@@ -1,0 +1,22 @@
+keytool -list -v -keystore key
+
+密钥库类型: JKS
+密钥库提供方: SUN
+
+您的密钥库包含 1 个条目
+
+别名: key0
+创建日期: May 16, 2018
+条目类型: PrivateKeyEntry
+证书链长度: 1
+证书[1]:
+所有者: CN=peibn, L=beijing, ST=beijing
+发布者: CN=peibn, L=beijing, ST=beijing
+序列号: 29beda8c
+有效期开始日期: Wed May 16 10:48:44 CST 2018, 截止日期: Thu May 03 10:48:44 CST 2068
+证书指纹:
+	 MD5: 6B:A9:DD:42:E0:99:ED:3F:E9:89:FA:C9:1B:7A:A5:2D
+	 SHA1: 53:51:CC:17:D4:78:BC:A3:DB:23:4E:26:4F:E6:78:25:07:30:DB:A1
+	 SHA256: 9C:AE:74:57:5A:DD:07:FD:91:AA:29:AA:EE:BF:F3:02:62:67:81:BB:DF:13:FE:C2:8B:BF:C5:67:72:A1:92:30
+	 签名算法名称: SHA256withRSA
+	 版本: 3

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@id/news_title"
+        android:layout_width="0.0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginRight="10.0dip"
+        android:layout_marginTop="7.0dip"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@id/icon_one"
+        android:layout_width="0.0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginRight="5.0dip"
+        android:layout_marginTop="7.0dip"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="3:2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/icon_two"
+        app:layout_constraintTop_toBottomOf="@id/news_title"
+        android:src="@mipmap/icon_nighticon_profile"
+        />
+
+    <ImageView
+        android:id="@id/icon_two"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5.0dip"
+        android:layout_marginRight="5.0dip"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@id/icon_one"
+        app:layout_constraintDimensionRatio="3:2"
+        app:layout_constraintLeft_toRightOf="@id/icon_one"
+        app:layout_constraintRight_toLeftOf="@id/icon_three"
+        app:layout_constraintTop_toTopOf="@id/icon_one"
+        android:src="@mipmap/icon_nighticon_profile"
+        />
+
+    <ImageView
+        android:id="@id/icon_three"
+        android:layout_width="0.0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5.0dip"
+        android:layout_marginRight="10.0dip"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@id/icon_two"
+        app:layout_constraintDimensionRatio="3:2"
+        app:layout_constraintLeft_toRightOf="@id/icon_two"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/icon_two"
+        android:src="@mipmap/icon_nighticon_profile"
+        />
+
+    <TextView
+        android:id="@id/news_source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginTop="7.0dip"
+        android:textColor="@color/text_gray_color"
+        android:textSize="@dimen/text_size_12"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/icon_one" />
+
+    <TextView
+        android:id="@id/news_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10.0dip"
+        android:layout_marginTop="7.0dip"
+        android:textColor="@color/text_gray_color"
+        android:textSize="@dimen/text_size_12"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/icon_one" />
+
+    <View
+        style="@style/line_horizon"
+        android:layout_marginTop="7.0dip"
+        app:layout_constraintTop_toBottomOf="@id/news_comment" />
+</android.support.constraint.ConstraintLayout>

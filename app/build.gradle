@@ -1,0 +1,68 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        release {
+            keyAlias 'key0'
+            keyPassword '123456'
+            storeFile file('/Users/peiboning/aswork/myproject/QueyueDemo/keystore/key')
+            storePassword '123456'
+        }
+        debug {
+            keyAlias 'key0'
+            keyPassword '123456'
+            storeFile file('/Users/peiboning/aswork/myproject/QueyueDemo/keystore/key')
+            storePassword '123456'
+        }
+    }
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.pbn.org.news"
+        minSdkVersion 14
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        }
+        debug{
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    // jsoup HTML parser library @ https://jsoup.org/
+    implementation 'org.jsoup:jsoup:1.11.3'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.squareup.okhttp:okhttp:2.0.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    // RxJava 2
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    // 图片加载
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    // 解析HTML
+    implementation 'org.jsoup:jsoup:1.10.2'
+    implementation 'com.just.agentweb:agentweb:3.0.0'
+    implementation project(':loclib')
+    implementation project(':permission')
+    //友盟
+    implementation 'com.umeng.sdk:common:1.5.0'
+    implementation 'com.umeng.sdk:analytics:7.5.0'
+}

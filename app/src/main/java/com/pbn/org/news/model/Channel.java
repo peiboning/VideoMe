@@ -1,0 +1,47 @@
+package com.pbn.org.news.model;
+
+import java.io.Serializable;
+
+public class Channel implements Serializable{
+    public static final int TYPE_MY = 1;
+    public static final int TYPE_MY_CHANNEL = 3;
+    public static final int TYPE_OTHER = 2;
+    public static final int TYPE_OTHER_CHANNEL = 4;
+    public String Title;
+    public String TitleCode;
+    private int itemType;
+
+    public Channel(String title, String titleCode) {
+        this(3, title, titleCode);
+    }
+
+    public Channel(int i, String title, String titleCode) {
+        this.itemType = i;
+        this.Title = title;
+        this.TitleCode = titleCode;
+    }
+
+    public String getTitle() {
+        return this.Title;
+    }
+
+    public void setTitle(String str) {
+        this.Title = str;
+    }
+
+    public String getTitleCode() {
+        return this.TitleCode;
+    }
+
+    public void setTitleCode(String str) {
+        this.TitleCode = str;
+    }
+
+    public void setItemType(int i) {
+        this.itemType = i;
+    }
+
+    public int getItemType() {
+        return this.itemType;
+    }
+}

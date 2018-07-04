@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <android.support.constraint.Guideline
+        android:id="@id/guideline_w"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.66" />
+
+    <TextView
+        android:id="@id/news_title"
+        android:layout_width="0.0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginRight="5.0dip"
+        android:layout_marginTop="7.0dip"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/guideline_w"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@id/icon_right"
+        android:layout_width="0.0dip"
+        android:layout_height="0.0dip"
+        android:layout_marginLeft="5.0dip"
+        android:layout_marginRight="10.0dip"
+        android:layout_marginTop="7.0dip"
+        app:layout_constraintDimensionRatio="3:2"
+        app:layout_constraintLeft_toRightOf="@id/guideline_w"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@id/news_source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10.0dip"
+        android:textColor="@color/text_gray_color"
+        android:textSize="@dimen/text_size_12"
+        app:layout_constraintBottom_toBottomOf="@id/icon_right"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@id/news_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5.0dip"
+        android:textColor="@color/text_gray_color"
+        android:textSize="@dimen/text_size_12"
+        app:layout_constraintBottom_toBottomOf="@id/icon_right"
+        app:layout_constraintRight_toLeftOf="@id/guideline_w" />
+
+    <View
+        style="@style/line_horizon"
+        android:layout_marginTop="7.0dip"
+        app:layout_constraintTop_toBottomOf="@id/news_source" />
+</android.support.constraint.ConstraintLayout>
