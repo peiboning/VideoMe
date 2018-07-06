@@ -107,11 +107,22 @@ public class NewsListActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(NewsVideoPlayerManager.instance().isPlaying()){
+            NewsVideoPlayerManager.instance().releaseNiceVideoPlayer();
+        }
+    }
+
     private long lastBackTime;
     @Override
     public void onBackPressed() {
         if(!NewsVideoPlayerManager.instance().onBackPressd()){
             if(System.currentTimeMillis() - lastBackTime < 1000){
+                if(NewsVideoPlayerManager.instance().isPlaying()){
+                    NewsVideoPlayerManager.instance().releaseNiceVideoPlayer();
+                }
                 super.onBackPressed();
             }else{
                 lastBackTime = System.currentTimeMillis();

@@ -10,15 +10,24 @@ public class Channel implements Serializable{
     public String Title;
     public String TitleCode;
     private int itemType;
+    private int quickCode;
 
     public Channel(String title, String titleCode) {
         this(3, title, titleCode);
     }
 
-    public Channel(int i, String title, String titleCode) {
-        this.itemType = i;
+    public Channel(int type, String title, String titleCode) {
+        this.itemType = type;
         this.Title = title;
         this.TitleCode = titleCode;
+    }
+
+    public int getQuickCode() {
+        return quickCode;
+    }
+
+    public void setQuickCode(int quickCode) {
+        this.quickCode = quickCode;
     }
 
     public String getTitle() {

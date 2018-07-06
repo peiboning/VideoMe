@@ -18,6 +18,7 @@ public class RetrofitClient {
     private Retrofit retrofitZIXUN;
     private Retrofit retrofitSDK;
     private Retrofit retrofitBOBO;
+    private Retrofit retrofitXigua;
 
     public static RetrofitClient getInstance() {
         if (null == sInstance) {
@@ -124,5 +125,28 @@ public class RetrofitClient {
                     .build();
         }
         return retrofitSDK;
+    }
+    public synchronized Retrofit getXiguaRetrofit() {
+        if(null == retrofitXigua){
+
+            Cache cache = new Cache(new File(NewsApplication.getContext().getExternalCacheDir(), "HttpCache"),
+                    1024 * 1024 * 50);
+
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            builder.cache(cache)
+                    .hostnameVerifier(FIXHttps.getHostNameVerifier())
+                    .sslSocketFactory(FIXHttps.getSSLFactory())
+                    .connectTimeout(10, TimeUnit.SECONDS)
+                    .readTimeout(10, TimeUnit.SECONDS)
+                    .writeTimeout(10, TimeUnit.SECONDS);
+
+            retrofitXigua = new Retrofit.Builder()
+                    .baseUrl("https://lf.snssdk.com")
+                    .client(builder.build())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build();
+        }
+        return retrofitXigua;
     }
 }

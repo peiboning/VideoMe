@@ -51,6 +51,7 @@ public class RequestBean {
     private String session;
     private long lastvirtualtime;
     private List<Integer> taglist;
+    private int tabindex;
 
     public RequestBean() {
         Context context = NewsApplication.getContext();
@@ -72,7 +73,16 @@ public class RequestBean {
         carrier = DeviceUtil.getInstance().getSimOperatorName();
 
         session = NewsApplication.session;
+        tabindex = 1;
 
+    }
+
+    public int getTabindex() {
+        return tabindex;
+    }
+
+    public void setTabindex(int tabindex) {
+        this.tabindex = tabindex;
     }
 
     public String getIp() {

@@ -34,6 +34,8 @@
         <activity android:name=".detail.DetailActivity"
             android:theme="@style/NoTitleTranslucentTheme"
             />
+
+        <activity android:name=".channel.ChannelMgrActivity"/>
     </application>
 
 </manifest>

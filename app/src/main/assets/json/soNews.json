@@ -1,57 +1,87 @@
 {
   "data": [{
     "name": "推荐",
-    "channelId": 30000
+    "channelId": 30000,
+    "quickId": 101
   }, {
     "name": "搞笑",
-    "channelId": 30001
+    "channelId": 30001,
+    "quickId": 139
   }, {
     "name": "娱乐",
-    "channelId": 30012
+    "channelId": 30012,
+    "quickId": 137
   }, {
     "name": "社会",
-    "channelId": 30004
+    "channelId": 30004,
+    "quickId": 138
   }, {
     "name": "音乐",
-    "channelId": 30031
+    "channelId": 30031,
+    "quickId": 142
   }, {
     "name": "影视剧",
-    "channelId": 30027
+    "channelId": 30027,
+    "quickId": 140
   }, {
     "name": "体育",
-    "channelId": 30026
+    "channelId": 30026,
+    "quickId": 145
   }, {
     "name": "科技",
-    "channelId": 30008
+    "channelId": 30008,
+    "quickId": 147
   }, {
     "name": "时尚",
-    "channelId": 30002
+    "channelId": 30002,
+    "quickId": -1
   }, {
     "name": "美食",
-    "channelId": 30006
+    "channelId": 30006,
+    "quickId": 146
   }, {
     "name": "汽车",
-    "channelId": 30007
+    "channelId": 30007,
+    "quickId": -1
   }, {
     "name": "健康",
-    "channelId": 30011
+    "channelId": 30011,
+    "quickId": -1
   }, {
     "name": "游戏",
-    "channelId": 30013
+    "channelId": 30013,
+    "quickId": -1
   }, {
     "name": "动漫",
-    "channelId": 30014
+    "channelId": 30014,
+    "quickId": -1
   }, {
     "name": "亲子",
-    "channelId": 30003
+    "channelId": 30003,
+    "quickId": -1
   }, {
     "name": "财经",
-    "channelId": 30028
+    "channelId": 30028,
+    "quickId": -1
   }, {
     "name": "萌宠",
-    "channelId": 30029
+    "channelId": 30029,
+    "quickId": 150
   }, {
     "name": "生活",
-    "channelId": 30030
+    "channelId": 30030,
+    "quickId": -1
+  }, {
+    "name": "舞蹈",
+    "channelId": -1,
+    "quickId": 151
+  }, {
+    "name": "小品",
+    "channelId": -1,
+    "quickId": 149
+  }, {
+    "name": "育儿",
+    "channelId": -1,
+    "quickId": 157
   }]
 }

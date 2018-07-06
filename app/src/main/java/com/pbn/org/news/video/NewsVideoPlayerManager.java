@@ -56,6 +56,12 @@ public class NewsVideoPlayerManager {
         }
     }
 
+    public void seekTo(long pos){
+        if(null != mVideoPlayer){
+            mVideoPlayer.seekTo(pos);
+        }
+    }
+
     public void releaseNiceVideoPlayer() {
         if (mVideoPlayer != null) {
             mVideoPlayer.release();

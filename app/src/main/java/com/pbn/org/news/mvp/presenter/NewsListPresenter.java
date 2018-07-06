@@ -11,6 +11,8 @@ import com.pbn.org.news.model.ChannelRequestBean;
 import com.pbn.org.news.model.bobo.BOBOModel;
 import com.pbn.org.news.model.bobo.BORequestBean;
 import com.pbn.org.news.model.quyue.HttpResponse;
+import com.pbn.org.news.model.xigua.QueryMap;
+import com.pbn.org.news.model.xigua.XiguaModel;
 import com.pbn.org.news.model.zixun.HttpResponse1;
 import com.pbn.org.news.model.quyue.QueyueNewsBean;
 import com.pbn.org.news.model.sdk.SDKVideoInfo;
@@ -18,6 +20,7 @@ import com.pbn.org.news.model.common.NewsBean;
 import com.pbn.org.news.mvp.view.INewsListView;
 import com.pbn.org.news.net.RetrofitClient;
 import com.pbn.org.news.net.api.BOBOAPI;
+import com.pbn.org.news.net.api.XiguaAPI;
 import com.pbn.org.news.net.api.ZIXUNAPI;
 import com.pbn.org.news.net.api.MyAPi;
 import com.pbn.org.news.net.api.SDKAPI;
@@ -44,8 +47,57 @@ import io.reactivex.schedulers.Schedulers;
 public class NewsListPresenter extends BasePresenter<INewsListView> {
     public static final String REFRESH_TIME = "refresh_time";
     private static final long  REFRESH_TIME_INTERNAL = AlarmManager.INTERVAL_HALF_HOUR;
+    boolean flag ;
     public void updateNewsList(Channel channel, int pageIndex, final boolean isLoadMore){
-        videoSDK(isLoadMore, channel);
+        if(channel.getTitleCode().equals("-1")){
+            getNewsList(isLoadMore, channel);
+            return;
+        }
+
+        if(channel.getQuickCode() == -1){
+            videoSDK(isLoadMore, channel);
+            return;
+        }
+        if(flag){
+            videoSDK(isLoadMore, channel);
+        }else{
+            getNewsList(isLoadMore, channel);
+        }
+        flag = !flag;
+//        xiguaVideo();
+    }
+
+    private void xiguaVideo(){
+        XiguaAPI api = RetrofitClient.getInstance().getXiguaRetrofit().create(XiguaAPI.class);
+        api.getData(QueryMap.getQueryMap())
+                .subscribeOn(Schedulers.io())
+                .map(new Function<XiguaModel, List<NewsBean>>() {
+                    @Override
+                    public List<NewsBean> apply(XiguaModel xiguaModel) throws Exception {
+                        return xiguaModel.toNewsBeans();
+                    }
+                }).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<NewsBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<NewsBean> newsBeans) {
+                        getView().updateNewsList(newsBeans, false);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     private void boboSDK(){
@@ -174,11 +226,11 @@ public class NewsListPresenter extends BasePresenter<INewsListView> {
 
     }
 
-    public void getNewsList(final boolean isLoadMore){
+    public void getNewsList(final boolean isLoadMore, Channel channel){
         ZIXUNAPI boboapi = RetrofitClient.getInstance().getMiguRetrofit().create(ZIXUNAPI.class);
         ChannelRequestBean requestBean = new ChannelRequestBean();
-        requestBean.setChannelid(2);
-        requestBean.setChannelName("视频");
+        requestBean.setChannelid(channel.getQuickCode());
+        requestBean.setChannelName(channel.getTitle());
         Observable<HttpResponse1> videoList = boboapi.getVideoList(requestBean);
         videoList.subscribeOn(Schedulers.io())
                 .map(new Function<HttpResponse1, List<NewsBean>>() {
