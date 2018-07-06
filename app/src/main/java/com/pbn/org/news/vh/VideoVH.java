@@ -1,5 +1,6 @@
 package com.pbn.org.news.vh;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -31,8 +32,13 @@ public class VideoVH extends BaseVH {
         loadImage(controller.imageView(), bean.getImages().get(0).getUrl());
         controller.setTitle(bean.getTitle());
         controller.setPlayTime(getPlayTime((int) videoModel.getDuration()));
-        videoSrc.setText(bean.getSource());
-        videoSrcIconTxt.setText(bean.getSource().subSequence(0,1));
+        if(TextUtils.isEmpty(bean.getSource())){
+            videoSrc.setText("NX");
+            videoSrcIconTxt.setText("N");
+        }else{
+            videoSrc.setText(bean.getSource());
+            videoSrcIconTxt.setText(bean.getSource().subSequence(0,1));
+        }
     }
 
     private String getPlayTime(int duration) {

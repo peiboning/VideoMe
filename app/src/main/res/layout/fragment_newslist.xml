@@ -16,13 +16,15 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:theme="@style/Theme.AppCompat"
-            app:tabSelectedTextColor="#ff0000"
-            android:background="#ffffff"
-            app:tabTextColor="#000000"
+            app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+            app:tabSelectedTextColor="#ffffff"
+            android:background="#ff0000"
+            app:tabTextColor="#aaffffff"
             app:tabMode="scrollable"
+            app:tabIndicatorColor="@color/white"
+
             />
-        
+
         <ImageView
             android:id="@+id/add_channel_btn"
             android:layout_width="50dp"
@@ -31,6 +33,7 @@
             android:background="@mipmap/shadow_add_titlebar_new"
             android:scaleType="center"
             android:layout_gravity="center|right"
+            android:visibility="gone"
             />
     </FrameLayout>
     <com.pbn.org.news.view.NewsViewPager
