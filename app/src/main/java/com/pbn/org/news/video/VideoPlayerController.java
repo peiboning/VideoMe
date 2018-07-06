@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pbn.org.news.R;
+import com.pbn.org.news.utils.UMUtils;
 
 
 /**
@@ -169,6 +170,7 @@ public class VideoPlayerController
                 startUpdateProgressTimer();
                 break;
             case NewsVideoPlayer.STATE_PLAYING:
+                UMUtils.startPlay(getContext());
                 mCoverImage.setVisibility(View.GONE);
                 mLoading.setVisibility(View.GONE);
                 mStart.setImageResource(R.mipmap.jc_pause_normal);
@@ -202,6 +204,7 @@ public class VideoPlayerController
 //                mError.setVisibility(View.VISIBLE);
                 break;
             case NewsVideoPlayer.STATE_COMPLETED:
+                UMUtils.playOver(getContext());
                 cancelUpdateProgressTimer();
                 setCenterVisible(false, false);
                 mCoverImage.setVisibility(View.VISIBLE);

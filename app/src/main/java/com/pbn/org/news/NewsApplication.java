@@ -5,13 +5,17 @@ import android.content.Context;
 import android.util.Log;
 
 import com.pbn.org.news.loclib.LocationMgr;
+import com.pbn.org.news.utils.ChannelUtils;
 import com.pbn.org.permission.PermissionClient;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.commonsdk.UMConfigure;
 
 import java.util.UUID;
 
 public class NewsApplication extends Application{
     private static Context sContext;
     public static String session;
+    private static String APP_KEY = "5afe2b88a40fa307a6000054";
     @Override
     public void onCreate() {
         super.onCreate();
@@ -30,7 +34,9 @@ public class NewsApplication extends Application{
 
 
     private void initUM() {
-
+        UMConfigure.init(this, APP_KEY, ChannelUtils.getChannel(this), UMConfigure.DEVICE_TYPE_PHONE, "");
+        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
+        MobclickAgent.openActivityDurationTrack(false);
     }
 
     private void initLoclib() {

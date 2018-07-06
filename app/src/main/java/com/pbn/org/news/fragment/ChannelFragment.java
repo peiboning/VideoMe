@@ -16,6 +16,7 @@ import com.pbn.org.news.mvp.presenter.NewsListPresenter;
 import com.pbn.org.news.mvp.view.INewsListView;
 import com.pbn.org.news.utils.LogUtils;
 import com.pbn.org.news.utils.SpUtils;
+import com.pbn.org.news.utils.UMUtils;
 import com.pbn.org.news.utils.ViewUtils;
 import com.pbn.org.news.vh.VideoVH;
 import com.pbn.org.news.video.NewsVideoPlayerManager;
@@ -77,11 +78,13 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
             public void onPullToRefreshing() {
                 LogUtils.d("ChannelFragment", "start update news data");
                 presenter.updateNewsList(channel, ++pageIndex, false);
+                UMUtils.refresh(getContext(), getChannelName());
             }
 
             @Override
             public void onLoadMore() {
                 presenter.updateNewsList(channel, ++pageIndex, true);
+                UMUtils.loadMore(getContext(), getChannelName());
             }
         });
 
@@ -176,8 +179,15 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
         listView.startRefresh();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        UMUtils.onFragmentResume(getChannelName());
+    }
 
-
-
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        UMUtils.onFragmentPause(getChannelName());
+    }
 }

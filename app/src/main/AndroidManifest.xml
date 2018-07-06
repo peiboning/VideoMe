@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
+
+
     <application
         android:name=".NewsApplication"
         android:allowBackup="true"
@@ -16,6 +18,9 @@
         android:roundIcon="@mipmap/video"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data android:name="CHANNEL"
+                android:value="${CHANNEL}"
+                />
         <activity android:name=".splash.SplashActivity"
             android:hardwareAccelerated="true"
             android:theme="@style/Splash"

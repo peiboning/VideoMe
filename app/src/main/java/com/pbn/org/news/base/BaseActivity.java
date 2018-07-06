@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 
 import com.pbn.org.news.NewsApplication;
 import com.pbn.org.news.view.SlideLayout;
+import com.umeng.analytics.MobclickAgent;
 
 public abstract class BaseActivity extends FragmentActivity implements SlideLayout.OnFinishListener{
     @Override
@@ -37,6 +38,18 @@ public abstract class BaseActivity extends FragmentActivity implements SlideLayo
         displayMetrics1.scaledDensity = displayMetrics1.scaledDensity * (displayMetrics1.density/targetDensity);
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     @Override

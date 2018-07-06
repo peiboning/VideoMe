@@ -18,6 +18,7 @@ import com.pbn.org.news.video.NewsVideoPlayerManager;
 import com.pbn.org.permission.OnRequestPermssionListener;
 import com.pbn.org.permission.PermissionClient;
 import com.pbn.org.permission.PermissionRejectHandler;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @author peiboning
@@ -108,8 +109,15 @@ public class NewsListActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
         if(NewsVideoPlayerManager.instance().isPlaying()){
             NewsVideoPlayerManager.instance().releaseNiceVideoPlayer();
         }

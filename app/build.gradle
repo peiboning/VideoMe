@@ -23,6 +23,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        flavorDimensions "1"
     }
     buildTypes {
         release {
@@ -33,6 +34,18 @@ android {
         }
         debug{
             signingConfig signingConfigs.debug
+        }
+    }
+    //为同一个应用创建不同的版本，比如一个国内版本，一个国外版
+    productFlavors {
+        xiaomi {
+            manifestPlaceholders = [ CHANNEL:"1"]
+        }
+        yyb {
+            manifestPlaceholders = [ CHANNEL:"2"]
+        }
+        wdj {
+            manifestPlaceholders = [ CHANNEL:"3"]
         }
     }
 }
