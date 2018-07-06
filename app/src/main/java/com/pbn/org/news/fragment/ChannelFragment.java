@@ -164,7 +164,7 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
         if(isLoadMore){
             listView.loadMoreComplete();
         }else{
-            listView.refreshOver();
+            listView.refreshOver(news.size());
         }
         if(null != news && news.size() > 0){
             SpUtils.putLong(NewsListPresenter.REFRESH_TIME, System.currentTimeMillis());

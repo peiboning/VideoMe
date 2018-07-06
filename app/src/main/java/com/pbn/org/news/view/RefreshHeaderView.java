@@ -1,5 +1,7 @@
 package com.pbn.org.news.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -22,6 +24,7 @@ public class RefreshHeaderView extends FrameLayout implements IResfreshHeaderVie
     private int state = STATE_DEF;
     private DotView dotView;
     private TextView tips;
+    private TextView numTips;
     public RefreshHeaderView(@NonNull Context context) {
         super(context);
         init();
@@ -42,6 +45,7 @@ public class RefreshHeaderView extends FrameLayout implements IResfreshHeaderVie
 
         dotView = rootView.findViewById(R.id.dot_view);
         tips = rootView.findViewById(R.id.head_tips);
+        numTips = rootView.findViewById(R.id.head_update_tips);
 
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
         addView(rootView, params);
@@ -64,11 +68,10 @@ public class RefreshHeaderView extends FrameLayout implements IResfreshHeaderVie
     }
 
     @Override
-    public void reset() {
+    public void reset(boolean flag) {
         dotView.stopLoading();
         state = STATE_RESET;
-
-        int start = rootView.getLayoutParams().height;
+        final int start = flag ? mHeight:rootView.getLayoutParams().height;
         int end = 0;
 
         ValueAnimator animator = ValueAnimator.ofInt(start, end);
@@ -80,14 +83,46 @@ public class RefreshHeaderView extends FrameLayout implements IResfreshHeaderVie
                 layoutParams.height = height;
                 rootView.setLayoutParams(layoutParams);
                 dotView.setProgress(height * 1.0f/mHeight);
-
+//                float alph = height*1.0f/start;
+//                rootView.setAlpha(alph);
+            }
+        });
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                tips.setVisibility(VISIBLE);
+                dotView.setVisibility(VISIBLE);
+                numTips.setVisibility(GONE);
             }
         });
 
         animator.setDuration(500);
+        if(flag){
+            animator.setStartDelay(1000);
+        }
         animator.start();
 
     }
+
+    @Override
+    public void updateNumTip(int num) {
+        state = STATE_SHOW_UPDATE_TIPS;
+        dotView.stopLoading();
+        tips.setVisibility(GONE);
+        dotView.setVisibility(GONE);
+        if(num <= 0){
+            numTips.setText("sorry,更新失败");
+        }else{
+            numTips.setText("为你找到了" + num + "条更新");
+        }
+        ViewGroup.LayoutParams layoutParams = numTips.getLayoutParams();
+        layoutParams.height = mHeight;
+        layoutParams.width = getWidth();
+        numTips.setLayoutParams(layoutParams);
+        numTips.setVisibility(VISIBLE);
+        reset(true);
+    }
+
     private void setVisvibleHeight(int dh){
         int nowH = rootView.getHeight();
         int tH = nowH + dh;

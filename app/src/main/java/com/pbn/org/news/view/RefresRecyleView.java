@@ -54,9 +54,9 @@ public class RefresRecyleView extends RecyclerView{
         this.mListener = listener;
     }
 
-    public void refreshOver(){
+    public void refreshOver(int size){
         if(headerView.getState() == IResfreshHeaderView.STATE_RESFRESHING){
-            headerView.reset();
+            headerView.updateNumTip(size);
         }
     }
 
@@ -100,6 +100,9 @@ public class RefresRecyleView extends RecyclerView{
             case MotionEvent.ACTION_MOVE:
                 int dy = (int) (e.getRawY() - mLastY);
                 mLastY = (int) e.getRawY();
+                if(dy>20){
+                    dy = 20;
+                }
                 if(isOnTop() && (headerView.getState() <= IResfreshHeaderView.STATE_RELEASE_REFRESH)){
                     headerView.onMove(dy/2);
                     if(headerView.getVisbleHeight() > 0){
@@ -114,7 +117,7 @@ public class RefresRecyleView extends RecyclerView{
                         mListener.onPullToRefreshing();
                     }
                 }else {
-                    headerView.reset();
+                    headerView.reset(false);
                 }
                 break;
             default:
@@ -186,7 +189,7 @@ public class RefresRecyleView extends RecyclerView{
     }
 
     public void startRefresh(){
-        smoothScrollToPosition(0);
+        scrollToPosition(0);
         if((headerView.getState() <= IResfreshHeaderView.STATE_RELEASE_REFRESH)){
             headerView.release2Resfresh();
             if(null != mListener){

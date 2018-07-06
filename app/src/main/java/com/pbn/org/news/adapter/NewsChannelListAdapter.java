@@ -88,6 +88,9 @@ public class NewsChannelListAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+        if(position > mNewsDatas.size()-1){
+            return;
+        }
         ((BaseVH)holder).showNews(mNewsDatas.get(position), position);
         ((BaseVH)holder).bind(mNewsDatas.get(position));
     }
