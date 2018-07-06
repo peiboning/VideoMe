@@ -72,7 +72,7 @@ public class HttpResponse1 {
     }
 
     public List<NewsBean> switchToOriginContent() {
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD HH:mm:ss");
         List<NewsBean> list = new ArrayList<NewsBean>();
         if(null != articles && articles.size() > 0){
             NewsBean bean = null;

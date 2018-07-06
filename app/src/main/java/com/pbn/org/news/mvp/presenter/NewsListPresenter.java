@@ -154,7 +154,7 @@ public class NewsListPresenter extends BasePresenter<INewsListView> {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        e.printStackTrace();
                     }
 
                     @Override
@@ -253,7 +253,7 @@ public class NewsListPresenter extends BasePresenter<INewsListView> {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        e.printStackTrace();
                     }
 
                     @Override

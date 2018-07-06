@@ -578,10 +578,6 @@ public class NewsVideoPlayer extends FrameLayout
         }
 
         // 隐藏ActionBar、状态栏，并横屏
-        VideoUtil.hideActionBar(mContext);
-        VideoUtil.scanForActivity(mContext)
-                .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
         ViewGroup contentView = (ViewGroup) VideoUtil.scanForActivity(mContext)
                 .findViewById(android.R.id.content);
         if (mCurrentMode == MODE_TINY_WINDOW) {
@@ -593,7 +589,9 @@ public class NewsVideoPlayer extends FrameLayout
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
         contentView.addView(mContainer, params);
-
+        VideoUtil.hideActionBar(mContext);
+        VideoUtil.scanForActivity(mContext)
+                .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         mCurrentMode = MODE_FULL_SCREEN;
         mController.onPlayModeChanged(mCurrentMode);
         LogUtil.d("MODE_FULL_SCREEN");
