@@ -169,7 +169,6 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
         mAdapter.updateData(news, isLoadMore);
         if(isLoadMore){
             listView.loadMoreComplete();
-            CrashReport.testJavaCrash();
         }else{
             listView.refreshOver(null != news?news.size():0);
         }
