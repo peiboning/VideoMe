@@ -28,12 +28,17 @@ public abstract class BaseVH extends RecyclerView.ViewHolder {
     }
 
     public void bind(final NewsBean bean){
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DetailActivity.startDetailPage((Activity) itemView.getContext(), bean);
-            }
-        });
+        if(null == bean){
+            return;
+        }
+        if(bean.getTemplate() != NewsBean.TYPE_ITEM_LIST_VIDEO){
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DetailActivity.startDetailPage((Activity) itemView.getContext(), bean);
+                }
+            });
+        }
 
     };
 

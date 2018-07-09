@@ -104,29 +104,31 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-               int fP = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-               int lp = ((LinearLayoutManager)recyclerView.getLayoutManager()).findLastVisibleItemPosition();
-               int vP = recyclerView.getLayoutManager().getChildCount();
-               int currentPlayerPos = NewsVideoPlayerManager.instance().getCurrentPlayerInFeedListPos() + listView.getHeaderViewNum();
-               if(currentPlayerPos >= listView.getHeaderViewNum()){
-                   if(currentPlayerPos < fP || currentPlayerPos > lp){
-                       NewsVideoPlayerManager.instance().releaseNiceVideoPlayer();
-                   }
-                   if(currentPlayerPos == fP || currentPlayerPos == lp){//判断百分比
-                       View view = ((LinearLayoutManager)recyclerView.getLayoutManager()).findViewByPosition(currentPlayerPos);
-                       if(view.findViewById(R.id.video_layout_root) != null){
-                           View playerView = view.findViewById(R.id.player);
-                           if(ViewUtils.getViewVisiblePercent(playerView, 0.5f)<30){
-                               NewsVideoPlayerManager.instance().releaseNiceVideoPlayer();
-                           }
-                       }
-                   }
-               }
+                LogUtils.i("ChannelFragment", "onScrolled dy:" + dy + ", dx:" + dx);
+                if(dy > 0 || dx > 0){
+                    int fP = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+                    int lp = ((LinearLayoutManager)recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                    int vP = recyclerView.getLayoutManager().getChildCount();
+                    int currentPlayerPos = NewsVideoPlayerManager.instance().getCurrentPlayerInFeedListPos() + listView.getHeaderViewNum();
+                    if(currentPlayerPos >= listView.getHeaderViewNum()){
+                        if(currentPlayerPos < fP || currentPlayerPos > lp){
+                            NewsVideoPlayerManager.instance().releaseNiceVideoPlayer();
+                        }
+                        if(currentPlayerPos == fP || currentPlayerPos == lp){//判断百分比
+                            View view = ((LinearLayoutManager)recyclerView.getLayoutManager()).findViewByPosition(currentPlayerPos);
+                            if(view.findViewById(R.id.video_layout_root) != null){
+                                View playerView = view.findViewById(R.id.player);
+                                if(ViewUtils.getViewVisiblePercent(playerView, 0.5f)<30){
+                                    NewsVideoPlayerManager.instance().releaseNiceVideoPlayer();
+                                }
+                            }
+                        }
+                    }
 
-               if(fP + vP >= recyclerView.getLayoutManager().getItemCount()){
-                    listView.loadMore();
-               }
-
+                    if(fP + vP >= recyclerView.getLayoutManager().getItemCount()){
+                        listView.loadMore();
+                    }
+                }
             }
         });
     }
@@ -158,7 +160,7 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
 
     @Override
     protected void fetchData() {
-        presenter.refreshNews(channel);
+        listView.startRefresh();
     }
 
     @Override
@@ -167,7 +169,7 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
         if(isLoadMore){
             listView.loadMoreComplete();
         }else{
-            listView.refreshOver(news.size());
+            listView.refreshOver(null != news?news.size():0);
         }
         if(null != news && news.size() > 0){
             SpUtils.putLong(NewsListPresenter.REFRESH_TIME, System.currentTimeMillis());

@@ -18,6 +18,7 @@ import com.pbn.org.news.vh.NewsOneVH;
 import com.pbn.org.news.vh.NewsThreeIconVH;
 import com.pbn.org.news.vh.RefreshVH;
 import com.pbn.org.news.vh.VideoVH;
+import com.pbn.org.news.video.NewsVideoPlayerManager;
 import com.pbn.org.news.view.RefresRecyleView;
 
 import java.util.ArrayList;
@@ -38,6 +39,9 @@ public class NewsChannelListAdapter extends RecyclerView.Adapter {
 
     public void updateData(List<NewsBean> data, boolean isLoadMore){
         if(null != data && data.size()>0){
+            if(NewsVideoPlayerManager.instance().isPlaying()){
+                NewsVideoPlayerManager.instance().releaseNiceVideoPlayer();
+            }
             if(null == mNewsDatas){
                 mNewsDatas = new ArrayList<NewsBean>();
             }

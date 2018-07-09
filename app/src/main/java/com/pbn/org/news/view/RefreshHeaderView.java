@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.pbn.org.news.R;
 import com.pbn.org.news.utils.LogUtils;
+import com.pbn.org.news.utils.NetUtil;
 
 public class RefreshHeaderView extends FrameLayout implements IResfreshHeaderView {
     private View rootView;
@@ -111,7 +112,7 @@ public class RefreshHeaderView extends FrameLayout implements IResfreshHeaderVie
         tips.setVisibility(GONE);
         dotView.setVisibility(GONE);
         if(num <= 0){
-            numTips.setText("sorry,更新失败");
+            numTips.setText(getErrorInfo());
         }else{
             numTips.setText("为你找到了" + num + "条更新");
         }
@@ -121,6 +122,14 @@ public class RefreshHeaderView extends FrameLayout implements IResfreshHeaderVie
         numTips.setLayoutParams(layoutParams);
         numTips.setVisibility(VISIBLE);
         reset(true);
+    }
+
+    private String getErrorInfo(){
+        String info = "sorry,更新失败";
+        if(!NetUtil.checkNet(getContext())){
+            info = "无网络";
+        }
+        return info;
     }
 
     private void setVisvibleHeight(int dh){
