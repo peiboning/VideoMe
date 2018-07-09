@@ -7,6 +7,7 @@ import android.util.Log;
 import com.pbn.org.news.loclib.LocationMgr;
 import com.pbn.org.news.utils.ChannelUtils;
 import com.pbn.org.permission.PermissionClient;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 
@@ -28,9 +29,13 @@ public class NewsApplication extends Application{
         initPermissionSDK();
         initLoclib();
         initUM();
+        initBugly();
         session = UUID.randomUUID().toString();
     }
 
+    private void initBugly() {
+        CrashReport.initCrashReport(this, "8d143cd859", BuildConfig.DEBUG);
+    }
 
 
     private void initUM() {

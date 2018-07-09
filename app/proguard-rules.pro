@@ -48,4 +48,7 @@
 -keep public class com.pbn.org.news.R$*{
     public static final int *;
 }
+#bugly
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
 

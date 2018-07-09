@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
 
     <application
@@ -21,6 +21,7 @@
         <meta-data android:name="CHANNEL"
                 android:value="${CHANNEL}"
                 />
+        <!-- 配置APP ID -->
         <activity android:name=".splash.SplashActivity"
             android:hardwareAccelerated="true"
             android:theme="@style/Splash"

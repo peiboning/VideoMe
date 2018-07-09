@@ -22,6 +22,7 @@ import com.pbn.org.news.vh.VideoVH;
 import com.pbn.org.news.video.NewsVideoPlayerManager;
 import com.pbn.org.news.view.CustomLinearLayoutManager;
 import com.pbn.org.news.view.RefresRecyleView;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,6 +169,7 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
         mAdapter.updateData(news, isLoadMore);
         if(isLoadMore){
             listView.loadMoreComplete();
+            CrashReport.testJavaCrash();
         }else{
             listView.refreshOver(null != news?news.size():0);
         }
