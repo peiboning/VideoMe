@@ -41,23 +41,13 @@ public class NewsListActivity extends BaseActivity {
         StatusBarCompat.setStatusBarColor(this, Color.RED);
         initFragment();
         requestLocationInfo();
+        initStorePermission();
 
     }
 
     private void requestLocationInfo() {
         if(!PermissionClient.checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)){
-            PermissionClient.request(this, Manifest.permission.ACCESS_COARSE_LOCATION, new OnRequestPermssionListener() {
-                @Override
-                public void onGrantPermission(String permssion) {
-                    LocationMgr.getInstance().startLoc();
-                    initStorePermission();
-                }
-
-                @Override
-                public void onRejectPermission(String permssion) {
-                    initStorePermission();
-                }
-            }, new PermissionRejectHandler() {
+            PermissionClient.request(this, Manifest.permission.ACCESS_COARSE_LOCATION, new PermissionRejectHandler() {
                 @Override
                 public boolean showRationaleToUser(String permission) {
                     return false;
@@ -70,7 +60,7 @@ public class NewsListActivity extends BaseActivity {
 
     private void initStorePermission() {
         if(!PermissionClient.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-            PermissionClient.request(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, null, new PermissionRejectHandler() {
+            PermissionClient.request(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionRejectHandler() {
                 @Override
                 public boolean showRationaleToUser(String permission) {
                     return false;

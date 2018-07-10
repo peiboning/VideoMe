@@ -13,8 +13,7 @@ import java.lang.ref.WeakReference;
 public class PermissionClient {
     private static PermissionClient sInstance = null;
     private static Context sContext;
-    private static WeakReference<OnRequestPermssionListener> onRequestPermssionListener;
-
+    public static final int REQUEST_PERMISSION_CODE = 100;
     public static PermissionClient getInstance() {
         if (null == sInstance) {
             synchronized (PermissionClient.class) {
@@ -45,11 +44,10 @@ public class PermissionClient {
         return flag;
     }
 
-    public static void request(Activity activity, String permission, OnRequestPermssionListener listener, PermissionRejectHandler rejectHandler){
+    public static void request(Activity activity, String permission, PermissionRejectHandler rejectHandler){
         if(checkPermission(permission)){
             return;
         }
-        onRequestPermssionListener = new WeakReference<OnRequestPermssionListener>(listener);
         boolean hasRejected = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission);
         if(hasRejected){
             if(null != rejectHandler){
@@ -58,30 +56,7 @@ public class PermissionClient {
                 }
             }
         }
-
-        requestPermission(activity, permission, rejectHandler);
+        ActivityCompat.requestPermissions(activity, new String[]{permission}, REQUEST_PERMISSION_CODE);
     }
 
-    private static void requestPermission(Context context, String permission, PermissionRejectHandler rejectHandler) {
-        PermissionActivity.requestPermission((Activity) context, permission);
-    }
-
-    public static void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(permissions.length <=0){
-            Toast.makeText(sContext, "onRequestPermissionsResult error", Toast.LENGTH_LONG).show();
-            return;
-        }
-        if(checkPermission(permissions[0])){
-            if(null != onRequestPermssionListener.get()){
-                onRequestPermssionListener.get().onGrantPermission(permissions[0]);
-            }
-            Toast.makeText(sContext, "onRequestPermissionsResult success", Toast.LENGTH_LONG).show();
-        }else{
-            if(null != onRequestPermssionListener.get()){
-                onRequestPermssionListener.get().onRejectPermission(permissions[0]);
-            }
-            Toast.makeText(sContext, "onRequestPermissionsResult failed", Toast.LENGTH_LONG).show();
-        }
-
-    }
 }
