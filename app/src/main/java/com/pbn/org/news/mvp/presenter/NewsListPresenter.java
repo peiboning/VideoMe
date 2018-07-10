@@ -149,12 +149,18 @@ public class NewsListPresenter extends BasePresenter<INewsListView> {
 
                     @Override
                     public void onNext(List<NewsBean> newsBeans) {
-                        getView().updateNewsList(newsBeans, isLoadmore);
+                        INewsListView view = getView();
+                        if(null != view){
+                            view.updateNewsList(newsBeans, isLoadmore);
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        getView().updateNewsList(null, isLoadmore);
+                        INewsListView view = getView();
+                        if(null != view){
+                            view.updateNewsList(null, isLoadmore);
+                        }
                         e.printStackTrace();
                     }
 
@@ -249,13 +255,19 @@ public class NewsListPresenter extends BasePresenter<INewsListView> {
 
                     @Override
                     public void onNext(List<NewsBean> newsBeans) {
-                        getView().updateNewsList(newsBeans, isLoadMore);
+                        INewsListView view = getView();
+                        if(null != view){
+                            view.updateNewsList(newsBeans, isLoadMore);
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        getView().updateNewsList(null, isLoadMore);
+                        INewsListView view = getView();
+                        if(null != view){
+                            view.updateNewsList(null, isLoadMore);
+                        }
                     }
 
                     @Override
