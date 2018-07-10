@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.pbn.org.news.base.BaseActivity;
 import com.pbn.org.news.fragment.NewsListFragment;
 import com.pbn.org.news.loclib.LocationMgr;
+import com.pbn.org.news.status_bar.StatusBarCompat;
 import com.pbn.org.news.video.NewsVideoPlayerManager;
 import com.pbn.org.permission.OnRequestPermssionListener;
 import com.pbn.org.permission.PermissionClient;
@@ -36,7 +37,8 @@ public class NewsListActivity extends BaseActivity {
         //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         //设置状态栏颜色
-        getWindow().setStatusBarColor(Color.RED);
+
+        StatusBarCompat.setStatusBarColor(this, Color.RED);
         initFragment();
         requestLocationInfo();
 
