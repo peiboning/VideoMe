@@ -11,6 +11,7 @@ public class Channel implements Serializable{
     public String TitleCode;
     private int itemType;
     private int quickCode;
+    private String haokanId;
 
     public Channel(String title, String titleCode) {
         this(3, title, titleCode);
@@ -52,5 +53,13 @@ public class Channel implements Serializable{
 
     public int getItemType() {
         return this.itemType;
+    }
+
+    public String getHaokanId() {
+        return haokanId;
+    }
+
+    public void setHaokanId(String haokanId) {
+        this.haokanId = haokanId;
     }
 }

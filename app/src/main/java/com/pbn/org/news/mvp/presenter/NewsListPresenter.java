@@ -3,6 +3,8 @@ package com.pbn.org.news.mvp.presenter;
 import android.app.AlarmManager;
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.print.PrinterId;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.pbn.org.news.base.BasePresenter;
@@ -10,6 +12,8 @@ import com.pbn.org.news.model.Channel;
 import com.pbn.org.news.model.ChannelRequestBean;
 import com.pbn.org.news.model.bobo.BOBOModel;
 import com.pbn.org.news.model.bobo.BORequestBean;
+import com.pbn.org.news.model.haokan.HKRequestParams;
+import com.pbn.org.news.model.haokan.HaokanVideo;
 import com.pbn.org.news.model.quyue.HttpResponse;
 import com.pbn.org.news.model.xigua.QueryMap;
 import com.pbn.org.news.model.xigua.XiguaModel;
@@ -20,6 +24,7 @@ import com.pbn.org.news.model.common.NewsBean;
 import com.pbn.org.news.mvp.view.INewsListView;
 import com.pbn.org.news.net.RetrofitClient;
 import com.pbn.org.news.net.api.BOBOAPI;
+import com.pbn.org.news.net.api.HAOKANAPI;
 import com.pbn.org.news.net.api.XiguaAPI;
 import com.pbn.org.news.net.api.ZIXUNAPI;
 import com.pbn.org.news.net.api.MyAPi;
@@ -45,26 +50,80 @@ import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 public class NewsListPresenter extends BasePresenter<INewsListView> {
+
+    private static final int SRC_NUM = 3;
+    private static final int SRC_INDEX_NEWSLIST = 0;
+    private static final int SRC_INDEX_HK = 1;
+    private static final int SRC_INDEX_VIDEOSDK = 2;
+
     public static final String REFRESH_TIME = "refresh_time";
     private static final long  REFRESH_TIME_INTERNAL = AlarmManager.INTERVAL_HALF_HOUR;
     boolean flag ;
+    private int requestNum = 0;
     public void updateNewsList(Channel channel, int pageIndex, final boolean isLoadMore){
-        if(channel.getTitleCode().equals("-1")){
-            getNewsList(isLoadMore, channel);
-            return;
+        int index = 1;//requestNum%SRC_NUM;
+        requestNum++;
+        if(SRC_INDEX_NEWSLIST == index){
+            if(channel.getQuickCode() != -1){
+                getNewsList(isLoadMore, channel);
+                return;
+            }
+            index++;
         }
 
-        if(channel.getQuickCode() == -1){
+        if(SRC_INDEX_HK == index){
+            if(!TextUtils.isEmpty(channel.getHaokanId())){
+                hkVideo(channel, isLoadMore);
+                return;
+            }
+            index++;
+        }
+
+        if(SRC_INDEX_VIDEOSDK == index){
             videoSDK(isLoadMore, channel);
             return;
         }
-        if(flag){
-            videoSDK(isLoadMore, channel);
-        }else{
-            getNewsList(isLoadMore, channel);
-        }
-        flag = !flag;
-//        xiguaVideo();
+    }
+
+    private void hkVideo(Channel channel, final boolean isLoadmore){
+        HAOKANAPI api = RetrofitClient.getInstance().getHaokanRetrofit().create(HAOKANAPI.class);
+
+        api.getList(HKRequestParams.getQueryMap(), HKRequestParams.getBodyMap(channel.getHaokanId(), isLoadmore))
+                .subscribeOn(Schedulers.io())
+                .map(new Function<HaokanVideo, List<NewsBean>>() {
+                    @Override
+                    public List<NewsBean> apply(HaokanVideo haokanVideo) throws Exception {
+                        return haokanVideo.toNewBean();
+                    }
+                }).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<NewsBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<NewsBean> newsBeans) {
+                        INewsListView view = getView();
+                        if(null != view){
+                            view.updateNewsList(newsBeans, isLoadmore);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        INewsListView view = getView();
+                        if(null != view){
+                            view.updateNewsList(null, isLoadmore);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     private void xiguaVideo(){

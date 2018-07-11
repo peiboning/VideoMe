@@ -11,10 +11,13 @@ import com.pbn.org.news.R;
 import com.pbn.org.news.adapter.NewsChannelAdapter;
 import com.pbn.org.news.base.MVPBaseFragment;
 import com.pbn.org.news.model.Channel;
+import com.pbn.org.news.model.haokan.HKRequestParams;
+import com.pbn.org.news.model.haokan.HaokanVideo;
 import com.pbn.org.news.model.xigua.QueryMap;
 import com.pbn.org.news.model.xigua.XiguaModel;
 import com.pbn.org.news.mvp.presenter.NewsListPresenter;
 import com.pbn.org.news.net.RetrofitClient;
+import com.pbn.org.news.net.api.HAOKANAPI;
 import com.pbn.org.news.net.api.XiguaAPI;
 import com.pbn.org.news.utils.ActivityUtils;
 import com.pbn.org.news.view.NewsViewPager;
@@ -26,6 +29,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -61,14 +65,16 @@ public class NewsListFragment extends MVPBaseFragment {
         addChannel = view.findViewById(R.id.add_channel_btn);
         viewPager.setAdapter(new NewsChannelAdapter(getChildFragmentManager(), channels));
         headerView.setupWithViewPager(viewPager);
+//        addChannel.setVisibility(View.VISIBLE);
         addChannel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityUtils.startChannelMgrActivity(getContext());
+//                ActivityUtils.startChannelMgrActivity(getContext());
             }
         });
 
     }
+
 
     private void initChannel() {
         AssetManager assetManager = getContext().getAssets();
@@ -94,6 +100,8 @@ public class NewsListFragment extends MVPBaseFragment {
                     Channel channel = new Channel(object.optString("name"), object.optInt("channelId", -1)+"");
                     int quickId = object.optInt("quickId", -1);
                     channel.setQuickCode(quickId);
+                    String haokanId = object.optString("haokanId", "");
+                    channel.setHaokanId(haokanId);
                     channels.add(channel);
                 }
             }

@@ -19,6 +19,7 @@ public class RetrofitClient {
     private Retrofit retrofitSDK;
     private Retrofit retrofitBOBO;
     private Retrofit retrofitXigua;
+    private Retrofit retrofitHaokan;
 
     public static RetrofitClient getInstance() {
         if (null == sInstance) {
@@ -148,5 +149,29 @@ public class RetrofitClient {
                     .build();
         }
         return retrofitXigua;
+    }
+
+    public synchronized Retrofit getHaokanRetrofit() {
+        if(null == retrofitHaokan){
+
+            Cache cache = new Cache(new File(NewsApplication.getContext().getExternalCacheDir(), "HttpCache"),
+                    1024 * 1024 * 50);
+
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            builder.cache(cache)
+                    .hostnameVerifier(FIXHttps.getHostNameVerifier())
+                    .sslSocketFactory(FIXHttps.getSSLFactory())
+                    .connectTimeout(10, TimeUnit.SECONDS)
+                    .readTimeout(10, TimeUnit.SECONDS)
+                    .writeTimeout(10, TimeUnit.SECONDS);
+
+            retrofitHaokan = new Retrofit.Builder()
+                    .baseUrl("https://sv.baidu.com")
+                    .client(builder.build())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build();
+        }
+        return retrofitHaokan;
     }
 }

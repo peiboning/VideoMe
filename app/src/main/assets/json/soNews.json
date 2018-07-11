@@ -2,86 +2,107 @@
   "data": [{
     "name": "推荐",
     "channelId": 30000,
-    "quickId": 101
+    "quickId": 101,
+    "haokanId":"recommend"
   }, {
     "name": "搞笑",
     "channelId": 30001,
-    "quickId": 139
+    "quickId": 139,
+    "haokanId":"gaoxiao_hk"
   }, {
     "name": "娱乐",
     "channelId": 30012,
-    "quickId": 137
+    "quickId": 137,
+    "haokanId":"yule_hk"
   }, {
     "name": "社会",
     "channelId": 30004,
-    "quickId": 138
+    "quickId": 138,
+    "haokanId":"shehui_hk"
   }, {
     "name": "音乐",
     "channelId": 30031,
-    "quickId": 142
+    "quickId": 142,
+    "haokanId":"yinyue_hk"
   }, {
     "name": "影视剧",
     "channelId": 30027,
-    "quickId": 140
+    "quickId": 140,
+    "haokanId":"yingshi_hk"
   }, {
     "name": "体育",
     "channelId": 30026,
-    "quickId": 145
+    "quickId": 145,
+    "haokanId":"tiyu_hk"
   }, {
     "name": "科技",
     "channelId": 30008,
-    "quickId": 147
+    "quickId": 147,
+    "haokanId":"keji_hk"
   }, {
     "name": "时尚",
     "channelId": 30002,
-    "quickId": -1
+    "quickId": -1,
+    "haokanId":""
   }, {
     "name": "美食",
     "channelId": 30006,
-    "quickId": 146
+    "quickId": 146,
+    "haokanId":"meishi_hk"
   }, {
     "name": "汽车",
     "channelId": 30007,
-    "quickId": -1
+    "quickId": -1,
+    "haokanId":"qiche_hk"
   }, {
     "name": "健康",
     "channelId": 30011,
-    "quickId": -1
+    "quickId": -1,
+    "haokanId":""
   }, {
     "name": "游戏",
     "channelId": 30013,
-    "quickId": -1
+    "quickId": -1,
+    "haokanId":"youxi_hk"
   }, {
     "name": "动漫",
     "channelId": 30014,
-    "quickId": -1
+    "quickId": -1,
+    "haokanId":"ertong_hk"
   }, {
     "name": "亲子",
     "channelId": 30003,
-    "quickId": -1
+    "quickId": -1,
+    "haokanId":""
   }, {
     "name": "财经",
     "channelId": 30028,
-    "quickId": -1
+    "quickId": -1,
+    "haokanId":""
   }, {
     "name": "萌宠",
     "channelId": 30029,
-    "quickId": 150
+    "quickId": 150,
+    "haokanId":"daimeng_hk"
   }, {
     "name": "生活",
     "channelId": 30030,
-    "quickId": -1
+    "quickId": -1,
+    "haokanId":"shenghuo_hk"
   }, {
     "name": "舞蹈",
     "channelId": -1,
-    "quickId": 151
+    "quickId": 151,
+    "haokanId":""
   }, {
     "name": "小品",
     "channelId": -1,
-    "quickId": 149
+    "quickId": 149,
+    "haokanId":""
   }, {
     "name": "育儿",
     "channelId": -1,
-    "quickId": 157
+    "quickId": 157,
+    "haokanId":""
   }]
 }

@@ -11,7 +11,13 @@ import com.baidu.location.LocationClientOption;
 //TODO 定位操作 放在子线程
 public class LocationMgr {
     private static LocationMgr sInstance = null;
-
+    private String county;
+    private String prov;
+    private String city;
+    private String cityCode;
+    private String street;
+    private double latitude;
+    private double longitude;
     public static LocationMgr getInstance() {
         if (null == sInstance) {
             synchronized (LocationMgr.class) {
@@ -26,6 +32,33 @@ public class LocationMgr {
     private LocationMgr() {
     }
 
+    public String getCounty() {
+        return county;
+    }
+
+    public String getProv() {
+        return prov;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
 
     private LocationClient mLocationClient;
     private Context mContext;
@@ -106,14 +139,17 @@ public class LocationMgr {
         @Override
         public void onReceiveLocation(BDLocation location) {
             String addr = location.getAddrStr();    //获取详细地址信息
-            String country = location.getCountry();    //获取国家
-            String province = location.getProvince();    //获取省份
-            String city = location.getCity();    //获取城市
+            county = location.getCountry();    //获取国家
+            prov = location.getProvince();    //获取省份
+            city = location.getCity();    //获取城市
             String district = location.getDistrict();    //获取区县
-            String street = location.getStreet();    //获取街道信息
+            street = location.getStreet();    //获取街道信息
+            cityCode = location.getCityCode();
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
             Log.e("onReceiveLocation", "addr:" + addr);
-            Log.e("onReceiveLocation", "country:" + country);
-            Log.e("onReceiveLocation", "province:" + province);
+            Log.e("onReceiveLocation", "country:" + county);
+            Log.e("onReceiveLocation", "province:" + prov);
             Log.e("onReceiveLocation", "city:" + city);
             Log.e("onReceiveLocation", "district:" + district);
             Log.e("onReceiveLocation", "street:" + street);
