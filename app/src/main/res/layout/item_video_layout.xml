@@ -13,11 +13,12 @@
 
     </com.pbn.org.news.video.NewsVideoPlayer>
 
-    <LinearLayout
+    <com.pbn.org.news.skin.widget.SkinLinearLayout
+        android:background="@color/skin_item_bottom_bg"
         android:layout_width="match_parent"
         android:layout_height="60dp">
 
-        <TextView
+        <com.pbn.org.news.skin.widget.SkinTextView
             android:id="@+id/src_icon_txt"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -28,6 +29,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginLeft="10dp"
+            android:textColor="@color/skin_item_text_icon_color"
             />
         <ImageView
             android:id="@+id/src_icon"
@@ -41,17 +43,18 @@
             android:visibility="gone"
             />
 
-        <TextView
+        <com.pbn.org.news.skin.widget.SkinTextView
             android:id="@+id/video_src"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="来源"
-            android:textColor="@color/black"
+            android:textColor="@color/skin_item_text_author_color"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
+
             />
 
-    </LinearLayout>
+    </com.pbn.org.news.skin.widget.SkinLinearLayout>
 
 
 </LinearLayout>

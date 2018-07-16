@@ -147,6 +147,7 @@ public class LocationMgr {
             cityCode = location.getCityCode();
             latitude = location.getLatitude();
             longitude = location.getLongitude();
+
             Log.e("onReceiveLocation", "addr:" + addr);
             Log.e("onReceiveLocation", "country:" + county);
             Log.e("onReceiveLocation", "province:" + prov);

@@ -48,7 +48,7 @@ public class SDKVideoInfo {
             SDKDataModel model = null;
             for(int i = 0;i<videoList.size();i++){
                 model = videoList.get(i);
-                if(model.getTemplateType() == 12){
+                if(model.getTemplateType() == 12 || model.getTemplateType() == 14 || model.getPlayTime() == 0){
                     continue;
                 }
                 bean = new NewsBean();
@@ -60,8 +60,12 @@ public class SDKVideoInfo {
                 imageList.add(new Image(model.getTvPic()));
                 bean.setImages(imageList);
 
-                bean.setSource(model.getUserInfo().getName());
-                bean.setUpdateTime(sdf.format(new Date(model.getTimestamp())));
+                if(null != model.getUserInfo()){
+                    bean.setSource(model.getUserInfo().getName());
+                }else{
+                    bean.setSource("BX");
+                }
+//                bean.setUpdateTime(sdf.format(new Date(model.getTimestamp())));
 
                 List<VideoModel> videos = new ArrayList<VideoModel>(1);
                 VideoModel videoModel = new VideoModel();

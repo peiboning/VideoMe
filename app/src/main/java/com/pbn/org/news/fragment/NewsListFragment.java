@@ -1,7 +1,9 @@
 package com.pbn.org.news.fragment;
 
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.support.design.widget.TabLayout;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -19,6 +21,8 @@ import com.pbn.org.news.mvp.presenter.NewsListPresenter;
 import com.pbn.org.news.net.RetrofitClient;
 import com.pbn.org.news.net.api.HAOKANAPI;
 import com.pbn.org.news.net.api.XiguaAPI;
+import com.pbn.org.news.skin.SkinManager;
+import com.pbn.org.news.skin.utils.SkinSp;
 import com.pbn.org.news.utils.ActivityUtils;
 import com.pbn.org.news.view.NewsViewPager;
 
@@ -70,6 +74,12 @@ public class NewsListFragment extends MVPBaseFragment {
             @Override
             public void onClick(View v) {
 //                ActivityUtils.startChannelMgrActivity(getContext());
+//                headerView.setTabTextColors(Color.BLUE, Color.GREEN);
+                if(TextUtils.isEmpty(SkinSp.currentThemeName())){
+                    SkinManager.with().startChangeSkin("skin_night.skin");
+                }else{
+                    SkinManager.with().startChangeSkin("");
+                }
             }
         });
 

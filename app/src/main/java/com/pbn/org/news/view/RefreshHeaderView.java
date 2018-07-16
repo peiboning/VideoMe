@@ -135,7 +135,7 @@ public class RefreshHeaderView extends FrameLayout implements IResfreshHeaderVie
     private void setVisvibleHeight(int dh){
         int nowH = rootView.getHeight();
         int tH = nowH + dh;
-        LogUtils.e("onMove", "target Height is " + tH);
+//        LogUtils.e("onMove", "target Height is " + tH);
         if(tH<=0){
             return;
         }

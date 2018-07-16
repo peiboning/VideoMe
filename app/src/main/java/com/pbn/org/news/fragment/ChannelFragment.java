@@ -77,7 +77,7 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
         listView.setOnRefreshListener(new RefresRecyleView.OnRefreshListener() {
             @Override
             public void onPullToRefreshing() {
-                LogUtils.d("ChannelFragment", "start update news data");
+//                LogUtils.d("ChannelFragment", "start update news data");
                 presenter.updateNewsList(channel, ++pageIndex, false);
                 UMUtils.refresh(getContext(), getChannelName());
             }
@@ -105,7 +105,7 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                LogUtils.i("ChannelFragment", "onScrolled dy:" + dy + ", dx:" + dx);
+//                LogUtils.i("ChannelFragment", "onScrolled dy:" + dy + ", dx:" + dx);
                 if(dy > 0 || dx > 0){
                     int fP = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
                     int lp = ((LinearLayoutManager)recyclerView.getLayoutManager()).findLastVisibleItemPosition();

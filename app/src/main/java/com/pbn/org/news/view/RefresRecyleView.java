@@ -124,12 +124,10 @@ public class RefresRecyleView extends RecyclerView{
                 break;
         }
         boolean flag = super.onTouchEvent(e);
-        Log.e("isOnTop", "flag is " + flag);
         return flag;
     }
 
     public boolean isOnTop() {
-        Log.e("isOnTop", (headerView.getParent() != null) +"");
         return (null != headerView && headerView.getParent() != null);
     }
 

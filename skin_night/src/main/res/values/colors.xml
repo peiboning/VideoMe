@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="skin_status_bar">#000000</color>
+    <color name="skin_tablayout_bg">#000000</color>
+    <color name="skin_tablayout_text_color">#80ffffff</color>
+    <color name="skin_tablayout_text_selected_color">#ff0000</color>
+    <color name="skin_item_bottom_bg">#000000</color>
+
+    <color name="skin_item_text_color">#f0bebebe</color>
+    <color name="skin_item_text_play_time_color">#aaffffff</color>
+    <color name="skin_item_text_icon_color">#ff616161</color>
+    <color name="skin_item_text_author_color">#80bebebe</color>
+</resources>

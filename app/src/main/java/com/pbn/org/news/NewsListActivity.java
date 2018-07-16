@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.pbn.org.news.base.BaseActivity;
 import com.pbn.org.news.fragment.NewsListFragment;
 import com.pbn.org.news.loclib.LocationMgr;
+import com.pbn.org.news.skin.inter.ISkinChange;
 import com.pbn.org.news.status_bar.StatusBarCompat;
 import com.pbn.org.news.video.NewsVideoPlayerManager;
 import com.pbn.org.permission.OnRequestPermssionListener;
@@ -24,7 +25,7 @@ import com.umeng.analytics.MobclickAgent;
 /**
  * @author peiboning
  */
-public class NewsListActivity extends BaseActivity {
+public class NewsListActivity extends BaseActivity implements ISkinChange {
 
     private FrameLayout mContent;
     private NewsListFragment mNewsFragment;
@@ -32,41 +33,16 @@ public class NewsListActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("onActivityCreated", "onCreate");
         //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         //设置状态栏颜色
 
-        StatusBarCompat.setStatusBarColor(this, Color.RED);
+        int color = getResources().getColor(R.color.skin_status_bar);
+        StatusBarCompat.setStatusBarColor(this, color);
         initFragment();
-        requestLocationInfo();
-        initStorePermission();
-
-    }
-
-    private void requestLocationInfo() {
-        if(!PermissionClient.checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)){
-            PermissionClient.request(this, Manifest.permission.ACCESS_COARSE_LOCATION, new PermissionRejectHandler() {
-                @Override
-                public boolean showRationaleToUser(String permission) {
-                    return false;
-                }
-            });
-        }else{
-            LocationMgr.getInstance().startLoc();
-        }
-    }
-
-    private void initStorePermission() {
-        if(!PermissionClient.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-            PermissionClient.request(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionRejectHandler() {
-                @Override
-                public boolean showRationaleToUser(String permission) {
-                    return false;
-                }
-            });
-        }
     }
 
     private void initFragment() {
@@ -104,6 +80,7 @@ public class NewsListActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+
     }
 
     @Override
@@ -129,5 +106,10 @@ public class NewsListActivity extends BaseActivity {
                 Toast.makeText(this,"再按一次退出", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    public void applySkin() {
+        StatusBarCompat.setStatusBarColor(this, Color.RED);
     }
 }

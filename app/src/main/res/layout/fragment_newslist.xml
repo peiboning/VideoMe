@@ -11,15 +11,15 @@
         android:gravity="center_vertical"
         >
 
-        <android.support.design.widget.TabLayout
+        <com.pbn.org.news.skin.widget.SkinTabLayout
             android:id="@+id/header_view"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_weight="1"
             app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
-            app:tabSelectedTextColor="#ffffff"
-            android:background="#ff0000"
-            app:tabTextColor="#aaffffff"
+            app:tabSelectedTextColor="@color/skin_tablayout_text_selected_color"
+            android:background="@color/skin_tablayout_bg"
+            app:tabTextColor="@color/skin_tablayout_text_color"
             app:tabMode="scrollable"
             app:tabIndicatorColor="@color/white"
 

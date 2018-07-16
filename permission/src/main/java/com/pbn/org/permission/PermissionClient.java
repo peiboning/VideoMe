@@ -9,6 +9,8 @@ import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PermissionClient {
     private static PermissionClient sInstance = null;
@@ -37,26 +39,19 @@ public class PermissionClient {
 
     }
 
-    public static boolean checkPermission(String permission){
-        boolean flag ;
-        int res = ContextCompat.checkSelfPermission(sContext, permission);
-        flag = res == PackageManager.PERMISSION_GRANTED;
-        return flag;
-    }
-
-    public static void request(Activity activity, String permission, PermissionRejectHandler rejectHandler){
-        if(checkPermission(permission)){
-            return;
-        }
-        boolean hasRejected = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission);
-        if(hasRejected){
-            if(null != rejectHandler){
-                if(rejectHandler.showRationaleToUser(permission)){
-                    return;
-                }
+    public static List<String> checkPermission(String[] permissions){
+        List<String> list = new ArrayList<>();
+        for(String permission : permissions){
+            int res = ContextCompat.checkSelfPermission(sContext, permission);
+            if(res != PackageManager.PERMISSION_GRANTED){
+                list.add(permission);
             }
         }
-        ActivityCompat.requestPermissions(activity, new String[]{permission}, REQUEST_PERMISSION_CODE);
+        return list;
+    }
+
+    public static void request(Activity activity, String[] permission, PermissionRejectHandler rejectHandler){
+        ActivityCompat.requestPermissions(activity, permission, REQUEST_PERMISSION_CODE);
     }
 
 }

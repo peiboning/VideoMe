@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.pbn.org.news.base.BasePresenter;
+import com.pbn.org.news.loclib.LocationMgr;
 import com.pbn.org.news.model.Channel;
 import com.pbn.org.news.model.ChannelRequestBean;
 import com.pbn.org.news.model.bobo.BOBOModel;
@@ -61,7 +62,7 @@ public class NewsListPresenter extends BasePresenter<INewsListView> {
     boolean flag ;
     private int requestNum = 0;
     public void updateNewsList(Channel channel, int pageIndex, final boolean isLoadMore){
-        int index = 1;//requestNum%SRC_NUM;
+        int index = requestNum%SRC_NUM;
         requestNum++;
         if(SRC_INDEX_NEWSLIST == index){
             if(channel.getQuickCode() != -1){
@@ -191,6 +192,8 @@ public class NewsListPresenter extends BasePresenter<INewsListView> {
         SDKAPI sdkapi = RetrofitClient.getInstance().getSDKRetrofit().create(SDKAPI.class);
         Map<String, String> map = new HashMap<String, String>();
         map.put("channelId", channel.getTitleCode());
+        map.put("cdma_lat", LocationMgr.getInstance().getLatitude()+"");
+        map.put("cdma_lng", LocationMgr.getInstance().getLongitude()+"");
         Observable<SDKVideoInfo> observable = sdkapi.getList(map);
         observable.subscribeOn(Schedulers.io())
                 .map(new Function<SDKVideoInfo, List<NewsBean>>() {

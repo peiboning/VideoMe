@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 
 import com.pbn.org.news.NewsApplication;
+import com.pbn.org.news.skin.inter.ISkinChange;
 import com.pbn.org.news.view.SlideLayout;
 import com.umeng.analytics.MobclickAgent;
 

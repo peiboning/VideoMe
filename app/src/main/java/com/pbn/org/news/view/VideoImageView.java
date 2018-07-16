@@ -28,7 +28,7 @@ public class VideoImageView extends ImageView{
 
     private void init() {
         paint  = new Paint();
-        paint.setColor(Color.parseColor("#66888888"));
+        paint.setColor(Color.parseColor("#66555555"));
     }
 
     @Override

@@ -2,9 +2,11 @@ package com.pbn.org.news;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 
 import com.pbn.org.news.loclib.LocationMgr;
+import com.pbn.org.news.skin.SkinManager;
 import com.pbn.org.news.utils.ChannelUtils;
 import com.pbn.org.permission.PermissionClient;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -26,11 +28,16 @@ public class NewsApplication extends Application{
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         sContext = this;
+        initSkin();
         initPermissionSDK();
         initLoclib();
         initUM();
         initBugly();
         session = UUID.randomUUID().toString();
+    }
+
+    private void initSkin() {
+        SkinManager.with().init(sContext).apply();
     }
 
     private void initBugly() {

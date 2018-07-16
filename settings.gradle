@@ -1,1 +1,1 @@
-include ':app', ':loclib', ':permission', ':analytics', ':utils'
+include ':app', ':loclib', ':permission', ':analytics', ':utils', ':skin_night'
