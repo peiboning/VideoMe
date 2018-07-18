@@ -37,8 +37,6 @@ public abstract class BaseActivity extends FragmentActivity implements SlideLayo
         displayMetrics1.density = targetDensity;
         displayMetrics1.densityDpi = targetDpi;
         displayMetrics1.scaledDensity = displayMetrics1.scaledDensity * (displayMetrics1.density/targetDensity);
-
-
     }
 
     @Override

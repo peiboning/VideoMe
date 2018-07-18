@@ -50,6 +50,11 @@ public class PermissionClient {
         return list;
     }
 
+    public static boolean checkPermission(String permissions){
+        int res = ContextCompat.checkSelfPermission(sContext, permissions);
+        return res == PackageManager.PERMISSION_GRANTED;
+    }
+
     public static void request(Activity activity, String[] permission, PermissionRejectHandler rejectHandler){
         ActivityCompat.requestPermissions(activity, permission, REQUEST_PERMISSION_CODE);
     }

@@ -21,7 +21,9 @@
         <meta-data android:name="CHANNEL"
                 android:value="${CHANNEL}"
                 />
-        <!-- 配置APP ID -->
+        <!-- GlideModule -->
+        <meta-data android:name="com.pbn.org.news.utils.imageloader.CustomGlideOptions"
+            android:value="GlideModule"/>
         <activity android:name=".splash.SplashActivity"
             android:hardwareAccelerated="true"
             android:theme="@style/Splash"
@@ -42,6 +44,7 @@
             />
 
         <activity android:name=".channel.ChannelMgrActivity"/>
+        <activity android:name=".setting.SettingActivity"/>
     </application>
 
 </manifest>

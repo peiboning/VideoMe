@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
+import com.pbn.org.news.cache.CacheManager;
 import com.pbn.org.news.loclib.LocationMgr;
 import com.pbn.org.news.skin.SkinManager;
 import com.pbn.org.news.utils.ChannelUtils;
@@ -33,7 +34,12 @@ public class NewsApplication extends Application{
         initLoclib();
         initUM();
         initBugly();
+        initCache();
         session = UUID.randomUUID().toString();
+    }
+
+    private void initCache() {
+        CacheManager.getInstance();
     }
 
     private void initSkin() {

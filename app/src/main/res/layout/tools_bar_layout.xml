@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.pbn.org.news.skin.widget.SkinRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/skin_item_title_bar_bg"
+    >
+
+    <ImageView
+        android:id="@+id/tools_bar_left"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@mipmap/title_left_arrow"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:visibility="gone"
+        />
+
+    <com.pbn.org.news.skin.widget.SkinTextView
+        android:id="@+id/tool_bar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="title"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textSize="18sp"
+        android:visibility="gone"
+        android:textColor="@color/skin_item_title_text_color"
+        />
+
+    <ImageView
+        android:id="@+id/tools_bar_right"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@mipmap/arrow_right"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:visibility="gone"
+        />
+    <com.pbn.org.news.skin.widget.SkinView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/skin_item_title_bar_splite_line_bg"
+        />
+
+</com.pbn.org.news.skin.widget.SkinRelativeLayout>

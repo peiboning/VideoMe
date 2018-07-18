@@ -44,7 +44,7 @@ public class NewsThreeIconVH extends BaseVH {
                 Glide.with(mTitle.getContext())
                         .load(bean.getImages().get(i).getUrl())
 //                        .load(R.mipmap.ic_launcher)
-                        .placeholder(R.mipmap.app_icon)
+//                        .placeholder(R.mipmap.app_icon)
                         .into(mImages[i]);
             }
         }

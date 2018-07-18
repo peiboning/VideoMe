@@ -27,6 +27,18 @@ public class SpUtils {
         e.apply();
     }
 
+    public static int getInt(String key, int defValue){
+        ensureSp();
+        return sp.getInt(key, defValue);
+    }
+
+    public static void putInt(String key, int value){
+        ensureSp();
+        SharedPreferences.Editor e = sp.edit();
+        e.putInt(key, value);
+        e.apply();
+    }
+
     public static String getString(String key, String defValue){
         ensureSp();
         return sp.getString(key, defValue);

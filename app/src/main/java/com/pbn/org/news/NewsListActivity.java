@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -16,7 +17,10 @@ import com.pbn.org.news.fragment.NewsListFragment;
 import com.pbn.org.news.loclib.LocationMgr;
 import com.pbn.org.news.skin.inter.ISkinChange;
 import com.pbn.org.news.status_bar.StatusBarCompat;
+import com.pbn.org.news.utils.ActivityUtils;
 import com.pbn.org.news.video.NewsVideoPlayerManager;
+import com.pbn.org.news.view.NewsToast;
+import com.pbn.org.news.view.RoundImageView;
 import com.pbn.org.permission.OnRequestPermssionListener;
 import com.pbn.org.permission.PermissionClient;
 import com.pbn.org.permission.PermissionRejectHandler;
@@ -29,6 +33,7 @@ public class NewsListActivity extends BaseActivity implements ISkinChange {
 
     private FrameLayout mContent;
     private NewsListFragment mNewsFragment;
+    private RoundImageView mSettingIcon;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +65,14 @@ public class NewsListActivity extends BaseActivity implements ISkinChange {
     @Override
     protected void initView() {
         mContent = findViewById(R.id.main_content);
+        mSettingIcon = findViewById(R.id.setting_icon);
+        mSettingIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityUtils.startSettingActivity(NewsListActivity.this);
+//                NewsToast.showSystemToast("setting Icon");
+            }
+        });
     }
 
     @Override

@@ -5,4 +5,12 @@
     <string name="edit_tip">长按编辑，拖拽排序</string>
     <string name="edit">编辑</string>
     <string name="finish">完成</string>
+    <string name="setting">设置</string>
+    <string name="night_theme">夜间模式</string>
+    <string name="smart_night_theme">开启智能夜间模式</string>
+    <string name="day_theme">日间模式</string>
+    <string name="clean_cache">清除缓存</string>
+    <string name="version_check">检查版本</string>
+    <string name="wifi_tips">非WIFI下播放提醒（提醒一次）</string>
+    <string name="app_about">关于</string>
 </resources>
