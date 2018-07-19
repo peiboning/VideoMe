@@ -307,4 +307,6 @@ public abstract class NewsBaseVideoPlayerController
     protected abstract void release();
 
     public abstract void setPlayTime(String time);
+    public abstract View getPlayTimeView();
+    public abstract View getTitleView();
 }

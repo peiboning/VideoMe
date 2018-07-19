@@ -1,6 +1,8 @@
 package com.pbn.org.news.model.zixun;
 
-public class VideoModel {
+import java.io.Serializable;
+
+public class VideoModel implements Serializable{
     private String url;
     private float duration;
     private int size;

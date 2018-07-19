@@ -62,7 +62,7 @@ public class NewsListPresenter extends BasePresenter<INewsListView> {
     boolean flag ;
     private int requestNum = 0;
     public void updateNewsList(Channel channel, int pageIndex, final boolean isLoadMore){
-        int index = 0;//requestNum%SRC_NUM;
+        int index = requestNum%SRC_NUM;
         requestNum++;
         if(SRC_INDEX_NEWSLIST == index){
             if(channel.getQuickCode() != -1){

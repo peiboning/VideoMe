@@ -23,7 +23,9 @@
     </style>
     <style name="Splash" parent="NoTitleFullscreen">
         <item name="android:background">@drawable/splash_bg</item>
-
+    </style>
+    <style name="VideoDetail" parent="NoTitleFullscreen">
+        <item name="android:background">@color/transparent</item>
     </style>
 
     <style name="NoTitleTranslucentTheme" parent="@style/AppTheme">

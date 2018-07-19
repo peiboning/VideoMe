@@ -1,6 +1,8 @@
 package com.pbn.org.news.model.common;
 
-public class Image {
+import java.io.Serializable;
+
+public class Image implements Serializable{
     private int width;
     private int height;
     private String url;

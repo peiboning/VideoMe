@@ -516,6 +516,16 @@ public class VideoPlayerController
         mPlayTime.setText(time);
     }
 
+    @Override
+    public View getPlayTimeView() {
+        return mPlayTime;
+    }
+
+    @Override
+    public View getTitleView() {
+        return mTitle;
+    }
+
     protected void tellPlayPos(String txt){
 
     }
