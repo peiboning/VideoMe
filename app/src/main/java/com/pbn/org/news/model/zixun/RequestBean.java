@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 
 import com.pbn.org.news.NewsApplication;
+import com.pbn.org.news.loclib.LocationMgr;
 import com.pbn.org.news.utils.DeviceUtil;
 import com.pbn.org.news.utils.NetUtil;
 import com.pbn.org.news.utils.SpUtils;
@@ -11,6 +12,9 @@ import com.pbn.org.news.utils.SpUtils;
 import java.util.List;
 
 public class RequestBean {
+    public static final String LASTVIRTUALTIME = "lastvirtualtime";
+    public static final String REQCOUNT = "reqcount";
+
     private String ip;
     private int reqtype;
     private String tokenId;
@@ -57,6 +61,8 @@ public class RequestBean {
         Context context = NewsApplication.getContext();
         imei = DeviceUtil.getInstance().getIMEI();
         imsi = DeviceUtil.getInstance().getImsi();
+        dpi = DeviceUtil.getInstance().getDeviceDensity();
+
         openUDID = DeviceUtil.getUUID();
         contenttpl = 215;
         count = 20;
@@ -65,13 +71,16 @@ public class RequestBean {
         deviceType = Build.MODEL;
         did = DeviceUtil.getInstance().getDid();
         feedstpl = 125;
-
+        refresh = "Top";
+        requestTime = System.currentTimeMillis();
         lastreqtime = SpUtils.getLong("lastreqtime", 0);
         SpUtils.putLong("lastreqtime", requestTime);
-        lbs = "";
+        lbs = "Latitude="+ LocationMgr.getInstance().getLatitude()+",Longitude="+LocationMgr.getInstance().getLongitude()+",Aoiname=";
         nets = NetUtil.getNetworkType(context);
         carrier = DeviceUtil.getInstance().getSimOperatorName();
-
+        lastvirtualtime = SpUtils.getLong(LASTVIRTUALTIME, 0L);
+        reqcount = SpUtils.getInt(REQCOUNT, 0);
+        SpUtils.putInt(REQCOUNT, reqcount+1);
         session = NewsApplication.session;
         tabindex = 1;
 

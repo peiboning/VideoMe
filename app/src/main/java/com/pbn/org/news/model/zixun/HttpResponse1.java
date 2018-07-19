@@ -2,6 +2,7 @@ package com.pbn.org.news.model.zixun;
 
 import com.pbn.org.news.model.common.Image;
 import com.pbn.org.news.model.common.NewsBean;
+import com.pbn.org.news.utils.SpUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -71,16 +72,25 @@ public class HttpResponse1 {
         this.articles = articles;
     }
 
-    public List<NewsBean> switchToOriginContent() {
+    public List<NewsBean> switchToOriginContent(boolean flag) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD HH:mm:ss");
         List<NewsBean> list = new ArrayList<NewsBean>();
+        long viruTime = 0;
         if(null != articles && articles.size() > 0){
             NewsBean bean = null;
             Articles article = null;
             for(int i = 0;i<articles.size() ;i++){
                 article = articles.get(i);
                 bean = new NewsBean();
-
+                if(flag){
+                    if(i == 0){
+                        viruTime = article.getVirtualTime();
+                    }
+                }else{
+                    if(i == articles.size()-1){
+                        viruTime = article.getVirtualTime();
+                    }
+                }
                 bean.setId(article.getNewsId());
                 bean.setContentSource(NewsBean.CONTENT_SOURCE_1);
                 bean.setTemplate(switch2Templete(article.getTemplate()));
@@ -100,6 +110,8 @@ public class HttpResponse1 {
                 bean.setVideos(article.getVideos());
                 list.add(bean);
             }
+
+            SpUtils.putLong(RequestBean.LASTVIRTUALTIME, viruTime);
         }
         return list;
     }

@@ -12,6 +12,15 @@ public class Articles {
     private String articleUrl;
     private List<VideoModel> videos;
     private long createTime;
+    private long virtualTime;
+
+    public long getVirtualTime() {
+        return virtualTime;
+    }
+
+    public void setVirtualTime(long virtualTime) {
+        this.virtualTime = virtualTime;
+    }
 
     public long getCreateTime() {
         return createTime;

@@ -18,6 +18,7 @@ public class LocationMgr {
     private String street;
     private double latitude;
     private double longitude;
+    private String buildName;
     public static LocationMgr getInstance() {
         if (null == sInstance) {
             synchronized (LocationMgr.class) {
@@ -154,6 +155,7 @@ public class LocationMgr {
             Log.e("onReceiveLocation", "city:" + city);
             Log.e("onReceiveLocation", "district:" + district);
             Log.e("onReceiveLocation", "street:" + street);
+            Log.e("onReceiveLocation", "buildName:" + buildName);
             stopLoc();
         }
     }

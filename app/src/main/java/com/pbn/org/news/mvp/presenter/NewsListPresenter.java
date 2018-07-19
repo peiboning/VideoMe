@@ -62,7 +62,7 @@ public class NewsListPresenter extends BasePresenter<INewsListView> {
     boolean flag ;
     private int requestNum = 0;
     public void updateNewsList(Channel channel, int pageIndex, final boolean isLoadMore){
-        int index = requestNum%SRC_NUM;
+        int index = 0;//requestNum%SRC_NUM;
         requestNum++;
         if(SRC_INDEX_NEWSLIST == index){
             if(channel.getQuickCode() != -1){
@@ -294,19 +294,25 @@ public class NewsListPresenter extends BasePresenter<INewsListView> {
 //        getView().requestNews(false);
 
     }
-
+    int page = 0;
     public void getNewsList(final boolean isLoadMore, Channel channel){
+
+        page++;
         ZIXUNAPI boboapi = RetrofitClient.getInstance().getMiguRetrofit().create(ZIXUNAPI.class);
         ChannelRequestBean requestBean = new ChannelRequestBean();
         requestBean.setChannelid(channel.getQuickCode());
         requestBean.setChannelName(channel.getTitle());
+        requestBean.setPage(page);
+        if(isLoadMore){
+            requestBean.setRefresh("Bottom");
+        }
         Observable<HttpResponse1> videoList = boboapi.getVideoList(requestBean);
         videoList.subscribeOn(Schedulers.io())
                 .map(new Function<HttpResponse1, List<NewsBean>>() {
 
                     @Override
                     public List<NewsBean> apply(HttpResponse1 httpResponse1) throws Exception {
-                        return httpResponse1.switchToOriginContent();
+                        return httpResponse1.switchToOriginContent(isLoadMore);
                     }
                 }).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<NewsBean>>() {

@@ -19,7 +19,9 @@ import java.util.List;
  * @author peiboning
  */
 public class SplashActivity extends MVPBaseActivity<ISplashView, SplashPresenter> implements ISplashView {
-    private String[] mNeedPermissions = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private String[] mNeedPermissions = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ,Manifest.permission.READ_PHONE_STATE
+    };
     @Override
     protected SplashPresenter createPresenter() {
         return new SplashPresenter();
