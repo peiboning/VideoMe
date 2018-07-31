@@ -19,6 +19,7 @@ public class NewsBean implements Serializable{
     public final static int TYPE_ITEM_SUMMARY = 7;
     public final static int TYPE_ITEM_LABEL = 8;
     public final static int TYPE_ITEM_FOCUSNEWS = 7;
+    public final static int TYPE_ITEM_AD = 9;
 
     private int contentSource;//标识是那个源
 

@@ -11,6 +11,7 @@ import com.pbn.org.news.R;
 import com.pbn.org.news.model.quyue.QueyueNewsBean;
 import com.pbn.org.news.model.common.NewsBean;
 import com.pbn.org.news.utils.LogUtils;
+import com.pbn.org.news.vh.AdItemVH;
 import com.pbn.org.news.vh.BaseVH;
 import com.pbn.org.news.vh.EmptyVH;
 import com.pbn.org.news.vh.NewsListBigVH;
@@ -29,12 +30,14 @@ public class NewsChannelListAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private RefresRecyleView mRecyleView;
     private NewsBean refreshBean = new NewsBean();
+    private NewsBean adBean = new NewsBean();
 
     public NewsChannelListAdapter(List<NewsBean> datas, Context context, RefresRecyleView view) {
         this.mNewsDatas = datas;
         this.mContext = context;
         mRecyleView = view;
         refreshBean.setTemplate(NewsBean.TYPE_ITEM_LIST_NEWS_REFRESH);
+        adBean.setTemplate(QueyueNewsBean.TYPE_ITEM_LIST_AD);
     }
 
     public void updateData(List<NewsBean> data, boolean isLoadMore){
@@ -44,15 +47,18 @@ public class NewsChannelListAdapter extends RecyclerView.Adapter {
             }
             if(null == mNewsDatas){
                 mNewsDatas = new ArrayList<NewsBean>();
+                mNewsDatas.add(new NewsBean());
             }
             if(mNewsDatas.size()<=0){
                 mNewsDatas.addAll(data);
             }else{
+                mNewsDatas.remove(adBean);
                 mNewsDatas.remove(refreshBean);
                 if(isLoadMore){
                     mNewsDatas.addAll(data);
                 }else{
                     mNewsDatas.add(0, refreshBean);
+                    mNewsDatas.add(1,adBean);
                     mNewsDatas.addAll(0, data);
                 }
             }
@@ -83,9 +89,13 @@ public class NewsChannelListAdapter extends RecyclerView.Adapter {
         }else if(QueyueNewsBean.TYPE_ITEM_LIST_VIDEO == viewType){
             view = inflater.inflate(R.layout.item_video_layout, null);
             VH = new VideoVH(view);
+        }else if(QueyueNewsBean.TYPE_ITEM_LIST_AD == viewType){
+            view = inflater.inflate(R.layout.item_ad_layout, null);
+            VH = new AdItemVH(view);
         }else{
             view = new View(mContext);
             VH = new EmptyVH(view);
+//            VH = new EmptyVH(view);
         }
         return VH;
     }

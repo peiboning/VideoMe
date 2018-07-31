@@ -20,6 +20,7 @@ import com.pbn.org.news.utils.UMUtils;
 import com.pbn.org.news.utils.ViewUtils;
 import com.pbn.org.news.vh.VideoVH;
 import com.pbn.org.news.video.NewsVideoPlayerManager;
+import com.pbn.org.news.view.AdImageView;
 import com.pbn.org.news.view.CustomLinearLayoutManager;
 import com.pbn.org.news.view.RefresRecyleView;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -105,11 +106,22 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int lastCompleteV = ((LinearLayoutManager)recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+                int fP = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+                int lp = ((LinearLayoutManager)recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                int vP = recyclerView.getLayoutManager().getChildCount();
+                for(int i = fP;i<=lp;i++){
+                    View view = recyclerView.getLayoutManager().findViewByPosition(i);
+                    AdImageView adImageView = view.findViewById(R.id.ad_item_img);
+                    if (null != adImageView && adImageView.getVisibility() == View.VISIBLE) {
+//                        Log.e("AdImageView", "layoutHeight:" + recyclerView.getLayoutManager().getHeight());
+//                        Log.e("AdImageView", "view top:" + view.getTop());
+                        adImageView.setDy(recyclerView.getLayoutManager().getHeight() - view.getTop(), recyclerView.getLayoutManager().getHeight());
+                    }
+                }
 //                LogUtils.i("ChannelFragment", "onScrolled dy:" + dy + ", dx:" + dx);
                 if(dy > 0 || dx > 0){
-                    int fP = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-                    int lp = ((LinearLayoutManager)recyclerView.getLayoutManager()).findLastVisibleItemPosition();
-                    int vP = recyclerView.getLayoutManager().getChildCount();
+
                     int currentPlayerPos = NewsVideoPlayerManager.instance().getCurrentPlayerInFeedListPos() + listView.getHeaderViewNum();
                     if(currentPlayerPos >= listView.getHeaderViewNum()){
                         if(currentPlayerPos < fP || currentPlayerPos > lp){

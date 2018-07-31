@@ -13,6 +13,7 @@ public class QueyueNewsBean implements Serializable {
     public final static int TYPE_ITEM_LIST_NEWS_THREE   = 3;
     public final static int TYPE_ITEM_LIST_NEWS_REFRESH = 4;
     public final static int TYPE_ITEM_LIST_VIDEO        = 5;
+    public final static int TYPE_ITEM_LIST_AD           = 6;
 
 
     private String ad_title;

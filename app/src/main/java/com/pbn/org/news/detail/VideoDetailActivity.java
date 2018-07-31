@@ -22,12 +22,13 @@ import com.pbn.org.news.model.common.NewsBean;
 import com.pbn.org.news.model.zixun.VideoModel;
 import com.pbn.org.news.mvp.presenter.VideoDetailPagePresenter;
 import com.pbn.org.news.mvp.view.IVideoDetailView;
+import com.pbn.org.news.skin.inter.ISkinChange;
 import com.pbn.org.news.status_bar.StatusBarCompat;
 import com.pbn.org.news.video.NewsVideoPlayer;
 import com.pbn.org.news.video.NewsVideoPlayerManager;
 import com.pbn.org.news.video.VideoPlayerController;
 
-public class VideoDetailActivity extends MVPBaseActivity<IVideoDetailView, VideoDetailPagePresenter> implements IVideoDetailView{
+public class VideoDetailActivity extends MVPBaseActivity<IVideoDetailView, VideoDetailPagePresenter> implements IVideoDetailView, ISkinChange{
     public static final String FROM_X = "fromX";
     public static final String FROM_Y = "fromY";
     public static final String BEAN = "bean";
@@ -142,5 +143,10 @@ public class VideoDetailActivity extends MVPBaseActivity<IVideoDetailView, Video
                 .load(url)
                 .placeholder(R.color.black)
                 .into(view);
+    }
+
+    @Override
+    public void applySkin() {
+
     }
 }
