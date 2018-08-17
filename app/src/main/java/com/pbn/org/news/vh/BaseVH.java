@@ -10,6 +10,8 @@ import com.pbn.org.news.R;
 import com.pbn.org.news.detail.DetailActivity;
 import com.pbn.org.news.model.common.NewsBean;
 
+import java.util.List;
+
 public abstract class BaseVH extends RecyclerView.ViewHolder {
     public BaseVH(View itemView) {
         super(itemView);
@@ -41,6 +43,8 @@ public abstract class BaseVH extends RecyclerView.ViewHolder {
         }
 
     };
+
+    public void bind(List<NewsBean> datas){}
 
 
 }

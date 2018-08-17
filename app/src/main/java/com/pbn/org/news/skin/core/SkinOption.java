@@ -17,8 +17,9 @@ public class SkinOption {
         return skinPath;
     }
 
-    public void setSkinPath(String skinPath) {
+    public SkinOption setSkinPath(String skinPath) {
         this.skinPath = skinPath;
+        return this;
     }
 
     public void apply(){

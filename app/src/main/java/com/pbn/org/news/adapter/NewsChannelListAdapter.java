@@ -14,6 +14,7 @@ import com.pbn.org.news.utils.LogUtils;
 import com.pbn.org.news.vh.AdItemVH;
 import com.pbn.org.news.vh.BaseVH;
 import com.pbn.org.news.vh.EmptyVH;
+import com.pbn.org.news.vh.ListItemViewHolder;
 import com.pbn.org.news.vh.NewsListBigVH;
 import com.pbn.org.news.vh.NewsOneVH;
 import com.pbn.org.news.vh.NewsThreeIconVH;
@@ -27,10 +28,12 @@ import java.util.List;
 
 public class NewsChannelListAdapter extends RecyclerView.Adapter {
     private List<NewsBean> mNewsDatas;
+    private List<NewsBean> mImageDatas;
     private Context mContext;
     private RefresRecyleView mRecyleView;
     private NewsBean refreshBean = new NewsBean();
     private NewsBean adBean = new NewsBean();
+    private NewsBean group = new NewsBean();
 
     public NewsChannelListAdapter(List<NewsBean> datas, Context context, RefresRecyleView view) {
         this.mNewsDatas = datas;
@@ -38,6 +41,8 @@ public class NewsChannelListAdapter extends RecyclerView.Adapter {
         mRecyleView = view;
         refreshBean.setTemplate(NewsBean.TYPE_ITEM_LIST_NEWS_REFRESH);
         adBean.setTemplate(QueyueNewsBean.TYPE_ITEM_LIST_AD);
+        group.setTemplate(QueyueNewsBean.TYPE_ITEM_LIST_GROUP);
+        mImageDatas = new ArrayList<>();
     }
 
     public void updateData(List<NewsBean> data, boolean isLoadMore){
@@ -54,12 +59,16 @@ public class NewsChannelListAdapter extends RecyclerView.Adapter {
             }else{
                 mNewsDatas.remove(adBean);
                 mNewsDatas.remove(refreshBean);
+                mNewsDatas.remove(group);
+                mImageDatas.clear();
+                mImageDatas.addAll(data);
                 if(isLoadMore){
                     mNewsDatas.addAll(data);
                 }else{
                     mNewsDatas.add(0, refreshBean);
                     mNewsDatas.add(1,adBean);
                     mNewsDatas.addAll(0, data);
+                    mNewsDatas.add(1, group);
                 }
             }
             LogUtils.e("ChannelFragment", "updateNewsList is " + data.size());
@@ -92,10 +101,12 @@ public class NewsChannelListAdapter extends RecyclerView.Adapter {
         }else if(QueyueNewsBean.TYPE_ITEM_LIST_AD == viewType){
             view = inflater.inflate(R.layout.item_ad_layout, null);
             VH = new AdItemVH(view);
+        }else if(QueyueNewsBean.TYPE_ITEM_LIST_GROUP == viewType){
+            view = inflater.inflate(R.layout.list_item_vh, null);
+            VH = new ListItemViewHolder(view);
         }else{
             view = new View(mContext);
             VH = new EmptyVH(view);
-//            VH = new EmptyVH(view);
         }
         return VH;
     }
@@ -105,8 +116,12 @@ public class NewsChannelListAdapter extends RecyclerView.Adapter {
         if(position > mNewsDatas.size()-1){
             return;
         }
-        ((BaseVH)holder).showNews(mNewsDatas.get(position), position);
-        ((BaseVH)holder).bind(mNewsDatas.get(position));
+        if(holder instanceof ListItemViewHolder){
+            ((BaseVH)holder).bind(mImageDatas);
+        }else{
+            ((BaseVH)holder).showNews(mNewsDatas.get(position), position);
+            ((BaseVH)holder).bind(mNewsDatas.get(position));
+        }
     }
 
     @Override

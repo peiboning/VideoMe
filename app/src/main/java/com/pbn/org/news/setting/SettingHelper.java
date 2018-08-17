@@ -67,7 +67,7 @@ public class SettingHelper {
                         Glide.get(NewsApplication.getContext()).clearDiskCache();
                         final String size = CacheManager.getInstance().getCacheSize();
                         NewsToast.showSystemToast("清理完毕");
-                        v.post(new Runnable() {
+                        NewsHandler.postToMainTask(new Runnable() {
                             @Override
                             public void run() {
                                 ((TextView)activity.findViewById(R.id.cache_size)).setText(size);
@@ -85,7 +85,7 @@ public class SettingHelper {
             @Override
             public void run() {
                 final String size = CacheManager.getInstance().getCacheSize();
-                tv.post(new Runnable() {
+                NewsHandler.postToMainTask(new Runnable() {
                     @Override
                     public void run() {
                         tv.setText(size);

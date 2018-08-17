@@ -10,10 +10,10 @@ public class CustomGlideOptions implements GlideModule{
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
         builder.setDiskCache(new CustomGlideDiskCache(context));
+
     }
 
     @Override
     public void registerComponents(Context context, Glide glide) {
-
     }
 }
