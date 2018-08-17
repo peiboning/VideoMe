@@ -90,7 +90,7 @@
     <!-- day theme-->
     <color name="skin_tablayout_bg">#ff0000</color>
     <color name="skin_status_bar">#ff0000</color>
-    <color name="skin_setting_status_bar">#e8ebee</color>
+    <color name="skin_setting_status_bar">#ff0000</color>
     <color name="skin_tablayout_text_color">#80ffffff</color>
     <color name="skin_tablayout_text_selected_color">#ffffff</color>
 

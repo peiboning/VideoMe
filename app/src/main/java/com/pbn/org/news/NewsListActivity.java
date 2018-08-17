@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.pbn.org.news.base.BaseActivity;
 import com.pbn.org.news.fragment.NewsListFragment;
 import com.pbn.org.news.loclib.LocationMgr;
+import com.pbn.org.news.setting.SmartTheme;
 import com.pbn.org.news.skin.inter.ISkinChange;
 import com.pbn.org.news.status_bar.StatusBarCompat;
 import com.pbn.org.news.utils.ActivityUtils;
@@ -34,6 +35,7 @@ public class NewsListActivity extends BaseActivity implements ISkinChange {
     private FrameLayout mContent;
     private NewsListFragment mNewsFragment;
     private RoundImageView mSettingIcon;
+    private SmartTheme smartTheme;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,7 +50,9 @@ public class NewsListActivity extends BaseActivity implements ISkinChange {
         int color = getResources().getColor(R.color.skin_status_bar);
         StatusBarCompat.setStatusBarColor(this, color);
         initFragment();
+        smartTheme = new SmartTheme(this);
     }
+
 
     private void initFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -92,6 +96,7 @@ public class NewsListActivity extends BaseActivity implements ISkinChange {
     @Override
     protected void onResume() {
         super.onResume();
+        smartTheme.checkSmartTheme();
         MobclickAgent.onResume(this);
 
     }

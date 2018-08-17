@@ -44,9 +44,10 @@
             />
 
         <activity android:name=".channel.ChannelMgrActivity"/>
-        <activity android:name=".setting.SettingActivity"/>
+        <activity android:name=".setting.SettingActivity"
+            android:theme="@style/NoTitleTranslucentTheme"
+            />
         <activity android:name=".detail.VideoDetailActivity"
-                android:theme="@style/NoTitleTranslucentTheme"
             android:launchMode="singleTop"
             android:configChanges="orientation|keyboardHidden|screenSize"
             />

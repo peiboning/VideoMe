@@ -80,7 +80,9 @@ public class VideoDetailActivity extends MVPBaseActivity<IVideoDetailView, Video
 
     @Override
     public void onBackPressed() {
-        startExitAnimal();
+        if(!NewsVideoPlayerManager.instance().onBackPressd()){
+            startExitAnimal();
+        }
     }
 
     @Override

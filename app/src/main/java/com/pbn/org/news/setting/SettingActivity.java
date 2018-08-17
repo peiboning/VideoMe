@@ -25,6 +25,7 @@ public class SettingActivity extends BaseActivity implements ISkinChange{
 
     private Switch nigthThemeSwitch;
     private Switch wifiTipsSwitch;
+    private Switch themeSmartSwitch;
     private TextView cacheSize;
     private TextView versionInfo;
     private RelativeLayout versionContainer;
@@ -56,6 +57,7 @@ public class SettingActivity extends BaseActivity implements ISkinChange{
         versionInfo = findViewById(R.id.version_info);
         cahcheContainer = findViewById(R.id.cache_size_container);
         versionContainer = findViewById(R.id.version_info_container);
+        themeSmartSwitch = findViewById(R.id.theme_smart_switch);
 
         leftIcon.setVisibility(View.VISIBLE);
         title.setVisibility(View.VISIBLE);
@@ -73,6 +75,8 @@ public class SettingActivity extends BaseActivity implements ISkinChange{
         helper.clearCache(cahcheContainer);
 
         helper.setNightThemeStatus(nigthThemeSwitch);
+
+        helper.setSmartTheme(themeSmartSwitch);
     }
 
     @Override

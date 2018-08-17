@@ -22,6 +22,7 @@ import okhttp3.Cache;
 public class SettingHelper {
     private static final String THEME_NIGHT_SWITCH = "";
     private Activity activity;
+    private SmartTheme smartTheme;
 
     public SettingHelper(Activity activity) {
         this.activity = activity;
@@ -29,7 +30,7 @@ public class SettingHelper {
     }
 
     private void init() {
-
+        smartTheme = new SmartTheme(activity);
     }
 
     public void setVersionInfo(TextView versionInfo){
@@ -95,4 +96,22 @@ public class SettingHelper {
         });
     }
 
+    public void setSmartTheme(Switch sw) {
+        if(smartTheme.isSmartTheme()){
+            sw.setChecked(true);
+        }else{
+            sw.setChecked(false);
+        }
+
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    smartTheme.startSmartTheme();
+                }else {
+                    smartTheme.closeSmartTheme();
+                }
+            }
+        });
+    }
 }
