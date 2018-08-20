@@ -7,10 +7,12 @@ import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.pbn.org.news.cache.CacheManager;
+import com.pbn.org.news.core.ActivityLifeCyle;
 import com.pbn.org.news.loclib.LocationMgr;
 import com.pbn.org.news.skin.SkinManager;
 import com.pbn.org.news.utils.ChannelUtils;
 import com.pbn.org.news.utils.NewsHandler;
+import com.pbn.org.news.utils.SpUtils;
 import com.pbn.org.permission.PermissionClient;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
@@ -26,15 +28,34 @@ public class NewsApplication extends MultiDexApplication{
     private static Context sContext;
     public static String session;
     private static String APP_KEY = "5afe2b88a40fa307a6000054";
+    private boolean isBackgroud;
+    private long enterBackgroudTime;
 
     @Override
     public void onCreate() {
         super.onCreate();
     }
 
+    public void enterBackgroud(){
+        isBackgroud = true;
+        enterBackgroudTime = System.currentTimeMillis();
+    }
+
+    public void enterForgroud(){
+        isBackgroud = false;
+    }
+
+    public boolean isStartSplash(){
+        if(enterBackgroudTime == 0){
+            return false;
+        }
+        return System.currentTimeMillis() - enterBackgroudTime > 15000;
+    }
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
+        registerActivityLifecycleCallbacks(new ActivityLifeCyle());
         sContext = this;
         initSkin();
         initPermissionSDK();

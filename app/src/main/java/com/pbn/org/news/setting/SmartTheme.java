@@ -98,13 +98,13 @@ public class SmartTheme {
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                SpUtils.putLong(SMART_THEME_TIPS_KEY, System.currentTimeMillis());
                 NewsToast.showSystemToast("后续需要切换，请到设置界面操作");
             }
         });
 
         builder.setTitle("提示");
         builder.create().show();
+        SpUtils.putLong(SMART_THEME_TIPS_KEY, System.currentTimeMillis());
     }
 
 

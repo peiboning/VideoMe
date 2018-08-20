@@ -20,6 +20,9 @@ public class NewsHandler {
     public static void postToMainTask(Runnable runnable){
         sMainHandler.post(runnable);
     }
+    public static void postToMainTaskDelay(Runnable runnable, long delay){
+        sMainHandler.postDelayed(runnable, delay);
+    }
 
     public static void postToBgTask(Runnable runnable){
         ensurebg();
