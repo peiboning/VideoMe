@@ -29,6 +29,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="8dp"
+                android:visibility="gone"
                 >
                 <com.pbn.org.news.skin.widget.SkinTextView
                     android:layout_width="wrap_content"
@@ -50,6 +51,7 @@
                     />
             </RelativeLayout>
             <com.pbn.org.news.skin.widget.SkinView
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/skin_item_setting_splite_line_color"/>
@@ -153,7 +155,7 @@
                 <com.pbn.org.news.skin.widget.SkinTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/version_check"
+                    android:text="@string/version_info"
                     android:textSize="16sp"
                     android:layout_centerVertical="true"
                     android:textColor="@color/skin_item_setting_item_text_color"
@@ -180,6 +182,7 @@
                 android:layout_height="54dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:visibility="gone"
                 >
                 <com.pbn.org.news.skin.widget.SkinTextView
                     android:layout_width="wrap_content"

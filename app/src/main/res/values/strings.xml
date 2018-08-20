@@ -11,6 +11,7 @@
     <string name="day_theme">日间模式</string>
     <string name="clean_cache">清除缓存</string>
     <string name="version_check">检查版本</string>
+    <string name="version_info">版本信息</string>
     <string name="wifi_tips">非WIFI下播放提醒（提醒一次）</string>
     <string name="app_about">关于</string>
 </resources>
