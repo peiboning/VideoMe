@@ -71,8 +71,10 @@ public class SplashActivity extends MVPBaseActivity<ISplashView, SplashPresenter
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            LocationMgr.getInstance().startLoc();
+        if(null != grantResults && grantResults.length>0){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                LocationMgr.getInstance().startLoc();
+            }
         }
         startActivity(1);
     }

@@ -14,6 +14,7 @@ import com.pbn.org.news.utils.ChannelUtils;
 import com.pbn.org.news.utils.NewsHandler;
 import com.pbn.org.news.utils.SpUtils;
 import com.pbn.org.permission.PermissionClient;
+import com.pbn.org.push.PushSDK;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
@@ -34,6 +35,7 @@ public class NewsApplication extends MultiDexApplication{
     @Override
     public void onCreate() {
         super.onCreate();
+        PushSDK.getInstance().init(sContext);
     }
 
     public void enterBackgroud(){
@@ -72,6 +74,8 @@ public class NewsApplication extends MultiDexApplication{
         });
 
     }
+
+
 
     private void initCache() {
         CacheManager.getInstance();
