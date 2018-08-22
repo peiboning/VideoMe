@@ -2,6 +2,7 @@ package com.pbn.org.news;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Environment;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
@@ -9,6 +10,8 @@ import android.util.Log;
 import com.pbn.org.news.cache.CacheManager;
 import com.pbn.org.news.core.ActivityLifeCyle;
 import com.pbn.org.news.loclib.LocationMgr;
+import com.pbn.org.news.process.RuntimeEnv;
+import com.pbn.org.news.service.BackgroudService;
 import com.pbn.org.news.skin.SkinManager;
 import com.pbn.org.news.utils.ChannelUtils;
 import com.pbn.org.news.utils.NewsHandler;
@@ -35,7 +38,9 @@ public class NewsApplication extends MultiDexApplication{
     @Override
     public void onCreate() {
         super.onCreate();
-        PushSDK.getInstance().init(sContext);
+        if(RuntimeEnv.isIsMainProcess()){
+            PushSDK.getInstance().init(sContext);
+        }
     }
 
     public void enterBackgroud(){
@@ -57,24 +62,34 @@ public class NewsApplication extends MultiDexApplication{
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        registerActivityLifecycleCallbacks(new ActivityLifeCyle());
+        //不能在此代码前添加任何代码
+        RuntimeEnv.JudgeProcess();
+        //
         sContext = this;
-        initSkin();
-        initPermissionSDK();
-        initLoclib();
-        initUM();
-//        initBugly();
-        initCache();
-        session = UUID.randomUUID().toString();
-        NewsHandler.postToBgTask(new Runnable() {
-            @Override
-            public void run() {
-                initSkin();
-            }
-        });
+        if(RuntimeEnv.isIsMainProcess()){
+            registerActivityLifecycleCallbacks(new ActivityLifeCyle());
+            initSkin();
+            initPermissionSDK();
+            initLoclib();
+            initUM();
+            initCache();
+            session = UUID.randomUUID().toString();
+            NewsHandler.postToBgTask(new Runnable() {
+                @Override
+                public void run() {
+                    initSkin();
+                }
+            });
+            startServiceFirst();
+        }
 
     }
 
+    private void startServiceFirst() {
+        Intent intent = new Intent();
+        intent.setClass(this, BackgroudService.class);
+        startService(intent);
+    }
 
 
     private void initCache() {

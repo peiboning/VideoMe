@@ -52,6 +52,12 @@
             android:launchMode="singleTop"
             android:configChanges="orientation|keyboardHidden|screenSize"
             />
+
+        <service android:name=".service.AppService"/>
+        <service android:name=".service.ShellService"/>
+        <service android:name=".service.BackgroudService"
+            android:process=":service"
+            />
     </application>
 
 </manifest>

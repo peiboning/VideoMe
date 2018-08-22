@@ -64,6 +64,11 @@ android {
         wdj {
             manifestPlaceholders = [ CHANNEL:"3"]
         }
+        csll{
+            manifestPlaceholders = [ CHANNEL:"4"]
+        }
+
+
     }
 }
 
