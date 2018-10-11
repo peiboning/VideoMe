@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.pbn.org.news.R;
@@ -19,11 +18,12 @@ import com.pbn.org.news.utils.SpUtils;
 import com.pbn.org.news.utils.UMUtils;
 import com.pbn.org.news.utils.ViewUtils;
 import com.pbn.org.news.vh.VideoVH;
+import com.pbn.org.news.video.IActivityCallback;
+import com.pbn.org.news.video.MainActivityLifecycleAndStatus;
 import com.pbn.org.news.video.NewsVideoPlayerManager;
 import com.pbn.org.news.view.AdImageView;
 import com.pbn.org.news.view.CustomLinearLayoutManager;
 import com.pbn.org.news.view.RefresRecyleView;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,8 @@ import java.util.List;
 /**
  * @author peiboning
  */
-public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPresenter> implements INewsListView {
+public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPresenter> implements INewsListView,IActivityCallback {
+    private static final String TAG = ChannelFragment.class.getSimpleName();
     private static final String CHANNEL = "channel";
     public static ChannelFragment newInstance(Channel channel){
         ChannelFragment fragment = new ChannelFragment();
@@ -114,25 +115,22 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
                     View view = recyclerView.getLayoutManager().findViewByPosition(i);
                     AdImageView adImageView = view.findViewById(R.id.ad_item_img);
                     if (null != adImageView && adImageView.getVisibility() == View.VISIBLE) {
-//                        Log.e("AdImageView", "layoutHeight:" + recyclerView.getLayoutManager().getHeight());
-//                        Log.e("AdImageView", "view top:" + view.getTop());
                         adImageView.setDy(recyclerView.getLayoutManager().getHeight() - view.getTop(), recyclerView.getLayoutManager().getHeight());
                     }
                 }
-//                LogUtils.i("ChannelFragment", "onScrolled dy:" + dy + ", dx:" + dx);
                 if(dy > 0 || dx > 0){
 
                     int currentPlayerPos = NewsVideoPlayerManager.instance().getCurrentPlayerInFeedListPos() + listView.getHeaderViewNum();
                     if(currentPlayerPos >= listView.getHeaderViewNum()){
                         if(currentPlayerPos < fP || currentPlayerPos > lp){
-                            NewsVideoPlayerManager.instance().releaseNiceVideoPlayer();
+                            NewsVideoPlayerManager.instance().releaseNiceVideoPlayer(false);
                         }
                         if(currentPlayerPos == fP || currentPlayerPos == lp){//判断百分比
                             View view = ((LinearLayoutManager)recyclerView.getLayoutManager()).findViewByPosition(currentPlayerPos);
                             if(view.findViewById(R.id.video_layout_root) != null){
                                 View playerView = view.findViewById(R.id.player);
                                 if(ViewUtils.getViewVisiblePercent(playerView, 0.5f)<30){
-                                    NewsVideoPlayerManager.instance().releaseNiceVideoPlayer();
+                                    NewsVideoPlayerManager.instance().releaseNiceVideoPlayer(false);
                                 }
                             }
                         }
@@ -146,24 +144,14 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
         });
     }
 
-    private void atuoPlay(RecyclerView recyclerView) {
-        int cc = recyclerView.getLayoutManager().getChildCount();
-        CustomLinearLayoutManager linearLayoutManager = (CustomLinearLayoutManager) recyclerView.getLayoutManager();
-        int fp = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
-        int lp = linearLayoutManager.findLastCompletelyVisibleItemPosition();
-        for(int i = fp;i<=lp;i++){
-            View view = linearLayoutManager.findViewByPosition(i);
-            if(view.findViewById(R.id.video_layout_root) != null){
-                if(!NewsVideoPlayerManager.instance().isPlaying()){
-                    view.findViewById(R.id.start).performClick();
-                }
-            }
-        }
-    }
+
 
     @Override
     public String getChannelName() {
-        return channel.getTitle();
+        if(null != channel){
+            return channel.getTitle();
+        }
+        return "null";
     }
 
     @Override
@@ -197,12 +185,49 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
     @Override
     public void onResume() {
         super.onResume();
+        LogUtils.i(TAG, "onResume:" + getChannelName());
         UMUtils.onFragmentResume(getChannelName());
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        LogUtils.i(TAG, "onPause:" + getChannelName());
         UMUtils.onFragmentPause(getChannelName());
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(!isVisibleToUser){
+            MainActivityLifecycleAndStatus.getInstance().removeOnStopPlayCallback(this);
+            NewsVideoPlayerManager.instance().releaseMediaplayer();
+        }else{
+            MainActivityLifecycleAndStatus.getInstance().addOnStopPlayCallback(this);
+        }
+        LogUtils.i(TAG, "setUserVisibleHint:" +isVisibleToUser + ","+ getChannelName());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MainActivityLifecycleAndStatus.getInstance().removeOnStopPlayCallback(this);
+    }
+
+    @Override
+    public void onEvent(Object object) {
+        int currentPlayerPos = NewsVideoPlayerManager.instance().getCurrentPlayerInFeedListPos()  + listView.getHeaderViewNum();
+        listView.smoothScrollToPosition(currentPlayerPos + 1);
+        atuoPlay(listView, currentPlayerPos + 1);
+    }
+
+    private void atuoPlay(RecyclerView recyclerView, int pos) {
+        CustomLinearLayoutManager linearLayoutManager = (CustomLinearLayoutManager) recyclerView.getLayoutManager();
+        View view = linearLayoutManager.findViewByPosition(pos);
+        if(view.findViewById(R.id.video_layout_root) != null){
+            if(!NewsVideoPlayerManager.instance().isPlaying()){
+                view.findViewById(R.id.start).performClick();
+            }
+        }
     }
 }

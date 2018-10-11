@@ -18,6 +18,7 @@ public class ShellService extends Service{
     public void onCreate() {
         super.onCreate();
         KeepLiveManager.getInstance().startForeground(this);
+        stopForeground(true);
         stopSelf();
     }
 

@@ -376,8 +376,9 @@ public class MainActivityLifecycleAndStatus {
 
     public void addOnStopPlayCallback(IActivityCallback callback) {
         try {
-            onStopPlayCallbacks.add(callback);
-			LogUtil.d("woody-oom","addOnStopPlayCallback,callback="+callback+",list size ="+onStopPlayCallbacks.size()+",list="+onStopPlayCallbacks.toString());
+            if(!onStopCallbacks.contains(callback)){
+                onStopPlayCallbacks.add(callback);
+            }
         } catch (Exception e) {
             LogUtil.printeException(e);
         }
@@ -386,7 +387,6 @@ public class MainActivityLifecycleAndStatus {
     public void removeOnStopPlayCallback(IActivityCallback callback) {
         try {
             onStopPlayCallbacks.remove(callback);
-			LogUtil.d("woody-oom","removeOnStopPlayCallback,callback="+callback+",list size ="+onStopPlayCallbacks.size()+",list="+onStopPlayCallbacks.toString());
         } catch (Exception e) {
             LogUtil.printeException(e);
         }

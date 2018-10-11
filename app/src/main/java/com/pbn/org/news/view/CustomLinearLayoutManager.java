@@ -26,10 +26,22 @@ public class CustomLinearLayoutManager extends LinearLayoutManager {
             @Override
             protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
                 //50.0f必须是float类型，否则会报错。等待查证为什么
-                return 50.0f/displayMetrics.densityDpi;
+                return 0.2f;
+            }
+
+            @Override
+            public int calculateDtToFit(int viewStart, int viewEnd, int boxStart, int boxEnd, int snapPreference) {
+                return (boxStart + (boxEnd - boxStart)/2) - (viewStart + (viewEnd - viewStart)/2);
+            }
+
+            @Override
+            protected int getVerticalSnapPreference() {
+                return SNAP_TO_START;
             }
         };
         linearSmoothScroller.setTargetPosition(position);
         startSmoothScroll(linearSmoothScroller);
     }
+
+
 }

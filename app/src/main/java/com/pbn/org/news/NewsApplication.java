@@ -16,6 +16,7 @@ import com.pbn.org.news.skin.SkinManager;
 import com.pbn.org.news.utils.ChannelUtils;
 import com.pbn.org.news.utils.NewsHandler;
 import com.pbn.org.news.utils.SpUtils;
+import com.pbn.org.news.utils.UIWatchDog;
 import com.pbn.org.permission.PermissionClient;
 import com.pbn.org.push.PushSDK;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -81,6 +82,7 @@ public class NewsApplication extends MultiDexApplication{
                 }
             });
             startServiceFirst();
+            UIWatchDog.getInstance().start();
         }
 
     }

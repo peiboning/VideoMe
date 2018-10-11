@@ -15,5 +15,6 @@ public class CustomGlideOptions implements GlideModule{
 
     @Override
     public void registerComponents(Context context, Glide glide) {
+
     }
 }

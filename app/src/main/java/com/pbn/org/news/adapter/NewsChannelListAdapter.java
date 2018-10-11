@@ -48,7 +48,7 @@ public class NewsChannelListAdapter extends RecyclerView.Adapter {
     public void updateData(List<NewsBean> data, boolean isLoadMore){
         if(null != data && data.size()>0){
             if(NewsVideoPlayerManager.instance().isPlaying()){
-                NewsVideoPlayerManager.instance().releaseNiceVideoPlayer();
+                NewsVideoPlayerManager.instance().releaseNiceVideoPlayer(false);
             }
             if(null == mNewsDatas){
                 mNewsDatas = new ArrayList<NewsBean>();
@@ -57,18 +57,18 @@ public class NewsChannelListAdapter extends RecyclerView.Adapter {
             if(mNewsDatas.size()<=0){
                 mNewsDatas.addAll(data);
             }else{
-                mNewsDatas.remove(adBean);
+//                mNewsDatas.remove(adBean);
                 mNewsDatas.remove(refreshBean);
-                mNewsDatas.remove(group);
+//                mNewsDatas.remove(group);
                 mImageDatas.clear();
                 mImageDatas.addAll(data);
                 if(isLoadMore){
                     mNewsDatas.addAll(data);
                 }else{
                     mNewsDatas.add(0, refreshBean);
-                    mNewsDatas.add(1,adBean);
+//                    mNewsDatas.add(1,adBean);
                     mNewsDatas.addAll(0, data);
-                    mNewsDatas.add(1, group);
+//                    mNewsDatas.add(1, group);
                 }
             }
             LogUtils.e("ChannelFragment", "updateNewsList is " + data.size());

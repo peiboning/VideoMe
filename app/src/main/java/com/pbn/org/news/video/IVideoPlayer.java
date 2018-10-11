@@ -21,6 +21,11 @@ public interface IVideoPlayer {
     void start();
 
     /**
+     * 开始播放
+     */
+    void start(boolean isDetail);
+
+    /**
      * 从指定的位置开始播放
      *
      * @param position 播放位置
@@ -164,5 +169,8 @@ public interface IVideoPlayer {
      * 释放INiceVideoPlayer，释放后，内部的播放器被释放掉，同时如果在全屏、小窗口模式下都会退出
      * 并且控制器的UI也应该恢复到最初始的状态.
      */
-    void release();
+    void release(boolean isDetail);
+
+    void openDetail();
+    void closeDetail();
 }

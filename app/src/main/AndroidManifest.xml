@@ -58,6 +58,13 @@
         <service android:name=".service.BackgroudService"
             android:process=":service"
             />
+
+        <receiver android:name=".brocast.StaticBrocastReceiver"
+            >
+            <intent-filter>
+                <action android:name="test.test.test"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -183,7 +183,7 @@ public class VideoPlayerController
                 mStart.setImageResource(R.mipmap.play_normal);
 				setCenterVisible(true, false);
                 cancelDismissTopBottomTimer();
-                MainActivityLifecycleAndStatus.getInstance().onStopPlay();
+                MainActivityLifecycleAndStatus.getInstance().onVideoPause();
                 break;
             case NewsVideoPlayer.STATE_BUFFERING_PLAYING:
                 mLoading.setVisibility(View.VISIBLE);
@@ -196,7 +196,7 @@ public class VideoPlayerController
                 mStart.setImageResource(R.mipmap.play_normal);
 //                mLoadText.setText("正在缓冲...");
                 cancelDismissTopBottomTimer();
-                MainActivityLifecycleAndStatus.getInstance().onStopPlay();
+//                MainActivityLifecycleAndStatus.getInstance().onStopPlay();
                 break;
             case NewsVideoPlayer.STATE_ERROR:
                 cancelUpdateProgressTimer();

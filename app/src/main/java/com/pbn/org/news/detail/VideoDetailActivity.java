@@ -4,16 +4,12 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewPropertyAnimator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.pbn.org.news.R;
@@ -96,7 +92,7 @@ public class VideoDetailActivity extends MVPBaseActivity<IVideoDetailView, Video
         player.post(new Runnable() {
             @Override
             public void run() {
-                player.start();
+                player.start(true);
                 startEnterAnimal();
             }
         });
@@ -125,7 +121,7 @@ public class VideoDetailActivity extends MVPBaseActivity<IVideoDetailView, Video
         set.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
-                NewsVideoPlayerManager.instance().releaseNiceVideoPlayer();
+                NewsVideoPlayerManager.instance().releaseMediaplayer();
             }
 
             @Override

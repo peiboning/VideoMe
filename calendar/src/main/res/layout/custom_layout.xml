@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.pbn.org.calendar.CustomSizeImageView
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/timg"
+        />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="我是标题"
+        android:textColor="#000"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_marginTop="-20dp"
+        android:background="#ff0"
+        />
+
+    <FrameLayout
+        android:id="@+id/bottom_tips"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        >
+        <com.pbn.org.calendar.MyWebView
+            android:id="@+id/web"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="210dp"
+            >
+        </com.pbn.org.calendar.MyWebView>
+
+        <View
+            android:id="@+id/bottom_cover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+
+            />
+    </FrameLayout>
+
+
+</merge>

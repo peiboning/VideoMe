@@ -1,6 +1,5 @@
 package com.pbn.org.news;
 
-import android.Manifest;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,17 +13,12 @@ import android.widget.Toast;
 
 import com.pbn.org.news.base.BaseActivity;
 import com.pbn.org.news.fragment.NewsListFragment;
-import com.pbn.org.news.loclib.LocationMgr;
 import com.pbn.org.news.setting.SmartTheme;
 import com.pbn.org.news.skin.inter.ISkinChange;
 import com.pbn.org.news.status_bar.StatusBarCompat;
 import com.pbn.org.news.utils.ActivityUtils;
 import com.pbn.org.news.video.NewsVideoPlayerManager;
-import com.pbn.org.news.view.NewsToast;
 import com.pbn.org.news.view.RoundImageView;
-import com.pbn.org.permission.OnRequestPermssionListener;
-import com.pbn.org.permission.PermissionClient;
-import com.pbn.org.permission.PermissionRejectHandler;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -106,7 +100,7 @@ public class NewsListActivity extends BaseActivity implements ISkinChange {
         super.onPause();
         MobclickAgent.onPause(this);
         if(NewsVideoPlayerManager.instance().isPlaying()){
-            NewsVideoPlayerManager.instance().releaseNiceVideoPlayer();
+            NewsVideoPlayerManager.instance().releaseNiceVideoPlayer(true);
         }
     }
 
@@ -116,7 +110,7 @@ public class NewsListActivity extends BaseActivity implements ISkinChange {
         if(!NewsVideoPlayerManager.instance().onBackPressd()){
             if(System.currentTimeMillis() - lastBackTime < 1000){
                 if(NewsVideoPlayerManager.instance().isPlaying()){
-                    NewsVideoPlayerManager.instance().releaseNiceVideoPlayer();
+                    NewsVideoPlayerManager.instance().releaseNiceVideoPlayer(false);
                 }
                 super.onBackPressed();
             }else{

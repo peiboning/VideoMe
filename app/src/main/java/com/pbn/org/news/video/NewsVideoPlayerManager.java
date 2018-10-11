@@ -1,11 +1,14 @@
 package com.pbn.org.news.video;
 
+import android.media.MediaPlayer;
+
 /**
  * 视频播放器管理器.
  */
 public class NewsVideoPlayerManager {
 
     private NewsVideoPlayer mVideoPlayer;
+    private MediaPlayer mPlayer;
 
     private NewsVideoPlayerManager() {
     }
@@ -23,9 +26,24 @@ public class NewsVideoPlayerManager {
         return mVideoPlayer;
     }
 
-    public void setCurrentSHVideoPlayer(NewsVideoPlayer videoPlayer) {
+    public void setShareMediaPlayer(MediaPlayer player){
+        mPlayer = player;
+    }
+
+    public MediaPlayer getShareMediaPlayer(){
+        return mPlayer;
+    }
+
+    public void releaseMediaplayer(){
+        if(null != mVideoPlayer){
+            releaseNiceVideoPlayer(false);
+        }
+        mPlayer = null;
+    }
+
+    public void setCurrentSHVideoPlayer(NewsVideoPlayer videoPlayer, boolean isDetail) {
         if (mVideoPlayer != videoPlayer) {
-            releaseNiceVideoPlayer();
+            releaseNiceVideoPlayer(isDetail);
             mVideoPlayer = videoPlayer;
         }
     }
@@ -62,9 +80,9 @@ public class NewsVideoPlayerManager {
         }
     }
 
-    public void releaseNiceVideoPlayer() {
+    public void releaseNiceVideoPlayer(boolean isEnterDetail) {
         if (mVideoPlayer != null) {
-            mVideoPlayer.release();
+            mVideoPlayer.release(isEnterDetail);
             mVideoPlayer = null;
         }
     }

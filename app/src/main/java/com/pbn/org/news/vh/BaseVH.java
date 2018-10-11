@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.GenericRequestBuilder;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.pbn.org.news.R;
 import com.pbn.org.news.detail.DetailActivity;
 import com.pbn.org.news.model.common.NewsBean;
@@ -24,7 +26,9 @@ public abstract class BaseVH extends RecyclerView.ViewHolder {
 
     protected void loadImage(ImageView view,String url){
         Glide.with(view.getContext())
+
                 .load(url)
+
                 .placeholder(R.color.black)
                 .into(view);
     }

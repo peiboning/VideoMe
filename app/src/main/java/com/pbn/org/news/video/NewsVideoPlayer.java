@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -165,8 +164,13 @@ public class NewsVideoPlayer extends FrameLayout
 
     @Override
     public void start() {
+        start(false);
+    }
+
+    @Override
+    public void start(boolean isEnterDetail) {
         if (mCurrentState == STATE_IDLE) {
-            NewsVideoPlayerManager.instance().setCurrentSHVideoPlayer(this);
+            NewsVideoPlayerManager.instance().setCurrentSHVideoPlayer(this, isEnterDetail);
             initAudioManager();
             initMediaPlayer();
             initTextureView();
@@ -355,6 +359,7 @@ public class NewsVideoPlayer extends FrameLayout
     }
 
     private void initMediaPlayer() {
+        mMediaPlayer = NewsVideoPlayerManager.instance().getShareMediaPlayer();
         if (mMediaPlayer == null) {
             switch (mPlayerType) {
                 case TYPE_NATIVE:
@@ -413,16 +418,26 @@ public class NewsVideoPlayer extends FrameLayout
         mMediaPlayer.setOnBufferingUpdateListener(mOnBufferingUpdateListener);
         // 设置dataSource
         try {
-            mMediaPlayer.setDataSource(mUrl);
+            if(NewsVideoPlayerManager.instance().getShareMediaPlayer() != null){
+                if (mSurface == null) {
+                    mSurface = new Surface(mSurfaceTexture);
+                }
+                mMediaPlayer.setSurface(mSurface);
+                mMediaPlayer.start();
+                mCurrentState = STATE_PREPARING;
+                mController.onPlayStateChanged(mCurrentState);
+            }else{
+                mMediaPlayer.setDataSource(mUrl);
 //            mMediaPlayer.setDataSource(mContext.getApplicationContext(), Uri.parse(mUrl), mHeaders);
-            if (mSurface == null) {
-                mSurface = new Surface(mSurfaceTexture);
+                if (mSurface == null) {
+                    mSurface = new Surface(mSurfaceTexture);
+                }
+                mMediaPlayer.setSurface(mSurface);
+                mMediaPlayer.prepareAsync();
+                mCurrentState = STATE_PREPARING;
+                mController.onPlayStateChanged(mCurrentState);
+                LogUtil.d("STATE_PREPARING");
             }
-            mMediaPlayer.setSurface(mSurface);
-            mMediaPlayer.prepareAsync();
-            mCurrentState = STATE_PREPARING;
-            mController.onPlayStateChanged(mCurrentState);
-            LogUtil.d("STATE_PREPARING");
         } catch (IOException e) {
             e.printStackTrace();
             LogUtil.e("打开播放器发生错误", e);
@@ -686,20 +701,11 @@ public class NewsVideoPlayer extends FrameLayout
             mMediaPlayer.release();
             mMediaPlayer = null;
         }
-        mContainer.removeView(mTextureView);
-        if (mSurface != null) {
-            mSurface.release();
-            mSurface = null;
-        }
-        if (mSurfaceTexture != null) {
-            mSurfaceTexture.release();
-            mSurfaceTexture = null;
-        }
         mCurrentState = STATE_IDLE;
     }
 
     @Override
-    public void release() {
+    public void release(boolean isDetail) {
         // 保存播放位置
         if (isPlaying() || isBufferingPlaying() || isBufferingPaused() || isPaused()) {
             VideoUtil.savePlayPosition(mContext, mUrl, getCurrentPosition());
@@ -714,9 +720,21 @@ public class NewsVideoPlayer extends FrameLayout
             exitTinyWindow();
         }
         mCurrentMode = MODE_NORMAL;
+        mCurrentState = STATE_IDLE;
+        mContainer.removeView(mTextureView);
+        if (mSurface != null) {
+            mSurface.release();
+            mSurface = null;
+        }
+        if (mSurfaceTexture != null) {
+            mSurfaceTexture.release();
+            mSurfaceTexture = null;
+        }
 
         // 释放播放器
-        releasePlayer();
+        if(!isDetail){
+            releasePlayer();
+        }
 
         // 恢复控制器
         if (mController != null) {
@@ -735,6 +753,16 @@ public class NewsVideoPlayer extends FrameLayout
         widthMeasureSpec = MeasureSpec.makeMeasureSpec(halfChildWidthSize, MeasureSpec.EXACTLY);
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(childHeightSize, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    @Override
+    public void openDetail() {
+        NewsVideoPlayerManager.instance().setShareMediaPlayer(mMediaPlayer);
+    }
+
+    @Override
+    public void closeDetail() {
+        NewsVideoPlayerManager.instance().releaseMediaplayer();
     }
 
     public void setViewInFeedListPos(int pos){

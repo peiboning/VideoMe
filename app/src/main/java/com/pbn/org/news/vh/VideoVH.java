@@ -50,6 +50,8 @@ public class VideoVH extends BaseVH {
             @Override
             public void onClick(View v) {
                 Rect rect = new Rect();
+                player.openDetail();
+                player.pause();
                 player.getGlobalVisibleRect(rect);
                 ActivityUtils.startVideoDetailActivity(itemView.getContext(), rect.top - StatusBarTools.getStatusBarHeight(itemView.getContext()), bean);
             }
