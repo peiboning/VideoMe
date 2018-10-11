@@ -61,13 +61,16 @@ public class MainLayout extends LinearLayout{
                     if(rect.bottom < 0){
                         searchVisibleHeight = 0;
                     }
+                    if(Math.abs(rect.top) == mSearchBarHeight){
+                        searchVisibleHeight = 0;
+                    }
 
                     if(dy > 0){//向下滑
                         if(searchVisibleHeight<mSearchBarHeight){
                             intercept = true;
                         }
                     }else{
-                        if(rect.bottom >= 0){
+                        if(rect.bottom > 0){
                             if(searchVisibleHeight >0){
                                 intercept = true;
                             }
@@ -100,6 +103,9 @@ public class MainLayout extends LinearLayout{
                     if(rect.bottom < 0){
                         searchVisibleHeight = 0;
                     }
+                    if(Math.abs(rect.top) == mSearchBarHeight){
+                        searchVisibleHeight = 0;
+                    }
                     if(dy > 0){//向下滑
                         if(searchVisibleHeight<mSearchBarHeight){
                             if((mSearchBarHeight - searchVisibleHeight) > dy){
@@ -111,19 +117,17 @@ public class MainLayout extends LinearLayout{
                             isconsumer = true;
                         }
                     }else{
-                        if(rect.bottom >= 0){
+                        if(rect.bottom > 0){
                             if(searchVisibleHeight >0){
-                                if(searchVisibleHeight < 2){
-                                    searchVisibleHeight = 2;
-                                }
-                                if(searchVisibleHeight/2 > Math.abs(dy)){
-                                    moveY = Math.abs(dy);
-                                }else{
-                                    moveY = searchVisibleHeight/2;
-                                }
-                                scrollBy(0, moveY);
-                                isconsumer = true;
                             }
+                            if(searchVisibleHeight > Math.abs(dy)){
+                                moveY = Math.abs(dy);
+                            }else{
+                                moveY = searchVisibleHeight;
+                            }
+                            Log.e("onTouchEvent", "move----searchVisibleHeight:"+searchVisibleHeight+",dy:"+dy + ",rect:" + rect.toShortString());
+                            scrollBy(0, moveY);
+                            isconsumer = true;
                         }
                     }
                 }
