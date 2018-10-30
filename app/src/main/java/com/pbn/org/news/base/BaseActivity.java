@@ -21,6 +21,7 @@ public abstract class BaseActivity extends FragmentActivity implements SlideLayo
             slideLayout.bindActivity(this);
             slideLayout.setOnFinishListener(this);
         }
+        initData();
         initView();
     }
 
@@ -57,6 +58,7 @@ public abstract class BaseActivity extends FragmentActivity implements SlideLayo
     }
 
     protected abstract void initView();
+    protected void initData(){};
 
     protected abstract int getLayoutId();
 

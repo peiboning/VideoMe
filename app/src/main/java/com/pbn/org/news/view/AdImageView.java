@@ -10,9 +10,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 public class AdImageView extends ImageView {
-    private int width;
     private int height;
-    private int translateY;
     private int totalHeight;
     public AdImageView(Context context) {
         super(context);
@@ -31,9 +29,6 @@ public class AdImageView extends ImageView {
             return;
         }
         totalHeight = total;
-        translateY = moveY - height;
-        float percent = (1-(moveY * 1.0f/total)) >= 1.0 ? 1.0f :(1- (moveY * 1.0f/total));
-        translateY = (int) ((getDrawable().getIntrinsicHeight() - height) * percent);
         invalidate();
     }
 
@@ -50,7 +45,6 @@ public class AdImageView extends ImageView {
             return;
         }
 
-        width = w;
         height = h;
     }
 
@@ -68,7 +62,7 @@ public class AdImageView extends ImageView {
         getLocationOnScreen(location);
         int startY = (totalHeight-h)/2;
         int endY = startY + h;
-        int y = location[1];
+        int y = location[1] - 266;
         canvas.save();
         int dy = 0;
         if (y>startY && y<endY-getBottom()){
@@ -76,7 +70,7 @@ public class AdImageView extends ImageView {
         }else if (y>=endY-getBottom()){
             dy = getBottom()-h;
         }
-        Log.e("AdImageView", "dy is : "+dy+" , 0transY is  " + y+", startY:" + startY + ", endY:" + endY + ", bottom:" + getBottom() + ",(end-bottom):" + (endY - getBottom()));
+        Log.e("AdImageView", "dy is : "+dy+" , 0transY is  " + y+", startY:" + startY + ", endY:" + endY + ", bottom:" + getBottom() + ",(end-bottom):" + (endY - getBottom()) + ", x:" + location[0] + ",y:" + location[1]);
         canvas.translate(0, dy);
         super.onDraw(canvas);
         canvas.restore();

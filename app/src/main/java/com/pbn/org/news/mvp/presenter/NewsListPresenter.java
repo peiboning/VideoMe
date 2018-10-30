@@ -7,6 +7,7 @@ import android.print.PrinterId;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.gson.JsonObject;
 import com.pbn.org.news.base.BasePresenter;
 import com.pbn.org.news.loclib.LocationMgr;
 import com.pbn.org.news.model.Channel;
@@ -32,6 +33,8 @@ import com.pbn.org.news.net.api.MyAPi;
 import com.pbn.org.news.net.api.SDKAPI;
 import com.pbn.org.news.utils.RequestParamsUtils;
 import com.pbn.org.news.utils.SpUtils;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,6 +64,7 @@ public class NewsListPresenter extends BasePresenter<INewsListView> {
     private static final long  REFRESH_TIME_INTERNAL = AlarmManager.INTERVAL_HALF_HOUR;
     boolean flag ;
     private int requestNum = 0;
+
     public void updateNewsList(Channel channel, int pageIndex, final boolean isLoadMore){
         int index = requestNum%SRC_NUM;
         requestNum++;

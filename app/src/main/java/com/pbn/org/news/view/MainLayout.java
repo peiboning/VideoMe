@@ -48,8 +48,6 @@ public class MainLayout extends LinearLayout{
             case MotionEvent.ACTION_DOWN:
                 mLastInterceptMoveX = (int) ev.getX();
                 mLastInterceptMoveY = (int) ev.getY();
-                mLastMoveX = (int) ev.getX();
-                mLastMoveY = (int) ev.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
                 int dx = (int) (ev.getX() - mLastInterceptMoveX);
@@ -76,14 +74,14 @@ public class MainLayout extends LinearLayout{
                             }
                         }
                     }
-                    Log.e("onInterceptTouchEvent", "intercept:" + intercept + "   rect:" + rect.toShortString());
+//                    Log.e("onInterceptTouchEvent", "intercept:" + intercept + "   rect:" + rect.toShortString());
                 }
                 break;
         }
         Log.e("onInterceptTouchEvent", "intercept:" + intercept + "----"+ev.getAction());
         mLastInterceptMoveX = (int) ev.getX();
         mLastInterceptMoveY = (int) ev.getY();
-        return intercept;
+        return super.onInterceptTouchEvent(ev);
     }
 
     private int mLastMoveX;
@@ -93,6 +91,11 @@ public class MainLayout extends LinearLayout{
         int action = ev.getAction();
         boolean isconsumer = false;
         switch (action){
+            case MotionEvent.ACTION_DOWN:
+                mLastMoveX = (int) ev.getX();
+                mLastMoveY = (int) ev.getY();
+                isconsumer = true;
+                break;
             case MotionEvent.ACTION_MOVE:
                 int dx = (int) (ev.getX() - mLastMoveX);
                 int dy = (int) (ev.getY() - mLastMoveY);
@@ -118,14 +121,12 @@ public class MainLayout extends LinearLayout{
                         }
                     }else{
                         if(rect.bottom > 0){
-                            if(searchVisibleHeight >0){
-                            }
                             if(searchVisibleHeight > Math.abs(dy)){
                                 moveY = Math.abs(dy);
                             }else{
                                 moveY = searchVisibleHeight;
                             }
-                            Log.e("onTouchEvent", "move----searchVisibleHeight:"+searchVisibleHeight+",dy:"+dy + ",rect:" + rect.toShortString());
+//                            Log.e("onTouchEvent", "move----searchVisibleHeight:"+searchVisibleHeight+",dy:"+dy + ",rect:" + rect.toShortString());
                             scrollBy(0, moveY);
                             isconsumer = true;
                         }
@@ -135,8 +136,8 @@ public class MainLayout extends LinearLayout{
         }
         mLastMoveX = (int) ev.getX();
         mLastMoveY = (int) ev.getY();
-//        Log.e("onTouchEvent", "----"+ev.getAction());
-        return super.onTouchEvent(ev);
+        Log.e("onTouchEvent", "----"+ev.getAction() + ",isconsumer:" + isconsumer);
+        return isconsumer;
     }
 
     private Rect getSearchBarVisibleHeight(){

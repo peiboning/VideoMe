@@ -25,6 +25,11 @@ public abstract class MVPBaseActivity<V,P extends BasePresenter<V>> extends Base
         }
     }
 
+    @Override
+    protected void initData() {
+
+    }
+
     protected abstract P createPresenter();
 
 

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
 
 
 android {
@@ -37,9 +38,15 @@ android {
             additionalParameters = [ //配置multidex参数
                                      '--multi-dex',//多dex分包
                                      '--set-max-idx-number=30000',//每个包内方法数上限
-                                     '--main-dex-list='+projectDir+'/main-dex-rule', //打包到主classes.dex的文件列表
+                                     '--main-dex-list=' + projectDir + '/main-dex-rule', //打包到主classes.dex的文件列表
                                      '--minimal-main-dex'
             ]
+        }
+
+        greendao{
+            schemaVersion 1 //数据库版本
+            daoPackage 'com.pbn.org.news.greendao.gen'
+            targetGenDir 'src/main/java'
         }
     }
     buildTypes {
@@ -49,23 +56,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
         }
-        debug{
+        debug {
             signingConfig signingConfigs.debug
         }
     }
     //为同一个应用创建不同的版本，比如一个国内版本，一个国外版
     productFlavors {
         xiaomi {
-            manifestPlaceholders = [ CHANNEL:"1"]
+            manifestPlaceholders = [CHANNEL: "1"]
         }
         yyb {
-            manifestPlaceholders = [ CHANNEL:"2"]
+            manifestPlaceholders = [CHANNEL: "2"]
         }
         wdj {
-            manifestPlaceholders = [ CHANNEL:"3"]
+            manifestPlaceholders = [CHANNEL: "3"]
         }
-        csll{
-            manifestPlaceholders = [ CHANNEL:"4"]
+        csll {
+            manifestPlaceholders = [CHANNEL: "4"]
         }
 
 
@@ -104,9 +111,10 @@ dependencies {
     implementation 'com.umeng.sdk:analytics:7.5.0'
     implementation 'com.tencent.bugly:crashreport:latest.release'
     //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
-    compile 'com.tencent.bugly:nativecrashreport:latest.release'
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release'
     //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
-    compile 'com.android.support:multidex:1.0.0'
+    implementation 'com.android.support:multidex:1.0.0'
     implementation 'com.android.support:cardview-v7:27.1.1'
     implementation project(':push')
+    implementation 'org.greenrobot:greendao:3.2.2'
 }

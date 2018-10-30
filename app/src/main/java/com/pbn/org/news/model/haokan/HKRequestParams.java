@@ -33,6 +33,12 @@ public class HKRequestParams {
         return map;
     }
 
+    public static HashMap<String, String> getHostWordMap(){
+        HashMap<String, String> map1 = new HashMap<>();
+        map1.put("hot/words", "method=get");
+        return map1;
+    }
+
     private static HashMap<String, Integer> refreshcountMap = new HashMap<>();
     public static HashMap<String, String> getBodyMap(String channel, boolean isLoadMore){
         HashMap<String, String> map1 = new HashMap<>();

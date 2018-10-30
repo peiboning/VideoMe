@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v4.view.LayoutInflaterCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import com.pbn.org.news.R;
@@ -38,6 +39,7 @@ public class SkinLayoutFactoryManager {
     public void installFactory(Context context){
         if(SkinUtils.isCanChangeSkin(context)){
             LayoutInflater inflater = LayoutInflater.from(context);
+            Log.e("installFactory", "inflater:" + inflater.hashCode() + ",baseContext:" + context);
             try {
                 Field field = LayoutInflater.class.getDeclaredField("mFactorySet");
                 field.setAccessible(true);

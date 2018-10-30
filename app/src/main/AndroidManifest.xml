@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.pbn.org.news"
-    >
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_LOGS" />
+    package="com.pbn.org.news">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
         android:name=".NewsApplication"
@@ -19,52 +18,56 @@
         android:roundIcon="@mipmap/video"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data android:name="CHANNEL"
-                android:value="${CHANNEL}"
-                />
+        <meta-data
+            android:name="CHANNEL"
+            android:value="${CHANNEL}" />
         <!-- GlideModule -->
-        <meta-data android:name="com.pbn.org.news.utils.imageloader.CustomGlideOptions"
-            android:value="GlideModule"/>
-        <activity android:name=".splash.SplashActivity"
+        <meta-data
+            android:name="com.pbn.org.news.utils.imageloader.CustomGlideOptions"
+            android:value="GlideModule" />
+
+        <activity
+            android:name=".splash.SplashActivity"
             android:hardwareAccelerated="true"
-            android:launchMode="singleTop"
-            >
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
         </activity>
-        <activity android:name=".NewsListActivity"
-            android:launchMode="singleTask"
+        <activity
+            android:name=".NewsListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            />
-        <activity android:name=".detail.DetailActivity"
-            android:theme="@style/NoTitleTranslucentTheme"
-            />
-
-        <activity android:name=".channel.ChannelMgrActivity"/>
-        <activity android:name=".setting.SettingActivity"
-            android:theme="@style/NoTitleTranslucentTheme"
-            />
-        <activity android:name=".detail.VideoDetailActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".detail.DetailActivity"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity android:name=".channel.ChannelMgrActivity" />
+        <activity
+            android:name=".setting.SettingActivity"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".detail.VideoDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            />
+            android:launchMode="singleTop" />
 
-        <service android:name=".service.AppService"/>
-        <service android:name=".service.ShellService"/>
-        <service android:name=".service.BackgroudService"
-            android:process=":service"
-            />
+        <service android:name=".service.AppService" />
+        <service android:name=".service.ShellService" />
+        <service
+            android:name=".service.BackgroudService"
+            android:process=":service" />
 
-        <receiver android:name=".brocast.StaticBrocastReceiver"
-            >
+        <receiver android:name=".brocast.StaticBrocastReceiver">
             <intent-filter>
-                <action android:name="test.test.test"/>
+                <action android:name="test.test.test" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".search.SearchActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateAlwaysVisible|adjustPan"
+            ></activity>
     </application>
 
 </manifest>

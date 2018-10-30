@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
@@ -15,9 +16,12 @@ import com.pbn.org.news.base.MVPBaseFragment;
 import com.pbn.org.news.model.Channel;
 import com.pbn.org.news.model.haokan.HKRequestParams;
 import com.pbn.org.news.model.haokan.HaokanVideo;
+import com.pbn.org.news.model.haokan.HotWorld;
 import com.pbn.org.news.model.xigua.QueryMap;
 import com.pbn.org.news.model.xigua.XiguaModel;
+import com.pbn.org.news.mvp.presenter.HomePresenter;
 import com.pbn.org.news.mvp.presenter.NewsListPresenter;
+import com.pbn.org.news.mvp.view.IHomeView;
 import com.pbn.org.news.net.RetrofitClient;
 import com.pbn.org.news.net.api.HAOKANAPI;
 import com.pbn.org.news.net.api.XiguaAPI;
@@ -42,7 +46,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class NewsListFragment extends MVPBaseFragment {
+public class NewsListFragment extends MVPBaseFragment<IHomeView, HomePresenter> implements IHomeView {
 
     public static NewsListFragment newFragment(){
         NewsListFragment fragment = new NewsListFragment();
@@ -53,17 +57,25 @@ public class NewsListFragment extends MVPBaseFragment {
     private NewsViewPager viewPager;
     private TabLayout headerView;
     private ImageView addChannel;
+    private TextView hotWords;
     private List<Channel> channels = new ArrayList<Channel>();
+    private HotWorld hostWorlds;
 
     @Override
-    protected NewsListPresenter createPresenter() {
-        return null;
+    protected HomePresenter createPresenter() {
+        return new HomePresenter();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.loadHostWorld();
+    }
 
     @Override
     protected void initView(View view) {
         initChannel();
+        hotWords = view.findViewById(R.id.hot_tv);
         viewPager = view.findViewById(R.id.news_viewpager);
         headerView = view.findViewById(R.id.header_view);
         addChannel = view.findViewById(R.id.add_channel_btn);
@@ -80,6 +92,12 @@ public class NewsListFragment extends MVPBaseFragment {
                 }else{
                     SkinManager.with().startChangeSkin("");
                 }
+            }
+        });
+        hotWords.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityUtils.startSearchActivity(getActivity(), hostWorlds);
             }
         });
 
@@ -128,4 +146,21 @@ public class NewsListFragment extends MVPBaseFragment {
         return R.layout.fragment_newslist;
     }
 
+    @Override
+    public void updateHotWords(HotWorld word) {
+        if(null != word){
+            StringBuilder sb = new StringBuilder();
+            sb.append(word.getTitle()).append(":").append(word.getHotWords());
+            List<String> others = word.getLikes();
+            if(null != others && others.size() > 0){
+                for(String s : others){
+                    if(!s.equals(word.getHotWords())){
+                        sb.append("|").append(s);
+                    }
+                }
+            }
+            hostWorlds = word;
+            hotWords.setText(sb.toString());
+        }
+    }
 }

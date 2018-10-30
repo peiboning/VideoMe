@@ -1,82 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.pbn.org.news.view.MainLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <FrameLayout
-        android:id="@+id/search_layout"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/skin_tablayout_bg"
-        android:orientation="horizontal"
-        >
-        <LinearLayout
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/search_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/search_bar_bg"
-            android:layout_gravity="center"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:gravity="center"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/search_bar_icon"
-                android:layout_marginRight="5dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="大家都在搜"
-                android:textSize="16sp"
-                />
-
-        </LinearLayout>
-
-    </FrameLayout>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        >
-
-        <com.pbn.org.news.skin.widget.SkinTabLayout
-            android:id="@+id/header_view"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
-            app:tabSelectedTextColor="@color/skin_tablayout_text_selected_color"
             android:background="@color/skin_tablayout_bg"
-            app:tabTextColor="@color/skin_tablayout_text_color"
-            app:tabMode="scrollable"
-            app:tabIndicatorColor="@color/white"
+            android:orientation="horizontal"
+            app:layout_scrollFlags="scroll|enterAlways"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/search_bar_bg"
+                android:layout_gravity="center"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/search_bar_icon"
+                    android:layout_marginRight="3dp"
+                    />
+                <TextView
+                    android:id="@+id/hot_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="大家都在搜"
+                    android:textSize="16sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    />
 
-            />
+            </LinearLayout>
 
-        <ImageView
-            android:id="@+id/add_channel_btn"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:src="@mipmap/add_channel"
-            android:background="@mipmap/shadow_add_titlebar_new"
-            android:scaleType="center"
-            android:layout_gravity="center|right"
-            android:visibility="gone"
-            />
-    </FrameLayout>
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            >
+
+            <com.pbn.org.news.skin.widget.SkinTabLayout
+                android:id="@+id/header_view"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+                app:tabSelectedTextColor="@color/skin_tablayout_text_selected_color"
+                android:background="@color/skin_tablayout_bg"
+                app:tabTextColor="@color/skin_tablayout_text_color"
+                app:tabMode="scrollable"
+                app:tabIndicatorColor="@color/white"
+
+                />
+
+            <ImageView
+                android:id="@+id/add_channel_btn"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/add_channel"
+                android:background="@mipmap/shadow_add_titlebar_new"
+                android:scaleType="center"
+                android:layout_gravity="center|right"
+                android:visibility="gone"
+                />
+        </FrameLayout>
+    </android.support.design.widget.AppBarLayout>
+
     <com.pbn.org.news.view.NewsViewPager
         android:id="@+id/news_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
     
 
-</com.pbn.org.news.view.MainLayout>
+</android.support.design.widget.CoordinatorLayout>

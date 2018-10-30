@@ -13,7 +13,7 @@ public class AppService extends Service{
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        throw  new RuntimeException("AppService not suport bind");
+        throw  new RuntimeException("AppService not suport bindView");
     }
 
     @Override

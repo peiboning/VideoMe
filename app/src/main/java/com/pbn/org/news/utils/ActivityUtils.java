@@ -8,6 +8,8 @@ import com.pbn.org.news.NewsListActivity;
 import com.pbn.org.news.channel.ChannelMgrActivity;
 import com.pbn.org.news.detail.VideoDetailActivity;
 import com.pbn.org.news.model.common.NewsBean;
+import com.pbn.org.news.model.haokan.HotWorld;
+import com.pbn.org.news.search.SearchActivity;
 import com.pbn.org.news.setting.SettingActivity;
 
 public class ActivityUtils {
@@ -26,6 +28,15 @@ public class ActivityUtils {
     public static void startSettingActivity(Context context){
         Intent intent = new Intent();
         intent.setClass(context, SettingActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void startSearchActivity(Context context, HotWorld hotWorlds){
+        Intent intent = new Intent();
+        if(null != hotWorlds){
+            intent.putExtra(SearchActivity.KEY_HOT_WRODS, hotWorlds);
+        }
+        intent.setClass(context, SearchActivity.class);
         context.startActivity(intent);
     }
 
