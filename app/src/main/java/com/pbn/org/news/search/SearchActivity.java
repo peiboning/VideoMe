@@ -14,18 +14,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pbn.org.news.R;
+import com.pbn.org.news.adapter.SearchRecordAdapter;
 import com.pbn.org.news.base.BaseActivity;
 import com.pbn.org.news.base.MVPBaseActivity;
 import com.pbn.org.news.model.haokan.HotWorld;
 import com.pbn.org.news.mvp.presenter.SearchActivityPresenter;
 import com.pbn.org.news.mvp.view.ISearchActivityView;
+import com.pbn.org.news.mvp.view.ISearchRecordView;
 import com.pbn.org.news.search.fragment.SearchRecordFragment;
 import com.pbn.org.news.skin.inter.ISkinChange;
 import com.pbn.org.news.status_bar.StatusBarCompat;
 import com.pbn.org.news.view.NewsToast;
 
-public class SearchActivity extends MVPBaseActivity<ISearchActivityView, SearchActivityPresenter> implements ISkinChange , View.OnClickListener{
+public class SearchActivity extends MVPBaseActivity<ISearchActivityView, SearchActivityPresenter> implements ISkinChange , View.OnClickListener, ISearchActivity, ISearchActivityView{
     private static final String TAG_RECOED = "tag_record";
+    private static final String TAG_RESULT = "tag_result";
     public static final String KEY_HOT_WRODS = "key_hot_wrods";
 
     private ImageView mBackImage;
@@ -115,8 +118,33 @@ public class SearchActivity extends MVPBaseActivity<ISearchActivityView, SearchA
             transaction.add(R.id.search_main_layout, mRecordFragment, TAG_RECOED);
             transaction.commit();
         }
-
     }
+
+    private void showSearchResultFragment(String word) {
+        mSearchResultFragment = (SearchListFragment) getSupportFragmentManager().findFragmentByTag(TAG_RESULT);
+        if(null != mSearchResultFragment){
+            FragmentTransaction transaction =  getSupportFragmentManager().beginTransaction();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(SearchListFragment.KEY_WORD, word);
+            mSearchResultFragment.setArguments(bundle);
+            transaction.show(mSearchResultFragment);
+            transaction.hide(mRecordFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }else{
+            mSearchResultFragment = new SearchListFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(SearchListFragment.KEY_WORD, word);
+            mSearchResultFragment.setArguments(bundle);
+            FragmentTransaction transaction =  getSupportFragmentManager().beginTransaction();
+            transaction.add(R.id.search_main_layout, mSearchResultFragment, TAG_RESULT);
+            transaction.hide(mRecordFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+    }
+
+
 
     @Override
     protected int getLayoutId() {
@@ -130,7 +158,12 @@ public class SearchActivity extends MVPBaseActivity<ISearchActivityView, SearchA
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if(getSupportFragmentManager().getBackStackEntryCount() == 0){
+            super.onBackPressed();
+        }else{
+            getSupportFragmentManager().popBackStack();
+            mEditText.setText("");
+        }
 
     }
 
@@ -145,5 +178,11 @@ public class SearchActivity extends MVPBaseActivity<ISearchActivityView, SearchA
         }else if(v == mSearch){
             searchAction();
         }
+    }
+
+    @Override
+    public void search(String word) {
+        mEditText.setText(word);
+        showSearchResultFragment(word);
     }
 }

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/search_icon"
+        android:layout_width="115dp"
+        android:layout_height="65dp"
+        android:layout_marginRight="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/search_bar_icon"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        />
+
+    <com.pbn.org.news.skin.widget.SkinTextView
+        android:id="@+id/play_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:30"
+        android:textColor="@color/skin_item_text_play_time_color"
+        android:background="@drawable/video_time_bg"
+        android:layout_alignRight="@id/search_icon"
+        android:layout_alignBottom="@id/search_icon"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/search_icon"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        >
+        <TextView
+            android:id="@+id/search_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="警察赶到去丽华小区连倩倩家里时门锁没有破坏，林涛撬锁开门林涛撬锁开门"
+            android:textColor="#1A1A1A"
+            android:textSize="15sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/play_nums"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="452万次播放"
+                android:textColor="#A6A6A6"
+                android:textSize="12sp"
+                android:layout_marginRight="10dp"
+                />
+
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@id/play_nums"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="全球资讯影视全球资讯影视全球资讯影视"
+                android:textColor="#A6A6A6"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

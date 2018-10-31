@@ -11,6 +11,7 @@ import com.pbn.org.news.model.common.NewsBean;
 import com.pbn.org.news.model.zixun.VideoModel;
 import com.pbn.org.news.status_bar.StatusBarTools;
 import com.pbn.org.news.utils.ActivityUtils;
+import com.pbn.org.news.utils.TimeUtils;
 import com.pbn.org.news.video.NewsVideoPlayer;
 import com.pbn.org.news.video.VideoPlayerController;
 
@@ -37,7 +38,7 @@ public class VideoVH extends BaseVH {
         player.setViewInFeedListPos(pos);
         loadImage(controller.imageView(), bean.getImages().get(0).getUrl());
         controller.setTitle(bean.getTitle());
-        controller.setPlayTime(getPlayTime((int) videoModel.getDuration()));
+        controller.setPlayTime(TimeUtils.getPlayTimeByInt((int) videoModel.getDuration()));
         if(TextUtils.isEmpty(bean.getSource())){
             videoSrc.setText("NX");
             videoSrcIconTxt.setText("N");
@@ -58,22 +59,5 @@ public class VideoVH extends BaseVH {
         });
     }
 
-    private String getPlayTime(int duration) {
-        String time = "";
-        if(duration<3600){
-            int min = duration/60;
-            int second = duration%60;
-            if(min<10){
-                time="0" + min + ":";
-            }else{
-                time = min+":";
-            }
-            if(second<10){
-                time = time + "0" + second;
-            }else{
-                time = time + second;
-            }
-        }
-        return time;
-    }
+
 }

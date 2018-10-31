@@ -87,4 +87,14 @@ public class HKRequestParams {
         return "";
     }
 
+    public static HashMap<String, String> getSearchBodyMap(String word, int page){
+        HashMap<String, String> map1 = new HashMap<>();
+        StringBuffer sb = new StringBuffer("method=get&tag=rc&cursor_time=0&cb_cursor=0&hot_cursor=0&offline_cursor=0&rn=10&pn=1");
+        sb.append("&title=").append(word)
+                .append("&").append("force=0&needBjh=1&long_video=1&wordseg=1&outpn=0")
+                .append("&").append("innerpn=").append(page);
+        map1.put("search", sb.toString());
+        return map1;
+    }
+
 }

@@ -26,9 +26,7 @@ public abstract class BaseVH extends RecyclerView.ViewHolder {
 
     protected void loadImage(ImageView view,String url){
         Glide.with(view.getContext())
-
                 .load(url)
-
                 .placeholder(R.color.black)
                 .into(view);
     }

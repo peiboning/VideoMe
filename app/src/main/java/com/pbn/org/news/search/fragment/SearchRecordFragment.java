@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.pbn.org.news.R;
@@ -13,7 +14,9 @@ import com.pbn.org.news.model.haokan.HotWorld;
 import com.pbn.org.news.model.search.SearchRecodeModel;
 import com.pbn.org.news.mvp.presenter.SearchRecordPresenter;
 import com.pbn.org.news.mvp.view.ISearchRecordView;
+import com.pbn.org.news.search.ISearchActivity;
 import com.pbn.org.news.search.SearchActivity;
+import com.pbn.org.news.view.NewsToast;
 import com.pbn.org.news.view.SearchHistoryItemDecoration;
 
 import java.util.ArrayList;
@@ -25,7 +28,7 @@ import java.util.List;
  * @author peiboning
  * @DATE 2018/10/30
  */
-public class SearchRecordFragment extends MVPBaseFragment<ISearchRecordView, SearchRecordPresenter> implements ISearchRecordView{
+public class SearchRecordFragment extends MVPBaseFragment<ISearchRecordView, SearchRecordPresenter> implements ISearchRecordView, SearchRecordAdapter.OnItemClickListener{
     private RecyclerView mSearchHistoryListView;
     private SearchRecordAdapter mAdapter;
     private GridLayoutManager mLayoutManager;
@@ -51,6 +54,7 @@ public class SearchRecordFragment extends MVPBaseFragment<ISearchRecordView, Sea
     protected void initView(View view) {
         mSearchHistoryListView = view.findViewById(R.id.search_history_lv);
         mAdapter = new SearchRecordAdapter(getActivity());
+        mAdapter.setOnItemClickListener(this);
         mSearchHistoryListView.setAdapter(mAdapter);
         mLayoutManager = new GridLayoutManager(getActivity(), 2);
         mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -106,6 +110,19 @@ public class SearchRecordFragment extends MVPBaseFragment<ISearchRecordView, Sea
     public void updateHot(List<SearchRecodeModel> list) {
         if(null != list){
             mAdapter.updateHot(list);
+        }
+    }
+
+    @Override
+    public void onItemClick(View view) {
+        int pos = mSearchHistoryListView.getChildAdapterPosition(view);
+        String content = mAdapter.getItemContent(pos);
+        if(!TextUtils.isEmpty(content)){
+            if(getActivity() instanceof ISearchActivity){
+                ((ISearchActivity) getActivity()).search(content);
+            }
+        }else{
+            NewsToast.showSystemToast("click item content is empty");
         }
     }
 }

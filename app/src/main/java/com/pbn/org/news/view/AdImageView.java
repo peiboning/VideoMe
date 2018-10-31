@@ -12,6 +12,8 @@ import android.widget.ImageView;
 public class AdImageView extends ImageView {
     private int height;
     private int totalHeight;
+    private int offset;
+    private int test;
     public AdImageView(Context context) {
         super(context);
     }
@@ -24,11 +26,16 @@ public class AdImageView extends ImageView {
         super(context, attrs, defStyleAttr);
     }
 
-    public void setDy(int moveY, int total){
+    public void setDy(int moveY, int total, int offset){
         if(getDrawable() == null){
             return;
         }
-        totalHeight = total;
+        if(totalHeight == 0){
+            totalHeight = total;
+        }
+        if(offset == 0){
+            this.offset = offset;
+        }
         invalidate();
     }
 
@@ -47,7 +54,7 @@ public class AdImageView extends ImageView {
 
         height = h;
     }
-
+    int lastY = 0;
     @Override
     protected void onDraw(Canvas canvas) {
         Drawable drawable = getDrawable();
@@ -57,12 +64,17 @@ public class AdImageView extends ImageView {
         int h = (int) (getWidth() * 1.0f * drawable.getIntrinsicHeight() / drawable.getIntrinsicWidth());
         //标识图片的绘制区域
         drawable.setBounds(0, 0, getWidth(), h);
-
+//        Log.e("AdImageView","h:"+ h);
         int[] location = new int[2];
         getLocationOnScreen(location);
         int startY = (totalHeight-h)/2;
         int endY = startY + h;
-        int y = location[1] - 266;
+        int y = location[1] - offset - test;
+        if(Math.abs(y - lastY) > 70){
+            test = 80;
+            y = y - 80;
+        }
+        lastY = y;
         canvas.save();
         int dy = 0;
         if (y>startY && y<endY-getBottom()){

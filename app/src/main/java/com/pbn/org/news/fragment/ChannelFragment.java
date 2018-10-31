@@ -115,7 +115,7 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
                     View view = recyclerView.getLayoutManager().findViewByPosition(i);
                     AdImageView adImageView = view.findViewById(R.id.ad_item_img);
                     if (null != adImageView && adImageView.getVisibility() == View.VISIBLE) {
-                        adImageView.setDy(recyclerView.getLayoutManager().getHeight() - view.getTop(), recyclerView.getLayoutManager().getHeight());
+                        adImageView.setDy(recyclerView.getLayoutManager().getHeight() - view.getTop(), recyclerView.getLayoutManager().getHeight(), recyclerView.getTop());
                     }
                 }
                 if(dy > 0 || dx > 0){
