@@ -37,6 +37,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter{
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = View.inflate(mContext, R.layout.item_search_video, null);
         SearchResultVH VH = new SearchResultVH(view);
+
         return VH;
     }
 

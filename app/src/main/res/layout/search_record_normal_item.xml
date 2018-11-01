@@ -5,12 +5,14 @@
     >
     <TextView
         android:id="@+id/record_tv"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#000"
         android:text="北京旅游"
         android:textSize="16sp"
-        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignLeft="@id/delete_image"
         android:paddingBottom="15dp"
         android:paddingTop="15dp"
         android:paddingLeft="10dp"
@@ -18,4 +20,16 @@
         android:maxLines="1"
         android:ellipsize="end"
         />
+
+    <ImageView
+        android:id="@+id/delete_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/search_bar_clear_icon"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+        android:layout_marginRight="10dp"
+        />
+
 </RelativeLayout>

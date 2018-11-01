@@ -5,7 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.pbn.org.news.R;
 import com.pbn.org.news.adapter.SearchRecordAdapter;
@@ -37,6 +39,8 @@ public class SearchRecordFragment extends MVPBaseFragment<ISearchRecordView, Sea
     protected SearchRecordPresenter createPresenter() {
         return new SearchRecordPresenter();
     }
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,9 +82,28 @@ public class SearchRecordFragment extends MVPBaseFragment<ISearchRecordView, Sea
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        Log.e("SearchRecordFragment", "onStart");
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         presenter.loadHistory();
+        Log.e("SearchRecordFragment", "onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e("SearchRecordFragment", "onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.e("SearchRecordFragment", "onStop");
     }
 
     @Override
@@ -98,7 +121,6 @@ public class SearchRecordFragment extends MVPBaseFragment<ISearchRecordView, Sea
                     hotList.add(model);
                 }
             }
-            hotList.add(0,new SearchRecodeModel(SearchRecodeModel.TYPE_NORMAL, hotWorld.getHotWords()));
             if(hotList.size() % 2 != 0){
                 hotList.add(new SearchRecodeModel(SearchRecodeModel.TYPE_NORMAL, ""));
             }
@@ -114,9 +136,7 @@ public class SearchRecordFragment extends MVPBaseFragment<ISearchRecordView, Sea
     }
 
     @Override
-    public void onItemClick(View view) {
-        int pos = mSearchHistoryListView.getChildAdapterPosition(view);
-        String content = mAdapter.getItemContent(pos);
+    public void onItemClick(String content) {
         if(!TextUtils.isEmpty(content)){
             if(getActivity() instanceof ISearchActivity){
                 ((ISearchActivity) getActivity()).search(content);
@@ -124,5 +144,31 @@ public class SearchRecordFragment extends MVPBaseFragment<ISearchRecordView, Sea
         }else{
             NewsToast.showSystemToast("click item content is empty");
         }
+    }
+
+    @Override
+    public void onExpandHistory() {
+        if(mAdapter.isNeedShowPartHistory()){
+            if(mAdapter.isExpandHistory()){
+                mAdapter.showPartHistory();
+            }else{
+                mAdapter.showAllHistory();
+            }
+        }
+    }
+
+    @Override
+    public void onHistoryEditor() {
+        mAdapter.edit();
+    }
+
+    @Override
+    public void onHistoryEditOver() {
+        mAdapter.editOver();
+    }
+
+    @Override
+    public void onDelete(SearchRecodeModel model) {
+        mAdapter.delete(model);
     }
 }

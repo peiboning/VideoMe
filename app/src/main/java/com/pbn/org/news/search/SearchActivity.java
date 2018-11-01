@@ -91,7 +91,7 @@ public class SearchActivity extends MVPBaseActivity<ISearchActivityView, SearchA
             NewsToast.showSystemToast("搜索内容不能为空");
         }else{
             presenter.updateSearchHistory(title);
-
+            showSearchResultFragment(title);
         }
     }
 
@@ -183,6 +183,6 @@ public class SearchActivity extends MVPBaseActivity<ISearchActivityView, SearchA
     @Override
     public void search(String word) {
         mEditText.setText(word);
-        showSearchResultFragment(word);
+        searchAction();
     }
 }
