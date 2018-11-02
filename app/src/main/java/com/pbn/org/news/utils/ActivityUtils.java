@@ -40,12 +40,17 @@ public class ActivityUtils {
         context.startActivity(intent);
     }
 
-    public static void startVideoDetailActivity(Context context, int fromX, NewsBean bean){
+    public static void startVideoDetailActivity(Context context, int fromX, NewsBean bean, int from){
         Intent intent = new Intent();
         intent.setClass(context, VideoDetailActivity.class);
         intent.putExtra(VideoDetailActivity.FROM_X, fromX);
         intent.putExtra(VideoDetailActivity.BEAN, bean);
+        intent.putExtra(VideoDetailActivity.SRC_SOURCE, from);
         context.startActivity(intent);
+
+    }
+    public static void startVideoDetailActivity(Context context, int fromX, NewsBean bean){
+       startVideoDetailActivity(context, fromX, bean, VideoDetailActivity.SOURCE_LIST);
         ((Activity)context).overridePendingTransition(0, 0);
     }
 

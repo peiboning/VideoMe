@@ -10,6 +10,7 @@ import com.pbn.org.news.R;
 import com.pbn.org.news.adapter.SearchResultAdapter;
 import com.pbn.org.news.base.BasePresenter;
 import com.pbn.org.news.base.MVPBaseFragment;
+import com.pbn.org.news.detail.VideoDetailActivity;
 import com.pbn.org.news.model.haokan.HaokanVideo;
 import com.pbn.org.news.model.haokan.SearchResult;
 import com.pbn.org.news.model.haokan.SearchVideo;
@@ -42,6 +43,7 @@ public class SearchListFragment extends MVPBaseFragment<ISearchResultView, Searc
         mProgress = view.findViewById(R.id.load_progress);
         listView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new SearchResultAdapter(getContext());
+        mAdapter.setDetailPage(VideoDetailActivity.SOURCE_SEARCH);
         listView.setAdapter(mAdapter);
         Bundle bundle = getArguments();
         if(null != bundle){

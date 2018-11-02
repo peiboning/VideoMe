@@ -22,6 +22,7 @@ import java.util.List;
 public class SearchResultAdapter extends RecyclerView.Adapter{
     private List<SearchVideo> datas = new ArrayList<>();
     private Context mContext;
+    private int from;
 
     public SearchResultAdapter(Context context){
         mContext = context;
@@ -32,11 +33,15 @@ public class SearchResultAdapter extends RecyclerView.Adapter{
         notifyDataSetChanged();
     }
 
+    public void setDetailPage(int from){
+        this.from = from;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = View.inflate(mContext, R.layout.item_search_video, null);
-        SearchResultVH VH = new SearchResultVH(view);
+        SearchResultVH VH = new SearchResultVH(view, from);
 
         return VH;
     }

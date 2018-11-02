@@ -97,4 +97,12 @@ public class HKRequestParams {
         return map1;
     }
 
+    public static HashMap<String, String> getRelateBodyMap(String vid){
+        HashMap<String, String> map1 = new HashMap<>();
+        StringBuffer sb = new StringBuffer("method=get&url_key=2209353772427868890&log_param_source=bjh");
+        sb.append("&").append("vid=").append(vid);
+        map1.put("video/detail", sb.toString());
+        return map1;
+    }
+
 }

@@ -50,6 +50,7 @@
         <activity
             android:name=".detail.VideoDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/NoTitleTranslucentTheme"
             android:launchMode="singleTop" />
 
         <service android:name=".service.AppService" />

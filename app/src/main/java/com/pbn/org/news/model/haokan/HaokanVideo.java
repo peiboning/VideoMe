@@ -34,7 +34,7 @@ public class HaokanVideo {
             NewsBean bean;
             for(videoData data : list){
                 bean = new NewsBean();
-                bean.setId(data.content.id);
+                bean.setId(data.content.vid);
                 bean.setTitle(data.content.title);
                 bean.setTemplate(NewsBean.TYPE_ITEM_LIST_VIDEO);
                 List<Image> imageList = new ArrayList<Image>(1);
@@ -100,6 +100,7 @@ public class HaokanVideo {
         private int duration;
         private String itemType;
         private String cover_src;
+        private String vid;
 
         public String getCover_src() {
             return cover_src;
@@ -155,6 +156,14 @@ public class HaokanVideo {
 
         public void setItemType(String itemType) {
             this.itemType = itemType;
+        }
+
+        public String getVid() {
+            return vid;
+        }
+
+        public void setVid(String vid) {
+            this.vid = vid;
         }
     }
 }

@@ -28,4 +28,8 @@ public interface HAOKANAPI {
     @FormUrlEncoded
     @POST("/haokan/api")
     Observable<SearchResult> getSearchResult(@QueryMap HashMap<String, String> map, @FieldMap HashMap<String, String> fieldMap);
+
+    @FormUrlEncoded
+    @POST("/haokan/api")
+    Observable<SearchResult> getRelativeVideo(@QueryMap HashMap<String, String> map, @FieldMap HashMap<String, String> fieldMap);
 }

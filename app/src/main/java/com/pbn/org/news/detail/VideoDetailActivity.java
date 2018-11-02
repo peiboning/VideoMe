@@ -7,14 +7,18 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.pbn.org.news.R;
+import com.pbn.org.news.adapter.RelateVideoAdapter;
 import com.pbn.org.news.base.MVPBaseActivity;
 import com.pbn.org.news.model.common.NewsBean;
+import com.pbn.org.news.model.haokan.SearchVideo;
 import com.pbn.org.news.model.zixun.VideoModel;
 import com.pbn.org.news.mvp.presenter.VideoDetailPagePresenter;
 import com.pbn.org.news.mvp.view.IVideoDetailView;
@@ -23,19 +27,30 @@ import com.pbn.org.news.status_bar.StatusBarCompat;
 import com.pbn.org.news.video.NewsVideoPlayer;
 import com.pbn.org.news.video.NewsVideoPlayerManager;
 import com.pbn.org.news.video.VideoPlayerController;
+import com.pbn.org.news.view.ProgressView;
+
+import java.util.List;
 
 public class VideoDetailActivity extends MVPBaseActivity<IVideoDetailView, VideoDetailPagePresenter> implements IVideoDetailView, ISkinChange{
     public static final String FROM_X = "fromX";
     public static final String FROM_Y = "fromY";
     public static final String BEAN = "bean";
+    public static final String SRC_SOURCE = "src_source";
+
+    public static final int SOURCE_SELF = 1;
+    public static final int SOURCE_SEARCH = 2;
+    public static final int SOURCE_LIST = 3;
 
     private NewsVideoPlayer player;
     private VideoPlayerController controller;
     private LinearLayout bottom;
+    private RecyclerView relateList;
 
     private int fromX;
     private NewsBean bean;
-    
+    private RelateVideoAdapter mAdapter;
+    private ProgressView mProgress;
+    private int srcSource;
     @Override
     protected VideoDetailPagePresenter createPresenter() {
         return new VideoDetailPagePresenter();
@@ -46,6 +61,7 @@ public class VideoDetailActivity extends MVPBaseActivity<IVideoDetailView, Video
         super.onCreate(savedInstanceState);
         int color = getResources().getColor(R.color.skin_status_bar);
         StatusBarCompat.setStatusBarColor(this, color);
+        parseIntent(getIntent());
     }
 
     @Override
@@ -54,14 +70,38 @@ public class VideoDetailActivity extends MVPBaseActivity<IVideoDetailView, Video
         controller = new VideoPlayerController(this);
         player.setController(controller);
         bottom = findViewById(R.id.detail_bottom);
-
-        parseIntent(getIntent());
-
+        relateList = findViewById(R.id.detail_relate);
+        relateList.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new RelateVideoAdapter(this);
+        relateList.setAdapter(mAdapter);
+        mProgress = findViewById(R.id.load_progress);
     }
 
     private void parseIntent(Intent intent) {
         fromX = intent.getIntExtra(FROM_X, 0);
         bean = (NewsBean) intent.getSerializableExtra(BEAN);
+        srcSource = intent.getIntExtra(SRC_SOURCE, 0);
+
+        presenter.getRelativeHKVideo(bean.getId());
+        relateList.setVisibility(View.GONE);
+        mProgress.start();
+        VideoModel videoModel = bean.getVideos().get(0);
+        if(SOURCE_SELF == srcSource){
+            NewsVideoPlayerManager.instance().releaseMediaplayer();
+        }
+        player.setUp(videoModel.getUrl(), null);
+        loadImage(controller.imageView(), bean.getImages().get(0).getUrl());
+        controller.getTitleView().setVisibility(View.INVISIBLE);
+        controller.getPlayTimeView().setVisibility(View.INVISIBLE);
+        player.start(true);
+        if(SOURCE_LIST == srcSource){
+            player.post(new Runnable() {
+                @Override
+                public void run() {
+                    startEnterAnimal();
+                }
+            });
+        }
     }
 
     @Override
@@ -77,25 +117,18 @@ public class VideoDetailActivity extends MVPBaseActivity<IVideoDetailView, Video
     @Override
     public void onBackPressed() {
         if(!NewsVideoPlayerManager.instance().onBackPressd()){
-            startExitAnimal();
+            if(SOURCE_LIST == srcSource){
+                startExitAnimal();
+            }else{
+                finish();
+            }
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        VideoModel videoModel = bean.getVideos().get(0);
-        player.setUp(videoModel.getUrl(), null);
-        loadImage(controller.imageView(), bean.getImages().get(0).getUrl());
-        controller.getTitleView().setVisibility(View.INVISIBLE);
-        controller.getPlayTimeView().setVisibility(View.INVISIBLE);
-        player.post(new Runnable() {
-            @Override
-            public void run() {
-                player.start(true);
-                startEnterAnimal();
-            }
-        });
+
     }
 
     private void startEnterAnimal() {
@@ -146,5 +179,21 @@ public class VideoDetailActivity extends MVPBaseActivity<IVideoDetailView, Video
     @Override
     public void applySkin() {
 
+    }
+
+    @Override
+    public void updateRelateVideo(List<SearchVideo> list) {
+        mProgress.stop();
+        relateList.setVisibility(View.VISIBLE);
+        if(null != list && list.size() > 0){
+            mAdapter.updateResult(list);
+        }else{
+            updateRelateError();
+        }
+    }
+
+    @Override
+    public void updateRelateError() {
+        mProgress.stop();
     }
 }

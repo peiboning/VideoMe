@@ -33,13 +33,16 @@ public class SearchResultVH extends RecyclerView.ViewHolder {
     private TextView playNums;
     private SkinTextView playTime;
 
-    public SearchResultVH(View itemView) {
+    private int from;
+
+    public SearchResultVH(View itemView, int from) {
         super(itemView);
         imageView = itemView.findViewById(R.id.search_icon);
         title = itemView.findViewById(R.id.search_title);
         author = itemView.findViewById(R.id.author);
         playNums = itemView.findViewById(R.id.play_nums);
         playTime = itemView.findViewById(R.id.play_time);
+        this.from = from;
     }
 
     public void bindView(final SearchVideo data){
@@ -56,7 +59,7 @@ public class SearchResultVH extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 NewsBean bean = getBeanFromSearchVideo(data);
-                ActivityUtils.startVideoDetailActivity(itemView.getContext(), 0, bean);
+                ActivityUtils.startVideoDetailActivity(itemView.getContext(), 0, bean, from);
             }
         });
     }
@@ -76,6 +79,7 @@ public class SearchResultVH extends RecyclerView.ViewHolder {
         Image image = new Image(data.getCover_src());
         images.add(image);
         bean.setImages(images);
+        bean.setId(data.getMedia_id());
 
         return bean;
     }

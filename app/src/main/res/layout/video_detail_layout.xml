@@ -2,7 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/transparent"
     >
+    <com.pbn.org.news.video.NewsVideoPlayer
+        android:id="@+id/player"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        >
+    </com.pbn.org.news.video.NewsVideoPlayer>
     <LinearLayout
         android:id="@+id/detail_bottom"
         android:layout_width="match_parent"
@@ -11,14 +19,35 @@
         android:background="@color/white"
         android:orientation="vertical">
 
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            layout="@layout/video_item_bottom"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/detail_relate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <com.pbn.org.news.view.ProgressView
+                android:id="@+id/load_progress"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                />
+
+        </FrameLayout>
+
+
+
     </LinearLayout>
-    <com.pbn.org.news.video.NewsVideoPlayer
-        android:id="@+id/player"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        >
-    </com.pbn.org.news.video.NewsVideoPlayer>
+
 
 
 

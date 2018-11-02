@@ -43,11 +43,13 @@ public class ProgressView extends View{
     }
 
     public void stop(){
+        setVisibility(GONE);
         isStop = true;
         valueAnimator.cancel();
     }
 
     public void start(){
+        setVisibility(VISIBLE);
         valueAnimator.cancel();
         isStop = false;
         valueAnimator.start();
