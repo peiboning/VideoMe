@@ -61,6 +61,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="8dp"
+                android:visibility="gone"
                 >
                 <com.pbn.org.news.skin.widget.SkinTextView
                     android:layout_width="wrap_content"
@@ -91,6 +92,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="8dp"
+                android:visibility="gone"
                 >
                 <com.pbn.org.news.skin.widget.SkinTextView
                     android:layout_width="wrap_content"

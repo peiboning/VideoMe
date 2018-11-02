@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.pbn.org.news.R;
@@ -45,6 +47,8 @@ public class VideoDetailActivity extends MVPBaseActivity<IVideoDetailView, Video
     private VideoPlayerController controller;
     private LinearLayout bottom;
     private RecyclerView relateList;
+    private TextView icon_txt;
+    private TextView author_txt;
 
     private int fromX;
     private NewsBean bean;
@@ -75,12 +79,22 @@ public class VideoDetailActivity extends MVPBaseActivity<IVideoDetailView, Video
         mAdapter = new RelateVideoAdapter(this);
         relateList.setAdapter(mAdapter);
         mProgress = findViewById(R.id.load_progress);
+        icon_txt = findViewById(R.id.src_icon_txt);
+        author_txt = findViewById(R.id.video_src);
     }
 
     private void parseIntent(Intent intent) {
         fromX = intent.getIntExtra(FROM_X, 0);
         bean = (NewsBean) intent.getSerializableExtra(BEAN);
         srcSource = intent.getIntExtra(SRC_SOURCE, 0);
+
+        String author = bean.getSource();
+        if(TextUtils.isEmpty(author)){
+            author = "VM";
+        }
+
+        icon_txt.setText(author.substring(0,1));
+        author_txt.setText(author);
 
         presenter.getRelativeHKVideo(bean.getId());
         relateList.setVisibility(View.GONE);
