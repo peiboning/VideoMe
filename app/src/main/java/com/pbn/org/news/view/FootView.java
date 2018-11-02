@@ -17,7 +17,7 @@ public class FootView extends FrameLayout {
     public final static int STATE_LOADING = 0;
     public final static int STATE_COMPLETE = 1;
 //    public final static int STATE_NOMORE = 2;
-//    public final static int STATE_NO_NETWORK = 3;
+    public final static int STATE_NO_NETWORK = 3;
 //    public final static int STATE_NOMORE_LIMIT_SIZE = 4;
 
     private TextView textView;
@@ -53,6 +53,10 @@ public class FootView extends FrameLayout {
             case STATE_COMPLETE:
                 textView.setText("加载完毕");
                 setVisibility(GONE);
+                break;
+            case STATE_NO_NETWORK:
+                textView.setText("网络不可用");
+                setVisibility(VISIBLE);
                 break;
             default:
                 setVisibility(GONE);

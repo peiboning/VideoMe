@@ -24,6 +24,7 @@ import com.pbn.org.news.mvp.view.ISearchRecordView;
 import com.pbn.org.news.search.fragment.SearchRecordFragment;
 import com.pbn.org.news.skin.inter.ISkinChange;
 import com.pbn.org.news.status_bar.StatusBarCompat;
+import com.pbn.org.news.utils.NetUtil;
 import com.pbn.org.news.view.NewsToast;
 
 public class SearchActivity extends MVPBaseActivity<ISearchActivityView, SearchActivityPresenter> implements ISkinChange , View.OnClickListener, ISearchActivity, ISearchActivityView{
@@ -83,6 +84,10 @@ public class SearchActivity extends MVPBaseActivity<ISearchActivityView, SearchA
     }
 
     private void searchAction() {
+        if(!NetUtil.isNetEnable(this)){
+            NewsToast.showSystemToast("网络不可用");
+            return;
+        }
         String title = mEditText.getText().toString();
         if(TextUtils.isEmpty(title)){
             title = mEditText.getHint().toString();

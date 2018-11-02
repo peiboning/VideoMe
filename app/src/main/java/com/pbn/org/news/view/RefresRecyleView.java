@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.ViewGroup;
 
 import com.pbn.org.news.list.HeaderViewHolder;
+import com.pbn.org.news.utils.NetUtil;
 import com.pbn.org.news.vh.SimpleVH;
 
 public class RefresRecyleView extends RecyclerView{
@@ -72,11 +73,17 @@ public class RefresRecyleView extends RecyclerView{
     }
 
     public void loadMore(){
-        if(null != mFootView){
-            mFootView.setStatus(FootView.STATE_LOADING);
-        }
-        if(null != mListener){
-            mListener.onLoadMore();
+        if(NetUtil.isNetEnable(getContext())){
+            if(null != mFootView){
+                mFootView.setStatus(FootView.STATE_LOADING);
+            }
+            if(null != mListener){
+                mListener.onLoadMore();
+            }
+        }else{
+            if(null != mFootView){
+                mFootView.setStatus(FootView.STATE_NO_NETWORK);
+            }
         }
     }
 
