@@ -17,7 +17,9 @@ import com.pbn.org.news.setting.SmartTheme;
 import com.pbn.org.news.skin.inter.ISkinChange;
 import com.pbn.org.news.status_bar.StatusBarCompat;
 import com.pbn.org.news.utils.ActivityUtils;
+import com.pbn.org.news.utils.NetUtil;
 import com.pbn.org.news.video.NewsVideoPlayerManager;
+import com.pbn.org.news.view.NewsToast;
 import com.pbn.org.news.view.RoundImageView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -92,6 +94,9 @@ public class NewsListActivity extends BaseActivity implements ISkinChange {
         super.onResume();
         smartTheme.checkSmartTheme();
         MobclickAgent.onResume(this);
+        if(NetUtil.isNetEnable(this) && !NetUtil.isWIFIConnected(this)){
+            NewsToast.showSystemToast("当前为移动网络,将消耗移动流量");
+        }
 
     }
 
