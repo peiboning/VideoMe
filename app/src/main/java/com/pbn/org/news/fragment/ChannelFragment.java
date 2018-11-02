@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewStub;
 
 import com.pbn.org.news.R;
 import com.pbn.org.news.adapter.NewsChannelListAdapter;
@@ -14,6 +15,7 @@ import com.pbn.org.news.model.common.NewsBean;
 import com.pbn.org.news.mvp.presenter.NewsListPresenter;
 import com.pbn.org.news.mvp.view.INewsListView;
 import com.pbn.org.news.utils.LogUtils;
+import com.pbn.org.news.utils.NetUtil;
 import com.pbn.org.news.utils.SpUtils;
 import com.pbn.org.news.utils.UMUtils;
 import com.pbn.org.news.utils.ViewUtils;
@@ -23,6 +25,7 @@ import com.pbn.org.news.video.MainActivityLifecycleAndStatus;
 import com.pbn.org.news.video.NewsVideoPlayerManager;
 import com.pbn.org.news.view.AdImageView;
 import com.pbn.org.news.view.CustomLinearLayoutManager;
+import com.pbn.org.news.view.NewsToast;
 import com.pbn.org.news.view.RefresRecyleView;
 
 import java.util.ArrayList;
@@ -47,6 +50,7 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
     private Channel channel;
     private NewsChannelListAdapter mAdapter;
     private int pageIndex = 0;
+    private ViewStub netErrorTip;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,6 +80,7 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
                 }
             }
         });
+        netErrorTip = view.findViewById(R.id.net_error_tip);
         listView.setOnRefreshListener(new RefresRecyleView.OnRefreshListener() {
             @Override
             public void onPullToRefreshing() {
@@ -166,14 +171,34 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
 
     @Override
     public void updateNewsList(List<NewsBean> news, boolean isLoadMore) {
-        mAdapter.updateData(news, isLoadMore);
-        if(isLoadMore){
-            listView.loadMoreComplete();
+
+        if((null != news && news.size() > 0) || mAdapter.getItemCount()>0){
+            mAdapter.updateData(news, isLoadMore);
+            if(isLoadMore){
+                listView.loadMoreComplete();
+            }else{
+                listView.refreshOver(null != news?news.size():0);
+            }
+            if(null != news && news.size() > 0){
+                SpUtils.putLong(NewsListPresenter.REFRESH_TIME, System.currentTimeMillis());
+            }
         }else{
-            listView.refreshOver(null != news?news.size():0);
-        }
-        if(null != news && news.size() > 0){
-            SpUtils.putLong(NewsListPresenter.REFRESH_TIME, System.currentTimeMillis());
+            if(!NetUtil.isNetEnable(this.getContext())){
+                final View view = netErrorTip.inflate();
+                listView.setVisibility(View.GONE);
+                view.findViewById(R.id.retry).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(!NetUtil.isNetEnable(v.getContext())){
+                            NewsToast.showSystemToast("没有网络");
+                        }else{
+                            view.setVisibility(View.GONE);
+                            listView.setVisibility(View.VISIBLE);
+                            fetchData();
+                        }
+                    }
+                });
+            }
         }
     }
 

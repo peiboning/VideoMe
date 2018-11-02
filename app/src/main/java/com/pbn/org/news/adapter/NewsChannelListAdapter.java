@@ -57,7 +57,7 @@ public class NewsChannelListAdapter extends RecyclerView.Adapter {
             if(mNewsDatas.size()<=0){
                 mNewsDatas.addAll(data);
             }else{
-                mNewsDatas.remove(adBean);
+//                mNewsDatas.remove(adBean);
                 mNewsDatas.remove(refreshBean);
 //                mNewsDatas.remove(group);
                 mImageDatas.clear();
@@ -66,7 +66,7 @@ public class NewsChannelListAdapter extends RecyclerView.Adapter {
                     mNewsDatas.addAll(data);
                 }else{
                     mNewsDatas.add(0, refreshBean);
-                    mNewsDatas.add(1,adBean);
+//                    mNewsDatas.add(1,adBean);
                     mNewsDatas.addAll(0, data);
 //                    mNewsDatas.add(1, group);
                 }
