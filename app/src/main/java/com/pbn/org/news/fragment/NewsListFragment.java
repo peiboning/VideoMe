@@ -60,6 +60,7 @@ public class NewsListFragment extends MVPBaseFragment<IHomeView, HomePresenter> 
     private TextView hotWords;
     private List<Channel> channels = new ArrayList<Channel>();
     private HotWorld hostWorlds;
+    private View search_frame;
 
     @Override
     protected HomePresenter createPresenter() {
@@ -79,6 +80,7 @@ public class NewsListFragment extends MVPBaseFragment<IHomeView, HomePresenter> 
         viewPager = view.findViewById(R.id.news_viewpager);
         headerView = view.findViewById(R.id.header_view);
         addChannel = view.findViewById(R.id.add_channel_btn);
+        search_frame = view.findViewById(R.id.search_frame);
         viewPager.setAdapter(new NewsChannelAdapter(getChildFragmentManager(), channels));
         headerView.setupWithViewPager(viewPager);
 //        addChannel.setVisibility(View.VISIBLE);
@@ -94,7 +96,7 @@ public class NewsListFragment extends MVPBaseFragment<IHomeView, HomePresenter> 
                 }
             }
         });
-        hotWords.setOnClickListener(new View.OnClickListener() {
+        search_frame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ActivityUtils.startSearchActivity(getActivity(), hostWorlds);

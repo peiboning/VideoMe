@@ -59,4 +59,21 @@ public class SearchRecordPresenter extends BasePresenter<ISearchRecordView>{
                 });
     }
 
+    public void deleteHistory(final SearchRecodeModel model) {
+        Observable.create(new ObservableOnSubscribe<SearchRecodeModel>() {
+            @Override
+            public void subscribe(ObservableEmitter<SearchRecodeModel> e) throws Exception {
+                e.onNext(model);
+                e.onComplete();
+            }
+        }).map(new Function<SearchRecodeModel, SearchHistory>() {
+            @Override
+            public SearchHistory apply(SearchRecodeModel model) throws Exception {
+                SearchHistory history = new SearchHistory();
+                history.setTitle(model.getContent());
+                SearchHistoryDaoImpl.deleteByModel(history);
+                return history;
+            }
+        }).subscribeOn(Schedulers.io()).subscribe();
+    }
 }

@@ -2,6 +2,10 @@ package com.pbn.org.news.db.dao;
 
 import com.pbn.org.news.db.model.SearchHistory;
 import com.pbn.org.news.greendao.gen.SearchHistoryDao;
+import com.pbn.org.news.model.search.SearchRecodeModel;
+
+import org.greenrobot.greendao.query.DeleteQuery;
+import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.List;
 
@@ -30,5 +34,14 @@ public class SearchHistoryDaoImpl {
         return DaoManager.getInstance().getDaoSession().getSearchHistoryDao()
                 .queryBuilder()
                 .where(SearchHistoryDao.Properties.Title.eq(content)).unique();
+    }
+
+    public static void deleteByModel(SearchHistory model){
+        QueryBuilder<SearchHistory> builder = DaoManager.getInstance().getDaoSession().getSearchHistoryDao()
+                .queryBuilder();
+
+        DeleteQuery<SearchHistory> deleteQuery = builder.where(SearchHistoryDao.Properties.Title.eq(model.getTitle())).buildDelete();
+
+        deleteQuery.executeDeleteWithoutDetachingEntities();
     }
 }

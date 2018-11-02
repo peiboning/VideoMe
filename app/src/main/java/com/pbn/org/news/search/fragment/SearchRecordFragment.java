@@ -170,5 +170,6 @@ public class SearchRecordFragment extends MVPBaseFragment<ISearchRecordView, Sea
     @Override
     public void onDelete(SearchRecodeModel model) {
         mAdapter.delete(model);
+        presenter.deleteHistory(model);
     }
 }

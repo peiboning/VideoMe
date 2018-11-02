@@ -1,5 +1,7 @@
 package com.pbn.org.news.base;
 
+import com.pbn.org.news.model.search.SearchRecodeModel;
+
 import java.lang.ref.WeakReference;
 
 public abstract class BasePresenter<V> {
@@ -26,4 +28,5 @@ public abstract class BasePresenter<V> {
         }
         return null;
     }
+
 }
