@@ -1,6 +1,7 @@
 package com.pbn.org.news.net;
 
 import com.pbn.org.news.NewsApplication;
+import com.pbn.org.news.cache.CacheManager;
 import com.pbn.org.news.utils.FIXHttps;
 
 import java.io.File;
@@ -38,7 +39,7 @@ public class RetrofitClient {
     public synchronized Retrofit getquAppRetrofit() {
         if(null == retrofit){
 
-            Cache cache = new Cache(new File(NewsApplication.getContext().getExternalCacheDir(), "HttpCache"),
+            Cache cache = new Cache(new File(CacheManager.getInstance().getExternalCacheDir(), "HttpCache"),
                     1024 * 1024 * 50);
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -60,7 +61,7 @@ public class RetrofitClient {
     public synchronized Retrofit getMiguRetrofit() {
         if(null == retrofitZIXUN){
 
-            Cache cache = new Cache(new File(NewsApplication.getContext().getExternalCacheDir(), "HttpCache"),
+            Cache cache = new Cache(new File(CacheManager.getInstance().getExternalCacheDir(), "HttpCache"),
                     1024 * 1024 * 50);
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -83,7 +84,7 @@ public class RetrofitClient {
     public synchronized Retrofit getSDKRetrofit() {
         if(null == retrofitSDK){
 
-            Cache cache = new Cache(new File(NewsApplication.getContext().getExternalCacheDir(), "HttpCache"),
+            Cache cache = new Cache(new File(CacheManager.getInstance().getExternalCacheDir(), "HttpCache"),
                     1024 * 1024 * 50);
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -107,7 +108,7 @@ public class RetrofitClient {
     public synchronized Retrofit getBOBORetrofit() {
         if(null == retrofitSDK){
 
-            Cache cache = new Cache(new File(NewsApplication.getContext().getExternalCacheDir(), "HttpCache"),
+            Cache cache = new Cache(new File(CacheManager.getInstance().getExternalCacheDir(), "HttpCache"),
                     1024 * 1024 * 50);
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -130,7 +131,7 @@ public class RetrofitClient {
     public synchronized Retrofit getXiguaRetrofit() {
         if(null == retrofitXigua){
 
-            Cache cache = new Cache(new File(NewsApplication.getContext().getExternalCacheDir(), "HttpCache"),
+            Cache cache = new Cache(new File(CacheManager.getInstance().getExternalCacheDir(), "HttpCache"),
                     1024 * 1024 * 50);
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -154,7 +155,7 @@ public class RetrofitClient {
     public synchronized Retrofit getHaokanRetrofit() {
         if(null == retrofitHaokan){
 
-            Cache cache = new Cache(new File(NewsApplication.getContext().getExternalCacheDir(), "HttpCache"),
+            Cache cache = new Cache(new File(CacheManager.getInstance().getExternalCacheDir(), "HttpCache"),
                     1024 * 1024 * 50);
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();

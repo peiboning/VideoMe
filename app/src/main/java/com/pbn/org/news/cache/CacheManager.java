@@ -38,20 +38,38 @@ public class CacheManager {
 
     private void initCacheDir() {
         if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-            imageCachePath = NewsApplication.getContext().getExternalCacheDir().getPath() + File.separator + "image_cache";
-            File file = new File(imageCachePath);
-            if(!file.exists()){
-                file.mkdirs();
+            File externalCacheDir = NewsApplication.getContext().getExternalCacheDir();
+            //fix bug
+            if(null != externalCacheDir){
+                imageCachePath = externalCacheDir.getPath() + File.separator + "image_cache";
+                File file = new File(imageCachePath);
+                if(!file.exists()){
+                    file.mkdirs();
+                }
+                cacheSize = DEFAULT_DISK_CACHE_SIZE;
+            }else{
+                initInternalStorage();
             }
-            cacheSize = DEFAULT_DISK_CACHE_SIZE;
         }else{
-            imageCachePath = NewsApplication.getContext().getCacheDir().getPath() + File.separator + "image_cache";
-            File file = new File(imageCachePath);
-            if(!file.exists()){
-                file.mkdirs();
-            }
-            cacheSize = DEFAULT_INTERNAL_CACHE_SIZE;
+            initInternalStorage();
         }
+    }
+
+    public File getExternalCacheDir(){
+        File externalCacheDir = NewsApplication.getContext().getExternalCacheDir();
+        if(null != externalCacheDir){
+            return externalCacheDir;
+        }
+        return NewsApplication.getContext().getCacheDir();
+    }
+
+    private void initInternalStorage() {
+        imageCachePath = NewsApplication.getContext().getCacheDir().getPath() + File.separator + "image_cache";
+        File file = new File(imageCachePath);
+        if(!file.exists()){
+            file.mkdirs();
+        }
+        cacheSize = DEFAULT_INTERNAL_CACHE_SIZE;
     }
 
     public String getImageCacheDir(){

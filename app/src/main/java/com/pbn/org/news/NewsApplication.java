@@ -99,13 +99,17 @@ public class NewsApplication extends MultiDexApplication{
     }
 
     private void initSkin() {
-        String path = sContext.getExternalCacheDir() + File.separator + "skin";
-        File file = new File(path);
-        copySkinFile(path);
-        if(!file.exists()){
-            file.mkdirs();
+        File external = sContext.getExternalCacheDir();
+        //fix bug
+        if(null != external){
+            String path = external.getPath()  + File.separator + "skin";
+            File file = new File(path);
+            copySkinFile(path);
+            if(!file.exists()){
+                file.mkdirs();
+            }
+            SkinManager.with().init(sContext).setSkinPath(path).apply();
         }
-        SkinManager.with().init(sContext).setSkinPath(path).apply();
     }
 
     private void copySkinFile(String path) {

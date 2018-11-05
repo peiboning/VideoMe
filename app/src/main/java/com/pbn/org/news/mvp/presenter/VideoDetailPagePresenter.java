@@ -2,6 +2,7 @@ package com.pbn.org.news.mvp.presenter;
 
 import com.pbn.org.news.NewsApplication;
 import com.pbn.org.news.base.BasePresenter;
+import com.pbn.org.news.cache.CacheManager;
 import com.pbn.org.news.model.haokan.HKRequestParams;
 import com.pbn.org.news.model.haokan.HotWorld;
 import com.pbn.org.news.model.haokan.SearchVideo;
@@ -37,7 +38,7 @@ import okhttp3.ResponseBody;
 public class VideoDetailPagePresenter extends BasePresenter<IVideoDetailView>{
 
     public void getRelativeHKVideo(final String vid){
-        Cache cache = new Cache(new File(NewsApplication.getContext().getExternalCacheDir(), "HttpCache"),
+        Cache cache = new Cache(new File(CacheManager.getInstance().getExternalCacheDir(), "HttpCache"),
                 1024 * 1024 * 50);
 
         final OkHttpClient.Builder builder = new OkHttpClient.Builder();
