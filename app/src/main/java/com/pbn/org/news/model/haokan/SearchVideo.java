@@ -16,6 +16,9 @@ public class SearchVideo {
     private String playcntText;
     private int duration;
 
+    private int contentSource;
+    private String channel;
+
     public String getTitle() {
         return title;
     }
@@ -78,5 +81,21 @@ public class SearchVideo {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public int getContentSource() {
+        return contentSource;
+    }
+
+    public void setContentSource(int contentSource) {
+        this.contentSource = contentSource;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
     }
 }

@@ -6,8 +6,12 @@ import java.io.Serializable;
 import java.util.List;
 
 public class NewsBean implements Serializable{
-    public static final int CONTENT_SOURCE_1 = 1;
+
+
+    public static final int CONTENT_SOURCE_zixun = 1;
     public static final int CONTENT_SOURCE_2 = 2;
+    public static final int CONTENT_SOURCE_Haokan = 3;
+    public static final int CONTENT_SOURCE_sdk = 4;
 
     public final static int TYPE_ITEM_LIST_NEWS_ONE     = 1;
     public final static int TYPE_ITEM_LIST_NEWS_BIG     = 2;
@@ -32,6 +36,10 @@ public class NewsBean implements Serializable{
     private String detailUrl;
     private int commitNum;
     private List<VideoModel> videos;
+    private int playCount;
+
+    private String channelId;
+
 
     public int getContentSource() {
         return contentSource;
@@ -111,5 +119,21 @@ public class NewsBean implements Serializable{
 
     public void setVideos(List<VideoModel> videos) {
         this.videos = videos;
+    }
+
+    public int getPlayCount() {
+        return playCount;
+    }
+
+    public void setPlayCount(int playCount) {
+        this.playCount = playCount;
+    }
+
+    public String getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
     }
 }

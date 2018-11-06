@@ -13,6 +13,7 @@ public class Articles {
     private List<VideoModel> videos;
     private long createTime;
     private long virtualTime;
+    private int playCount;
 
     public long getVirtualTime() {
         return virtualTime;
@@ -92,5 +93,13 @@ public class Articles {
 
     public void setVideos(List<VideoModel> videos) {
         this.videos = videos;
+    }
+
+    public int getPlayCount() {
+        return playCount;
+    }
+
+    public void setPlayCount(int playCount) {
+        this.playCount = playCount;
     }
 }

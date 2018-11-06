@@ -85,6 +85,7 @@
     <color name="text_gray_color">#ff999999</color>
     <color name="text_hint_color">#ffbfbfbf</color>
     <color name="transparent">#00000000</color>
+    <color name="transparent1">#01000000</color>
     <color name="white">#ffffffff</color>
 
     <!-- day theme-->

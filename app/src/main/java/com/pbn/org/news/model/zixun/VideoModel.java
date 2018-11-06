@@ -8,6 +8,7 @@ public class VideoModel implements Serializable{
     private int size;
     private String vid;
 
+
     public String getUrl() {
         return url;
     }

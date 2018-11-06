@@ -1,12 +1,12 @@
 package com.pbn.org.news.model.sdk;
 
+import com.pbn.org.news.model.Channel;
 import com.pbn.org.news.model.zixun.VideoModel;
 import com.pbn.org.news.model.common.Image;
 import com.pbn.org.news.model.common.NewsBean;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class SDKVideoInfo {
@@ -38,7 +38,7 @@ public class SDKVideoInfo {
         this.data = data;
     }
 
-    public List<NewsBean> toNewsBeans(){
+    public List<NewsBean> toNewsBeans(String channel){
         List<SDKDataModel> videoList = data.getVideoList();
         if(null != videoList && videoList.size() > 0){
             SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
@@ -73,7 +73,10 @@ public class SDKVideoInfo {
                 videoModel.setUrl(model.getPlayUrl());
                 videos.add(videoModel);
                 bean.setVideos(videos);
+                bean.setPlayCount(model.getPlayNum());
 
+                bean.setContentSource(NewsBean.CONTENT_SOURCE_sdk);
+                bean.setChannelId(channel);
 
                 list.add(bean);
             }

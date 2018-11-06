@@ -1,1 +1,2 @@
-include ':app', ':loclib', ':permission', ':analytics', ':utils', ':skin_night', ':resourcechecke', ':gradleplugin', ':push', ':calendar'
+include ':app', ':loclib', ':permission', ':analytics', ':utils', ':skin_night', ':resourcechecke', ':gradleplugin', ':push'
+//include ':calendar'

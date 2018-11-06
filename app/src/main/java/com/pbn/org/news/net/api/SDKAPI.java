@@ -11,4 +11,6 @@ import retrofit2.http.QueryMap;
 public interface SDKAPI {
     @GET("/api/videotab/getVideoList.go")
     Observable<SDKVideoInfo> getList(@QueryMap Map<String, String> map);
+    @GET("/api/videotab/getRelevanceList.go")
+    Observable<SDKVideoInfo> getRelateList(@QueryMap Map<String, String> map);
 }

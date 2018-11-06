@@ -25,7 +25,9 @@
         <item name="android:background">@drawable/splash_bg</item>
     </style>
     <style name="VideoDetail" parent="NoTitleFullscreen">
-        <item name="android:background">@color/transparent</item>
+        <item name="android:windowBackground">@color/transparent1</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
     </style>
 
     <style name="NoTitleTranslucentTheme" parent="@style/AppTheme">

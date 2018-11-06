@@ -78,9 +78,6 @@ public class DeviceUtil {
 
     private Context mContext;
 
-    private static final String FOLDER_NAME = "QuickNews";
-    private static final String FILE_NAME = "INSTALLATION";
-
     private DeviceUtil(){
         mContext = NewsApplication.getContext();
         tm = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);

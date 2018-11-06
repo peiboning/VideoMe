@@ -92,7 +92,7 @@ public class HttpResponse1 {
                     }
                 }
                 bean.setId(article.getNewsId());
-                bean.setContentSource(NewsBean.CONTENT_SOURCE_1);
+                bean.setContentSource(NewsBean.CONTENT_SOURCE_zixun);
                 bean.setTemplate(switch2Templete(article.getTemplate()));
                 bean.setTitle(article.getTitle());
                 List<Pics> pics = article.getPics();

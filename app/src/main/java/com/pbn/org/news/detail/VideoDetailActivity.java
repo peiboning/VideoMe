@@ -62,6 +62,7 @@ public class VideoDetailActivity extends MVPBaseActivity<IVideoDetailView, Video
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         int color = getResources().getColor(R.color.skin_status_bar);
         StatusBarCompat.setStatusBarColor(this, color);
@@ -96,7 +97,11 @@ public class VideoDetailActivity extends MVPBaseActivity<IVideoDetailView, Video
         icon_txt.setText(author.substring(0,1));
         author_txt.setText(author);
 
-        presenter.getRelativeHKVideo(bean.getId());
+        if(NewsBean.CONTENT_SOURCE_Haokan == bean.getContentSource()){
+            presenter.getRelativeHKVideo(bean.getId());
+        }else if(NewsBean.CONTENT_SOURCE_sdk == bean.getContentSource()){
+            presenter.getRelateVideoFromSDK(bean.getId(), bean.getChannelId(), this);
+        }
         relateList.setVisibility(View.GONE);
         mProgress.start();
         VideoModel videoModel = bean.getVideos().get(0);

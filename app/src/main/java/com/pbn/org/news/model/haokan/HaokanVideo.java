@@ -52,7 +52,7 @@ public class HaokanVideo {
                 videoModel.setUrl(data.content.video_src);
                 videos.add(videoModel);
                 bean.setVideos(videos);
-
+                bean.setContentSource(NewsBean.CONTENT_SOURCE_Haokan);
                 beans.add(bean);
             }
             return beans;

@@ -73,13 +73,19 @@ public class SearchResultVH extends RecyclerView.ViewHolder {
         model.setUrl(data.getVideo_src());
         list.add(model);
         bean.setVideos(list);
-
-
         List<Image> images = new ArrayList<>();
         Image image = new Image(data.getCover_src());
         images.add(image);
         bean.setImages(images);
         bean.setId(data.getMedia_id());
+        if(data.getContentSource() == 0){
+            bean.setContentSource(NewsBean.CONTENT_SOURCE_Haokan);
+        }else{
+            bean.setContentSource(data.getContentSource());
+        }
+
+        bean.setChannelId(data.getChannel());
+        bean.setSource(data.getAuthor());
 
         return bean;
     }

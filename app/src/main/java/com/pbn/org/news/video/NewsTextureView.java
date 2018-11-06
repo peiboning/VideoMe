@@ -1,6 +1,9 @@
 package com.pbn.org.news.video;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.util.Log;
 import android.view.TextureView;
 
 /**
@@ -8,7 +11,7 @@ import android.view.TextureView;
  * （参考自节操播放器 https://github.com/lipangit/JieCaoVideoPlayer）
  */
 public class NewsTextureView extends TextureView {
-
+    public static final String TAG = NewsTextureView.class.getSimpleName();
     private int videoHeight;
     private int videoWidth;
 
@@ -100,5 +103,44 @@ public class NewsTextureView extends TextureView {
             // no size yet, just adopt the given spec sizes
         }
         setMeasuredDimension(width, height);
+    }
+
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
+        canvas.drawBitmap(getMosaicsBitmaps(), getWidth() - 50, getTop()+10, null);
+    }
+
+    public static Bitmap getMosaicsBitmaps() {
+        long start = System.currentTimeMillis();
+        int bmpW = 50;
+        int bmpH = 30;
+        int[] pixels = new int[bmpH * bmpW];
+        int raw = 100;
+        int unit;
+        if (raw == 0) {
+            unit = bmpW;
+        } else {
+            unit = bmpW / raw; //原来的unit*unit像素点合成一个，使用原左上角的值
+        }
+
+        for (int i = 0; i < bmpH; ) {
+            for (int j = 0; j < bmpW; ) {
+                int leftTopPoint = i * bmpW + j;
+                for (int k = 0; k < unit; k++) {
+                    for (int m = 0; m < unit; m++) {
+                        int point = (i + k) * bmpW + (j + m);
+                        if (point < pixels.length) {
+                            pixels[point] = pixels[leftTopPoint];
+                        }
+                    }
+                }
+                j += unit;
+            }
+            i += unit;
+        }
+        long end = System.currentTimeMillis();
+        Log.v(TAG, "DrawTime:" + (end - start));
+        return Bitmap.createBitmap(pixels, bmpW, bmpH, Bitmap.Config.ARGB_8888);
     }
 }

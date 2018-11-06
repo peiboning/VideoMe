@@ -66,9 +66,12 @@ public class NewsListPresenter extends BasePresenter<INewsListView> {
     private int requestNum = 0;
 
     public void updateNewsList(Channel channel, int pageIndex, final boolean isLoadMore){
-        requestNum = 1;
         int index = requestNum%SRC_NUM;
-//        requestNum++;
+        requestNum++;
+        if(index == 0){//暂时不需要0渠道(相关推荐没搞定)
+            index = requestNum%SRC_NUM;
+            requestNum++;
+        }
         if(SRC_INDEX_NEWSLIST == index){
             if(channel.getQuickCode() != -1){
                 getNewsList(isLoadMore, channel);
@@ -193,7 +196,7 @@ public class NewsListPresenter extends BasePresenter<INewsListView> {
                 });
     }
 
-    private void videoSDK(final boolean isLoadmore, Channel channel){
+    private void videoSDK(final boolean isLoadmore, final Channel channel){
         SDKAPI sdkapi = RetrofitClient.getInstance().getSDKRetrofit().create(SDKAPI.class);
         Map<String, String> map = new HashMap<String, String>();
         map.put("channelId", channel.getTitleCode());
@@ -205,7 +208,7 @@ public class NewsListPresenter extends BasePresenter<INewsListView> {
                     @Override
                     public List<NewsBean> apply(SDKVideoInfo sdkVideoInfo) throws Exception {
 
-                        return sdkVideoInfo.toNewsBeans();
+                        return sdkVideoInfo.toNewsBeans(channel.getTitleCode());
                     }
                 }).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<NewsBean>>() {
