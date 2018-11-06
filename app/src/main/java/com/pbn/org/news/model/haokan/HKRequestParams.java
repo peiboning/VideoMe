@@ -11,6 +11,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 
 public class HKRequestParams {
+    public static long sessionId = System.currentTimeMillis();
     public static HashMap<String, String> getQueryMap(){
         HashMap<String, String> map = new HashMap<>();
 
@@ -53,6 +54,7 @@ public class HKRequestParams {
         refreshcountMap.put(channel, refreshcount + 1);
         int refreshtype = isLoadMore?4:0;
         StringBuffer sb = new StringBuffer("method=get&rn=8&tag="+channel+"&refreshtype="+refreshtype+"&refreshcount=" + refreshcount);
+        sb.append("&sessionid=").append(sessionId);
         JSONObject card = new JSONObject();
         JSONObject location = new JSONObject();
         try {
@@ -69,8 +71,8 @@ public class HKRequestParams {
             location.put("longitude", LocationMgr.getInstance().getLongitude());
 
             sb.append("&card=").append(card.toString()).append("&").append("location=").append(location.toString())
-            .append("&adparam={}").append("&gr_param=");
-            ;
+                    .append("&offline_cursor=0&cb_cursor=0&hot_cursor=0&cursor_time=0")
+            .append("&adparam={}");
         } catch (JSONException e) {
             e.printStackTrace();
         }

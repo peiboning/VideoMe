@@ -51,6 +51,7 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
     private NewsChannelListAdapter mAdapter;
     private int pageIndex = 0;
     private ViewStub netErrorTip;
+    private boolean isRequesting;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,12 +86,20 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
             @Override
             public void onPullToRefreshing() {
 //                LogUtils.d("ChannelFragment", "start update news data");
+                if(isRequesting){
+                    return;
+                }
+                isRequesting = true;
                 presenter.updateNewsList(channel, ++pageIndex, false);
                 UMUtils.refresh(getContext(), getChannelName());
             }
 
             @Override
             public void onLoadMore() {
+                if(isRequesting){
+                    return;
+                }
+                isRequesting = true;
                 presenter.updateNewsList(channel, ++pageIndex, true);
                 UMUtils.loadMore(getContext(), getChannelName());
             }
@@ -142,6 +151,9 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
                     }
 
                     if(fP + vP >= recyclerView.getLayoutManager().getItemCount()){
+                        if(isRequesting){
+                            return;
+                        }
                         listView.loadMore();
                     }
                 }
@@ -171,7 +183,7 @@ public class ChannelFragment extends MVPBaseFragment<INewsListView, NewsListPres
 
     @Override
     public void updateNewsList(List<NewsBean> news, boolean isLoadMore) {
-
+        isRequesting = false;
         if((null != news && news.size() > 0) || mAdapter.getItemCount()>0){
             mAdapter.updateData(news, isLoadMore);
             if(isLoadMore){

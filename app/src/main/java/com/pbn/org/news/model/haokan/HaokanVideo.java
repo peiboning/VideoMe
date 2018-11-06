@@ -33,6 +33,9 @@ public class HaokanVideo {
             List<NewsBean> beans = new ArrayList<NewsBean>(list.size());
             NewsBean bean;
             for(videoData data : list){
+                if(!data.getType().equals("video")){
+                    continue;
+                }
                 bean = new NewsBean();
                 bean.setId(data.content.vid);
                 bean.setTitle(data.content.title);
@@ -82,6 +85,15 @@ public class HaokanVideo {
     }
     public class videoData{
         private Content content;
+        private String type;
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
 
         public Content getContent() {
             return content;

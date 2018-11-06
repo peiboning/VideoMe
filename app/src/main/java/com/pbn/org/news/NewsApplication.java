@@ -1,9 +1,7 @@
 package com.pbn.org.news;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Environment;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
@@ -15,11 +13,9 @@ import com.pbn.org.news.service.BackgroudService;
 import com.pbn.org.news.skin.SkinManager;
 import com.pbn.org.news.utils.ChannelUtils;
 import com.pbn.org.news.utils.NewsHandler;
-import com.pbn.org.news.utils.SpUtils;
 import com.pbn.org.news.utils.UIWatchDog;
 import com.pbn.org.permission.PermissionClient;
 import com.pbn.org.push.PushSDK;
-import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 
@@ -136,7 +132,7 @@ public class NewsApplication extends MultiDexApplication{
     }
 
     private void initBugly() {
-        CrashReport.initCrashReport(this, "8d143cd859", BuildConfig.DEBUG);
+//        CrashReport.initCrashReport(this, "8d143cd859", BuildConfig.DEBUG);
     }
 
 
