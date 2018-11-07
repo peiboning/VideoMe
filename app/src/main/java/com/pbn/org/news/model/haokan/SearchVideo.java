@@ -7,6 +7,10 @@ package com.pbn.org.news.model.haokan;
  * @DATE 2018/10/31
  */
 public class SearchVideo {
+    public static final int CONTENT_TYPE_NORMAL = 1;
+    public static final int CONTENT_TYPE_DETAIL_TITLE = 2;
+    public static final int CONTENT_TYPE_DETAIL_AUTHOR = 3;
+
     private String title;
     private String video_src;
     private String cover_src;
@@ -16,8 +20,9 @@ public class SearchVideo {
     private String playcntText;
     private int duration;
 
-    private int contentSource;
+    private int contentSource;//数据渠道来源
     private String channel;
+    private int contentType = CONTENT_TYPE_NORMAL;//供样式渲染用
 
     public String getTitle() {
         return title;
@@ -97,5 +102,13 @@ public class SearchVideo {
 
     public void setChannel(String channel) {
         this.channel = channel;
+    }
+
+    public int getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(int contentType) {
+        this.contentType = contentType;
     }
 }

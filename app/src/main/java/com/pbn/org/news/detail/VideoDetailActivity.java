@@ -205,7 +205,8 @@ public class VideoDetailActivity extends MVPBaseActivity<IVideoDetailView, Video
         mProgress.stop();
         relateList.setVisibility(View.VISIBLE);
         if(null != list && list.size() > 0){
-            mAdapter.updateResult(list);
+            relateList.scrollToPosition(0);
+            mAdapter.updateResult(list, bean);
         }else{
             updateRelateError();
         }

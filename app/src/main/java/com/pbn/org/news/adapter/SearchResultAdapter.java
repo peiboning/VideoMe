@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.pbn.org.news.R;
 import com.pbn.org.news.model.haokan.SearchVideo;
+import com.pbn.org.news.vh.search.DetailTitleVH;
 import com.pbn.org.news.vh.search.SearchResultVH;
 
 import java.util.ArrayList;
@@ -40,8 +41,16 @@ public class SearchResultAdapter extends RecyclerView.Adapter{
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = View.inflate(mContext, R.layout.item_search_video, null);
-        SearchResultVH VH = new SearchResultVH(view, from);
+        RecyclerView.ViewHolder VH = null;
+        if(SearchVideo.CONTENT_TYPE_NORMAL == viewType){
+            View view = View.inflate(mContext, R.layout.item_search_video, null);
+            VH = new SearchResultVH(view, from);
+        }else if(SearchVideo.CONTENT_TYPE_DETAIL_AUTHOR == viewType){
+
+        }else if(SearchVideo.CONTENT_TYPE_DETAIL_TITLE == viewType){
+            View view = View.inflate(mContext, R.layout.item_relate_video_title, null);
+            VH = new DetailTitleVH(view);
+        }
 
         return VH;
     }
@@ -51,10 +60,20 @@ public class SearchResultAdapter extends RecyclerView.Adapter{
         if(holder instanceof SearchResultVH){
             ((SearchResultVH) holder).bindView(datas.get(position));
         }
+        if(holder instanceof DetailTitleVH){
+            ((DetailTitleVH) holder).bindView(datas.get(position));
+        }
     }
+
+
 
     @Override
     public int getItemCount() {
         return datas.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return datas.get(position).getContentType();
     }
 }

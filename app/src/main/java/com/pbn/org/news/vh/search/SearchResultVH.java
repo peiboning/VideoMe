@@ -86,6 +86,7 @@ public class SearchResultVH extends RecyclerView.ViewHolder {
 
         bean.setChannelId(data.getChannel());
         bean.setSource(data.getAuthor());
+        bean.setTitle(data.getTitle());
 
         return bean;
     }
