@@ -29,7 +29,9 @@
         <activity
             android:name=".splash.SplashActivity"
             android:hardwareAccelerated="true"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:theme="@style/Splash"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

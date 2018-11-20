@@ -12,6 +12,7 @@ public class NewsHandler {
     private static void ensurebg(){
         if(null == sHandler){
             sThread = new HandlerThread("NewsHandler:bg");
+            sThread.setPriority(Thread.MIN_PRIORITY);
             sThread.start();
             sHandler = new Handler(sThread.getLooper());
         }

@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
@@ -84,6 +85,10 @@ public class VideoPlayerController
         mProgressBar = findViewById(R.id.progress);
         mTotallayTime = findViewById(R.id.total);
         mFullScreen = findViewById(R.id.fullscreen);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            mFullScreen.setVisibility(INVISIBLE);
+        }
 
         mBottomProgressBar = findViewById(R.id.bottom_progressbar);
         mLoading = findViewById(R.id.loading);

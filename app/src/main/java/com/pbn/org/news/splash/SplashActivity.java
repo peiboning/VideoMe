@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -14,6 +15,7 @@ import com.pbn.org.news.loclib.LocationMgr;
 import com.pbn.org.news.mvp.presenter.SplashPresenter;
 import com.pbn.org.news.mvp.view.ISplashView;
 import com.pbn.org.news.service.AppService;
+import com.pbn.org.news.service.BackgroudService;
 import com.pbn.org.news.utils.ActivityUtils;
 import com.pbn.org.news.utils.NewsHandler;
 import com.pbn.org.news.utils.UMUtils;
@@ -35,10 +37,8 @@ public class SplashActivity extends MVPBaseActivity<ISplashView, SplashPresenter
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Debug.startMethodTracing("NewsApp");
 
-        Intent i = new Intent();
-        i.setClass(this, AppService.class);
-        startService(i);
     }
 
     @Override
@@ -74,6 +74,12 @@ public class SplashActivity extends MVPBaseActivity<ISplashView, SplashPresenter
     protected void onResume() {
         super.onResume();
         UMUtils.OnOnlyActivityResume(this, "SplashActivity");
+        startServiceFirst();
+
+        Intent i = new Intent();
+        i.setClass(this, AppService.class);
+        startService(i);
+        Debug.stopMethodTracing();
     }
 
     @Override
@@ -93,8 +99,8 @@ public class SplashActivity extends MVPBaseActivity<ISplashView, SplashPresenter
     }
 
     public void startActivity(int from){
-        Log.e("SplashActivity", "start from is " + from+", isNeedstartMain : " + isNeedStartMain);
-        long delay = System.currentTimeMillis() - enterTime<3000?(3000-(System.currentTimeMillis() - enterTime)):0;
+        long delay = System.currentTimeMillis() - enterTime<1000?(1000-(System.currentTimeMillis() - enterTime)):0;
+        Log.e("SplashActivity", "start from is " + from+", isNeedstartMain : " + isNeedStartMain+", delay is " + delay);
         NewsHandler.postToMainTaskDelay(new Runnable() {
             @Override
             public void run() {
@@ -104,5 +110,11 @@ public class SplashActivity extends MVPBaseActivity<ISplashView, SplashPresenter
                 finish();
             }
         }, delay);
+    }
+
+    private void startServiceFirst() {
+        Intent intent = new Intent();
+        intent.setClass(this, BackgroudService.class);
+        startService(intent);
     }
 }

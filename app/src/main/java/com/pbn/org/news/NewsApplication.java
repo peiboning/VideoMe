@@ -2,6 +2,10 @@ package com.pbn.org.news;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Debug;
+import android.os.Process;
+import android.os.SystemClock;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
@@ -16,6 +20,7 @@ import com.pbn.org.news.utils.NewsHandler;
 import com.pbn.org.news.utils.UIWatchDog;
 import com.pbn.org.permission.PermissionClient;
 import com.pbn.org.push.PushSDK;
+import com.qihoo360.replugin.RePlugin;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 
@@ -35,9 +40,12 @@ public class NewsApplication extends MultiDexApplication{
     @Override
     public void onCreate() {
         super.onCreate();
+        RePlugin.App.onCreate();
         if(RuntimeEnv.isIsMainProcess()){
             PushSDK.getInstance().init(sContext);
+            Debug.stopMethodTracing();
         }
+
     }
 
     public void enterBackgroud(){
@@ -53,7 +61,7 @@ public class NewsApplication extends MultiDexApplication{
         if(enterBackgroudTime == 0){
             return false;
         }
-        return System.currentTimeMillis() - enterBackgroudTime > 15000;
+        return System.currentTimeMillis() - enterBackgroudTime > 1000 * 60 * 20;
     }
 
     @Override
@@ -63,33 +71,26 @@ public class NewsApplication extends MultiDexApplication{
         RuntimeEnv.JudgeProcess();
         //
         sContext = this;
+        RePlugin.App.attachBaseContext(this);
+        SystemClock.sleep(500);
         if(RuntimeEnv.isIsMainProcess()){
-            registerActivityLifecycleCallbacks(new ActivityLifeCyle());
-            initSkin();
+            Debug.startMethodTracing("NewsAppStart");
             initPermissionSDK();
-            initLoclib();
-            initUM();
-            initCache();
             session = UUID.randomUUID().toString();
             NewsHandler.postToBgTask(new Runnable() {
                 @Override
                 public void run() {
+                    Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+                    initCache();
+                    initUM();
+                    initLoclib();
+                    registerActivityLifecycleCallbacks(new ActivityLifeCyle());
                     initSkin();
+                    UIWatchDog.getInstance().start();
                 }
             });
-            startServiceFirst();
-            UIWatchDog.getInstance().start();
         }
-
     }
-
-    private void startServiceFirst() {
-        Intent intent = new Intent();
-        intent.setClass(this, BackgroudService.class);
-        startService(intent);
-    }
-
-
     private void initCache() {
         CacheManager.getInstance();
     }
@@ -158,10 +159,18 @@ public class NewsApplication extends MultiDexApplication{
     public void onTrimMemory(int level) {
         Log.e("onTrimMemory", "onTrimMemory level is " + level);
         super.onTrimMemory(level);
+        RePlugin.App.onTrimMemory(level);
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
+        RePlugin.App.onLowMemory();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        RePlugin.App.onConfigurationChanged(newConfig);
     }
 }
