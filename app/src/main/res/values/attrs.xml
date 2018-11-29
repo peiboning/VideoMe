@@ -122,4 +122,7 @@
         <item>1027</item>
         <item>1031</item>
     </string-array>
+    <declare-styleable name="skin">
+        <attr name="enble" format="boolean"/>
+    </declare-styleable>
 </resources>

@@ -25,6 +25,6 @@ public class XMPush {
     }
 
     public void init(Context context){
-        MiPushClient.registerPush(context, APP_ID, APP_KEY);
+//        MiPushClient.registerPush(context, APP_ID, APP_KEY);
     }
 }

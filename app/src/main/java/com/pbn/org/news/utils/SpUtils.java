@@ -4,14 +4,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.pbn.org.news.NewsApplication;
+import com.pbn.org.news.utils.sp.SafeSharePreference;
+import com.pbn.org.news.utils.sp.inter.ISafeSharePreference;
 
 public class SpUtils {
     private static final String NEWS_CONTENT_SP = "news_content_sp";
-    private static SharedPreferences sp;
+    private static ISafeSharePreference sp;
 
     private static void ensureSp(){
         if(null == sp){
-            sp = NewsApplication.getContext().getSharedPreferences(NEWS_CONTENT_SP, Context.MODE_PRIVATE);
+            sp = SafeSharePreference.getSafeSharePreference(NEWS_CONTENT_SP);
         }
     }
 

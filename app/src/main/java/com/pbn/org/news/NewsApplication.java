@@ -36,14 +36,14 @@ public class NewsApplication extends MultiDexApplication{
     private static String APP_KEY = "5afe2b88a40fa307a6000054";
     private boolean isBackgroud;
     private long enterBackgroudTime;
+    private static long testTime;
 
     @Override
     public void onCreate() {
         super.onCreate();
         RePlugin.App.onCreate();
         if(RuntimeEnv.isIsMainProcess()){
-            PushSDK.getInstance().init(sContext);
-            Debug.stopMethodTracing();
+            UIWatchDog.getInstance().start();
         }
 
     }
@@ -64,20 +64,23 @@ public class NewsApplication extends MultiDexApplication{
         return System.currentTimeMillis() - enterBackgroudTime > 1000 * 60 * 20;
     }
 
+    public static void testTime(){
+        Log.e("IdleHandler", "sTime is :" + (System.currentTimeMillis() - testTime));
+    }
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         //不能在此代码前添加任何代码
         RuntimeEnv.JudgeProcess();
         //
+        testTime = System.currentTimeMillis();
         sContext = this;
         RePlugin.App.attachBaseContext(this);
-        SystemClock.sleep(500);
         if(RuntimeEnv.isIsMainProcess()){
-            Debug.startMethodTracing("NewsAppStart");
             initPermissionSDK();
             session = UUID.randomUUID().toString();
-            NewsHandler.postToBgTask(new Runnable() {
+            new Thread(){
                 @Override
                 public void run() {
                     Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
@@ -86,9 +89,9 @@ public class NewsApplication extends MultiDexApplication{
                     initLoclib();
                     registerActivityLifecycleCallbacks(new ActivityLifeCyle());
                     initSkin();
-                    UIWatchDog.getInstance().start();
                 }
-            });
+            }.start();
+
         }
     }
     private void initCache() {

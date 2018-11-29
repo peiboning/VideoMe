@@ -2,6 +2,7 @@ package com.pbn.org.news.vh;
 
 import android.graphics.Rect;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -54,7 +55,16 @@ public class VideoVH extends BaseVH {
                 player.openDetail();
                 player.pause();
                 player.getGlobalVisibleRect(rect);
-                ActivityUtils.startVideoDetailActivity(itemView.getContext(), rect.top - StatusBarTools.getStatusBarHeight(itemView.getContext()), bean);
+                Log.e("getGlobalVisibleRect", "b-t : " + (rect.bottom - rect.top) + ", top:" + rect.top +",  b:" + rect.bottom);
+                int fromX = 0;
+                if((rect.bottom - rect.top) == player.getHeight()){
+                    fromX = rect.top - StatusBarTools.getStatusBarHeight(itemView.getContext());
+                }
+
+                if((rect.bottom - rect.top) <  player.getHeight()){
+                    fromX = 0;
+                }
+                ActivityUtils.startVideoDetailActivity(itemView.getContext(), fromX, bean);
             }
         });
     }

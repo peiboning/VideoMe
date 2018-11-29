@@ -5,10 +5,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Debug;
+import android.os.Looper;
+import android.os.MessageQueue;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.pbn.org.news.NewsApplication;
 import com.pbn.org.news.R;
 import com.pbn.org.news.base.MVPBaseActivity;
 import com.pbn.org.news.loclib.LocationMgr;
@@ -22,6 +26,7 @@ import com.pbn.org.news.utils.UMUtils;
 import com.pbn.org.permission.PermissionClient;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @author peiboning
@@ -33,12 +38,51 @@ public class SplashActivity extends MVPBaseActivity<ISplashView, SplashPresenter
     public static String IS_NEED_START_MAIN = "is_need_start_main";
     private boolean isNeedStartMain;
     private long enterTime;
-
+    private CountDownLatch latch;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Debug.startMethodTracing("NewsApp");
+        Looper.myLooper().getQueue().addIdleHandler(new MessageQueue.IdleHandler() {
+            @Override
+            public boolean queueIdle() {
+                new Thread(){
+                    int  i = 40;
+                    @Override
+                    public void run() {
+                        NewsHandler.postToMainTask(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.e("IdleHandler", "IdleHandler");
+                                NewsApplication.testTime();
+                                startServiceFirst();
 
+                                Intent i = new Intent();
+                                i.setClass(SplashActivity.this, AppService.class);
+                                startService(i);
+
+                                List<String> permissions = PermissionClient.checkPermission(mNeedPermissions);
+                                if(null != permissions && permissions.size() > 0){
+                                    if(!permissions.contains(Manifest.permission.ACCESS_COARSE_LOCATION)){
+                                        LocationMgr.getInstance().startLoc();
+                                    }
+                                    PermissionClient.request(SplashActivity.this, permissions.toArray(new String[permissions.size()]), null);
+                                }else{
+                                    LocationMgr.getInstance().startLoc();
+                                    startActivity(2);
+                                }
+                            }
+                        });
+                    }
+                }.start();
+
+                return false;
+            }
+        });
+        super.onCreate(savedInstanceState);
+    }
+
+    private boolean test() {
+
+        return false;
     }
 
     @Override
@@ -53,16 +97,7 @@ public class SplashActivity extends MVPBaseActivity<ISplashView, SplashPresenter
         if(null != intent){
             isNeedStartMain = intent.getBooleanExtra(IS_NEED_START_MAIN, true);
         }
-        List<String> permissions = PermissionClient.checkPermission(mNeedPermissions);
-        if(null != permissions && permissions.size() > 0){
-            if(!permissions.contains(Manifest.permission.ACCESS_COARSE_LOCATION)){
-                LocationMgr.getInstance().startLoc();
-            }
-            PermissionClient.request(this, permissions.toArray(new String[permissions.size()]), null);
-        }else{
-            LocationMgr.getInstance().startLoc();
-            startActivity(2);
-        }
+
     }
 
     @Override
@@ -73,13 +108,9 @@ public class SplashActivity extends MVPBaseActivity<ISplashView, SplashPresenter
     @Override
     protected void onResume() {
         super.onResume();
-        UMUtils.OnOnlyActivityResume(this, "SplashActivity");
-        startServiceFirst();
-
-        Intent i = new Intent();
-        i.setClass(this, AppService.class);
-        startService(i);
-        Debug.stopMethodTracing();
+//        UMUtils.OnOnlyActivityResume(this, "SplashActivity");
+        Log.e("IdleHandler", "OnResume");
+        NewsApplication.testTime();
     }
 
     @Override

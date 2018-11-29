@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -86,6 +87,7 @@ public class VideoDetailActivity extends MVPBaseActivity<IVideoDetailView, Video
 
     private void parseIntent(Intent intent) {
         fromX = intent.getIntExtra(FROM_X, 0);
+        Log.e("getGlobalVisibleRect", "x : " + fromX);
         bean = (NewsBean) intent.getSerializableExtra(BEAN);
         srcSource = intent.getIntExtra(SRC_SOURCE, 0);
 
@@ -167,8 +169,13 @@ public class VideoDetailActivity extends MVPBaseActivity<IVideoDetailView, Video
         ObjectAnimator playerTranslationY = ObjectAnimator.ofFloat(player, "translationY", player.getTranslationY(), fromX);
 
         ObjectAnimator alpha = ObjectAnimator.ofFloat(bottom, "alpha", 1, 0);
+        if(fromX == 0){
+            ObjectAnimator alpha1 = ObjectAnimator.ofFloat(player, "alpha", 1, 0);
+            set.play(playerTranslationY).with(alpha).with(alpha1);
+        }else{
+            set.play(playerTranslationY).with(alpha);
+        }
 
-        set.play(playerTranslationY).with(alpha);
         set.setDuration(300);
         set.addListener(new AnimatorListenerAdapter() {
             @Override
