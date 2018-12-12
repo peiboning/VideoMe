@@ -22,7 +22,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.pbn.org.news"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 10800
         versionName "1.8.0"
@@ -31,7 +31,7 @@ android {
         multiDexEnabled true
         ndk {
             // 设置支持的SO库架构
-            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+            abiFilters 'armeabi', 'armeabi-v7a' //, 'x86', 'x86_64', 'arm64-v8a'
         }
 
         dexOptions {
@@ -150,4 +150,7 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.2'
 
     implementation 'com.qihoo360.replugin:replugin-host-lib:2.2.4'
+    implementation(project(':flutter'),{
+        exclude group: 'com.android.support'
+    })
 }

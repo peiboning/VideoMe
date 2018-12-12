@@ -83,17 +83,13 @@ public class NewsListFragment extends MVPBaseFragment<IHomeView, HomePresenter> 
         search_frame = view.findViewById(R.id.search_frame);
         viewPager.setAdapter(new NewsChannelAdapter(getChildFragmentManager(), channels));
         headerView.setupWithViewPager(viewPager);
-//        addChannel.setVisibility(View.VISIBLE);
+        addChannel.setVisibility(View.VISIBLE);
         addChannel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                ActivityUtils.startChannelMgrActivity(getContext());
-//                headerView.setTabTextColors(Color.BLUE, Color.GREEN);
-                if(TextUtils.isEmpty(SkinSp.currentThemeName())){
-                    SkinManager.with().startChangeSkin("skin_night.skin");
-                }else{
-                    SkinManager.with().startChangeSkin("");
-                }
+                ActivityUtils.startFlutterActivity(getContext());
+//
             }
         });
         search_frame.setOnClickListener(new View.OnClickListener() {

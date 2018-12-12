@@ -1,2 +1,7 @@
 include ':app', ':loclib', ':permission', ':analytics', ':utils', ':skin_night', ':resourcechecke', ':gradleplugin', ':push'
 //include ':calendar'
+setBinding(new Binding([gradle: this]))                                 // new
+evaluate(new File(                                                      // new
+        settingsDir,                                               // new
+        'my_flutter/.android/include_flutter.groovy'                      // new
+))

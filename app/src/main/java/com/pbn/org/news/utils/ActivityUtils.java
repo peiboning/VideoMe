@@ -7,6 +7,7 @@ import android.content.Intent;
 import com.pbn.org.news.NewsListActivity;
 import com.pbn.org.news.channel.ChannelMgrActivity;
 import com.pbn.org.news.detail.VideoDetailActivity;
+import com.pbn.org.news.flutter.FlutterActivity;
 import com.pbn.org.news.model.common.NewsBean;
 import com.pbn.org.news.model.haokan.HotWorld;
 import com.pbn.org.news.search.SearchActivity;
@@ -14,6 +15,11 @@ import com.pbn.org.news.setting.SettingActivity;
 import com.pbn.org.news.view.NewsToast;
 
 public class ActivityUtils {
+    public static void startFlutterActivity(Context context){
+        Intent intent = new Intent();
+        intent.setClass(context, FlutterActivity.class);
+        context.startActivity(intent);
+    }
     public static void startMainActivity(Context context){
         Intent intent = new Intent();
         intent.setClass(context, NewsListActivity.class);

@@ -71,6 +71,9 @@
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateAlwaysVisible|adjustPan"
             ></activity>
+        <activity android:name=".flutter.FlutterActivity"
+            android:theme="@style/FlutterTheme"
+            />
     </application>
 
 </manifest>
