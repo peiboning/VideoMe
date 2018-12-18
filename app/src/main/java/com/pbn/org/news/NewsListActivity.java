@@ -69,6 +69,7 @@ public class NewsListActivity extends BaseActivity implements ISkinChange {
         mSettingIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int a = 1/0;
                 ActivityUtils.startSettingActivity(NewsListActivity.this);
 //                NewsToast.showSystemToast("setting Icon");
             }

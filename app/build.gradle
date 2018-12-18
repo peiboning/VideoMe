@@ -24,8 +24,8 @@ android {
         applicationId "com.pbn.org.news"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 10800
-        versionName "1.8.0"
+        versionCode 10811
+        versionName "1.8.11"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         flavorDimensions "1"
         multiDexEnabled true
@@ -61,9 +61,11 @@ android {
         debug {
             signingConfig signingConfigs.debug
         }
+
     }
     //为同一个应用创建不同的版本，比如一个国内版本，一个国外版
     productFlavors {
+
         xiaomi {
             manifestPlaceholders = [CHANNEL: "1"]
         }

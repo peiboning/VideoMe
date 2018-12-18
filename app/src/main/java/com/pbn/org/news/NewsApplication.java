@@ -18,6 +18,7 @@ import com.pbn.org.news.skin.SkinManager;
 import com.pbn.org.news.utils.ChannelUtils;
 import com.pbn.org.news.utils.NewsHandler;
 import com.pbn.org.news.utils.UIWatchDog;
+import com.pbn.org.news.utils.crash.CrashHandler;
 import com.pbn.org.permission.PermissionClient;
 import com.pbn.org.push.PushSDK;
 import com.qihoo360.replugin.RePlugin;
@@ -74,6 +75,9 @@ public class NewsApplication extends MultiDexApplication{
         //不能在此代码前添加任何代码
         RuntimeEnv.JudgeProcess();
         //
+
+        new CrashHandler(100).init();
+
         testTime = System.currentTimeMillis();
         sContext = this;
         RePlugin.App.attachBaseContext(this);
